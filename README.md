@@ -22,7 +22,13 @@
 
 ## Usage
 
-> Some usage instructions
+To open the app in a dev environment, from the root directory run
+```sh
+npm install
+npm run react-dev
+npm run server dev
+```
+
 
 ## Requirements
 
