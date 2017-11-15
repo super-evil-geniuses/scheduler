@@ -4,7 +4,7 @@
 
 ## Team
 
-  - teamMember
+  - Toby Hoshman
   - teamMember
   - teamMember
   - teamMember
