@@ -6,8 +6,9 @@
 
   - Toby Hoshman
   - Vanessa Yip
-  - teamMember
+  - Sofie Graham
   - Caleb Choi
+
 
 ## Table of Contents
 
