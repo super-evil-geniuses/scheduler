@@ -7,7 +7,10 @@
   "engines": {
     "node": ">=6.4.0"
   },
-  "scripts": {},
+  "scripts": {
+    "react-dev": "webpack -d --watch",
+    "server-dev": "nodemon ./server/index.js"
+  },
   "dependencies": {
     "axios": "^0.17.1",
     "bluebird": "^3.5.1",
@@ -25,6 +28,8 @@
     "babel-register": "^6.7.2",
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
     "mocha": "^4.0.1",
+    "nodemon": "^1.12.1",
+    "path": "^0.12.7",
     "webpack": "^3.8.1"
   },
   "babel": {
