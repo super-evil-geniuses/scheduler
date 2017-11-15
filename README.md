@@ -4,7 +4,7 @@
 
 ## Team
 
-  - teamMember
+  - Sofie Graham
   - teamMember
   - teamMember
   - teamMember
