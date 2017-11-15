@@ -7,7 +7,7 @@
   - Toby Hoshman
   - teamMember
   - teamMember
-  - teamMember
+  - Caleb Choi
 
 ## Table of Contents
 
