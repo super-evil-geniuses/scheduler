@@ -4,10 +4,11 @@
 
 ## Team
 
+  - Toby Hoshman
+  - Vanessa Yip
   - Sofie Graham
-  - teamMember
-  - teamMember
-  - teamMember
+  - Caleb Choi
+
 
 ## Table of Contents
 
