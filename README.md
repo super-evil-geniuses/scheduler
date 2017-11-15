@@ -4,10 +4,10 @@
 
 ## Team
 
-  - Vanessa Yip (vanessayip)
+  - Toby Hoshman
+  - Vanessa Yip
   - teamMember
-  - teamMember
-  - teamMember
+  - Caleb Choi
 
 ## Table of Contents
 
