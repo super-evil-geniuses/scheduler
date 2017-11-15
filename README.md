@@ -5,7 +5,7 @@
 ## Team
 
   - Toby Hoshman
-  - teamMember
+  - Vanessa Yip
   - teamMember
   - Caleb Choi
 
