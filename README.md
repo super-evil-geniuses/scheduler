@@ -4,7 +4,7 @@
 
 ## Team
 
-  - teamMember
+  - Vanessa Yip (vanessayip)
   - teamMember
   - teamMember
   - teamMember
