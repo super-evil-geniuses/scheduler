@@ -1,6 +1,5 @@
-# Project Name
-THIS IS STAGING
-> Pithy project description
+# Shiftly
+> Automated shift scheduling for small businesses.
 
 ## Team
 
@@ -21,10 +20,37 @@ THIS IS STAGING
 1. [Contributing](#contributing)
 
 ## Usage
-
-To open the app in a dev environment, from the root directory run
+### Dependencies
+To open the app in a dev environment, first install dependencies by running this command in your terminal:
 ```
 npm install
+```
+
+### Database
+Then install postgres db:
+```
+brew install postgres
+```
+If ypu are prompted, run this to start pg: `brew services start postgresql`
+Run pg in your command line:
+```
+psql postgres
+```
+Check out https://gist.github.com/apolloclark/ea5466d5929e63043dcf for commands.
+Manually create a database on your local machine using the terminal:
+```
+CREATE DATABASE <your database name> WITH OWNER <your owner name>
+```
+The default password is "null"
+### Create local env variables
+Creat a .env file in the root folder with the following variables:
+- DB_HOST=localhost
+- DB_USER={your username for postgres}
+- DB_NAME=shiftly
+- PORT=9000
+### Run locally
+Once your db is set up, run the app by running each of these command in a seperate terminal window:
+```
 npm run react-dev
 npm run server-dev
 ```
@@ -44,10 +70,11 @@ npm run server-dev
 
 From within the root directory:
 
-```sh
+```
 npm install -g bower
 npm install
-bower install
+
+bower install (Do we use bower?!)
 ```
 
 ### Roadmap
