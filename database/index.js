@@ -1,13 +1,6 @@
 const Sequelize = require('sequelize');
 
-//Setting up postgres
-// 1. brew install postgres
-// 2. run "psql postgres"
-// checkout https://gist.github.com/apolloclark/ea5466d5929e63043dcf for commands
-// I had to manually create a database on my local machine using terminal
-// CREATE DATABASE <your database name> WITH OWNER <your owner name>
-// default password is "null"
-const sequelize = new Sequelize(/*database name*/, /*owner name*/, /*password*/, { host: 'localhost', dialect: 'postgres', });
+const sequelize = new Sequelize( process.env.DB_NAME || 'shiftly', process.env.DB_USER || 'sofiegraham', process.env.DB_PASS || null, { host: process.env.DB_PASS || 'localhost', dialect: 'postgres', });
 
 // underscored = (snake_case foreign keys)
 const User = sequelize.define('user', {
@@ -47,6 +40,13 @@ Schedule.hasMany(Needed_Employee, { as: 'needed_employee' });
 Day_Part.hasMany(Employee_Availability, { as: 'employee_availability' });
 Day_Part.hasMany(Actual_Schedule, { as: 'actual_schedule' });
 Day_Part.hasMany(Needed_Employee, { as: 'needed_employee' });
+
+User.sync();
+Schedule.sync();
+Employee_Availability.sync();
+Actual_Schedule.sync();
+Needed_Employee.sync();
+Day_Part.sync();
 
 module.exports = {
 	User: User,
