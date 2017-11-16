@@ -17,7 +17,7 @@ const User = sequelize.define('user', {
 }, {underscored: true});
 
 const Schedule = sequelize.define('schedule', {
-	monday_dates: Sequelize.INTEGER,
+	monday_dates: Sequelize.DATE,
 }, {underscored: true});
 
 const Employee_Availability = sequelize.define('employee_availability', {
