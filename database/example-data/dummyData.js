@@ -1,6 +1,6 @@
 let temp1 = {
-  schedId: 001
-  tempId: 001,
+  schedId: 1,
+  tempId: 1,
   weekStart: new Date('11/13/17'),
   monA: 1,
   monP: 2,
@@ -18,8 +18,8 @@ let temp1 = {
   sunP: 2,
 };
 let temp2 = {
-  schedId: 002
-  tempId: 002,
+  schedId: 2,
+  tempId: 2,
   weekStart: new Date('11/21/17'),
   monA: 1,
   monP: 2,
@@ -38,7 +38,7 @@ let temp2 = {
 };
 
 let schedule = {
-  schedId: 001
+  schedId: 1,
   weekStart: new Date('11/13/17'),
   monA: ['Chris'],
   monP: ['Lucas', 'Michael'],
@@ -58,7 +58,7 @@ let schedule = {
 
 let avails = [
   {name: 'Lucas',
-  emplId: 001,
+  emplId: 1,
   monA: true,
   monP: true,
   tuesA: true,
@@ -75,7 +75,7 @@ let avails = [
   sunP: false,
   },
   {name: 'Michael',
-  emplId: 002,
+  emplId: 2,
   monA: true,
   monP: true,
   tuesA: true,
@@ -92,7 +92,7 @@ let avails = [
   sunP: true,
   },
   {name: 'Sophia',
-  emplId: 003,
+  emplId: 3,
   monA: false,
   monP: false,
   tuesA: false,
@@ -109,7 +109,7 @@ let avails = [
   sunP: false,
   },
   {name: 'Tevene',
-  emplId: 004,
+  emplId: 4,
   monA: false,
   monP: false,
   tuesA: false,
@@ -126,7 +126,7 @@ let avails = [
   sunP: true,
   },
   {name: 'Will',
-  emplId: 005,
+  emplId: 5,
   monA: true,
   monP: true,
   tuesA: true,
@@ -143,7 +143,7 @@ let avails = [
   sunP: true,
   },
   {name: 'Christina',
-  emplId: 006,
+  emplId: 6,
   monA: true,
   monP: true,
   tuesA: true,
@@ -160,7 +160,7 @@ let avails = [
   sunP: true,
   },
   {name: 'Nia',
-  emplId: 007,
+  emplId: 7,
   monA: true,
   monP: true,
   tuesA: true,
@@ -177,7 +177,7 @@ let avails = [
   sunP: true,
   },
   {name: 'Kastania',
-  emplId: 008,
+  emplId: 8,
   monA: true,
   monP: true,
   tuesA: true,
@@ -194,7 +194,7 @@ let avails = [
   sunP: false,
   },
   {name: 'Chris',
-  emplId: 009,
+  emplId: 9,
   monA: true,
   monP: false,
   tuesA: true,
@@ -211,7 +211,7 @@ let avails = [
   sunP: false,
   },
   {name: 'Wren',
-  emplId: 010,
+  emplId: 10,
   monA: true,
   monP: true,
   tuesA: true,
