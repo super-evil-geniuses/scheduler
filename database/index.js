@@ -18,7 +18,6 @@ const Employee_Availability = sequelize.define('employee_availability', {
 }, {underscored: true});
 
 const Actual_Schedule = sequelize.define('actual_schedule', {
-	is_working: Sequelize.BOOLEAN,
 }, {underscored: true});
 
 const Needed_Employee = sequelize.define('needed_employee', {
