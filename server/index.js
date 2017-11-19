@@ -1,10 +1,14 @@
 require('dotenv').config();
 const express = require('express');
-const db = require('../database/index.js');
+const utils = require('../helpers');
 
-let app = express();
+const app = express();
 
 app.use(express.static(__dirname + '/../client/dist/compiled'));
+
+app.patch('/employee_availability/:employeeId', utils.updateEmployeeAvailability, (req, res) => {
+  res.end();
+});
 
 const PORT = process.env.PORT || 8080;
 
