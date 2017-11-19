@@ -1,0 +1,7 @@
+language: node_js
+
+#lists the versions of node that needs to be tested. Can specify one or more of the latest releases
+node_js:
+  #latest stable Node.js release
+  - "node"
+ 
