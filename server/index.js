@@ -14,7 +14,7 @@ app.post('/template-schedule', function (req, res) {
   
   //store the template
 
-  res.send(`week starting ${mondayDate} template is stored`);
+  res.send('template is stored');
 });
 
 app.listen(PORT, console.log(`now listening on port ${PORT}`));
