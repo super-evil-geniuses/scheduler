@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const Promise = require('bluebird');
 const dummyData = require('./example-data/dummyData');
 
-const sequelize = new Sequelize(process.env.DB_NAME || 'shiftly', process.env.DB_USER || 'sofiegraham', process.env.DB_PASS || null, { host: process.env.DB_HOST || 'localhost', dialect: 'postgres' });
+const sequelize = new Sequelize(process.env.DB_NAME || 'shiftly', process.env.DB_USER || 'postgres', process.env.DB_PASS || null, { host: process.env.DB_HOST || 'localhost', dialect: 'postgres' });
 
 // underscored = (snake_case foreign keys)
 const User = sequelize.define('user', {
