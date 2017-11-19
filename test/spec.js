@@ -59,10 +59,10 @@ const port = process.env.PORT || 8080;
 
 describe('POST /template-schedule', function() {
   it('sent object has a property called numOfEmployeesNeeded', function(done) {
-    request(app)
+    request(server)
       .post('/template-schedule')
       .set('Content-Type', 'application/json')
-      .send({
+      .send(JSON.stringify({
         mondayDate: new Date('11/13/17'),
         monA: 2,
         monP: 2,
@@ -78,7 +78,7 @@ describe('POST /template-schedule', function() {
         satP: 2,
         sunA: 2,
         sunP: 2
-      })
+      }))
       .expect(`week starting ${new Date('11/13/17')} template is stored`);
   });
 });

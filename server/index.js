@@ -18,3 +18,5 @@ app.post('/template-schedule', function (req, res) {
 });
 
 app.listen(PORT, console.log(`now listening on port ${PORT}`));
+
+module.exports = app;
