@@ -68,17 +68,8 @@ const port = process.env.PORT || 8080;
 // });
 
 describe('POST /template-schedule', function() {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
   it('sent a template object and was successfully stored in the db', function(done) {
->>>>>>> adding test folder and spec
-=======
     request(server)
->>>>>>> added supertest and fixed the test case for intial testing purposes
-=======
->>>>>>> travisSetup
       .post('/template-schedule')
       .set('Content-Type', 'application/json')
       .send(JSON.stringify({
