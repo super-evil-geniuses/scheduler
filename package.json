@@ -11,7 +11,7 @@
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon ./server/index.js",
     "test": "mocha test --reporter spec",
-    "db:setup": "node ./database/example-data/seedDatabase.js"
+    "db:setup": "node database/example-data/seedDatabase.js"
   },
   "dependencies": {
     "axios": "^0.17.1",
