@@ -63,13 +63,18 @@ const port = process.env.PORT || 8080;
 
 describe('POST /template-schedule', function() {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   it('sent a template object and was successfully stored in the db', function(done) {
 >>>>>>> adding test folder and spec
     request(app)
+=======
+  it('sent object has a property called numOfEmployeesNeeded', function(done) {
+    request(server)
+>>>>>>> added supertest and fixed the test case for intial testing purposes
       .post('/template-schedule')
       .set('Content-Type', 'application/json')
-      .send({
+      .send(JSON.stringify({
         mondayDate: new Date('11/13/17'),
         monA: 2,
         monP: 2,
@@ -85,7 +90,7 @@ describe('POST /template-schedule', function() {
         satP: 2,
         sunA: 2,
         sunP: 2
-      })
+      }))
       .expect(`week starting ${new Date('11/13/17')} template is stored`);
   });
 });
