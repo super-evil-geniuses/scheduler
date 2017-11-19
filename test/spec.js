@@ -80,6 +80,6 @@ describe('POST /template-schedule', function() {
         sunA: 2,
         sunP: 2
       }))
-      .expect(`week starting ${new Date('11/13/17')} template is stored`, done);
+      .expect(`week starting ${JSON.stringify(new Date('11/13/17'))} template is stored`, done);
   });
 });
