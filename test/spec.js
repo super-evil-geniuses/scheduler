@@ -1,10 +1,14 @@
 const expect = require('chai').expect;
 const pg = require('pg');
+<<<<<<< HEAD
 /*
 Mock 'http' objects for testing Express routing functions, but could be used for testing any Node.js web server applications that have code that requires mockups of the request and response objects
 */
 const httpMocks = require('node-mocks-http');
 
+=======
+const request = require('supertest'); //used for testing http
+>>>>>>> adding test folder and spec
 //require the necessary files
 const server = require('../server/index.js');
 const schema = require('../database/index.js');
@@ -58,7 +62,10 @@ const port = process.env.PORT || 8080;
 // });
 
 describe('POST /template-schedule', function() {
-  it('sent object has a property called numOfEmployeesNeeded', function(done) {
+<<<<<<< HEAD
+=======
+  it('sent a template object and was successfully stored in the db', function(done) {
+>>>>>>> adding test folder and spec
     request(app)
       .post('/template-schedule')
       .set('Content-Type', 'application/json')
