@@ -1,8 +1,11 @@
 const Sequelize = require('sequelize');
 const Promise = require('bluebird');
-const dummyData = require('./example-data/dummyData');
 
+<<<<<<< HEAD
 const sequelize = new Sequelize(process.env.DB_NAME || 'shiftly', process.env.DB_USER || 'postgres', process.env.DB_PASS || null, { host: process.env.DB_HOST || 'localhost', dialect: 'postgres' });
+=======
+const sequelize = new Sequelize(process.env.DB_NAME || 'shiftly', process.env.DB_USER || 'calebchoi', process.env.DB_PASS || null, { host: process.env.DB_HOST || 'localhost', dialect: 'postgres' });
+>>>>>>> Changed database index.js to initialize on db:setup
 
 // underscored = (snake_case foreign keys)
 const User = sequelize.define('user', {
@@ -43,10 +46,7 @@ Day_Part.hasMany(Actual_Schedule, { as: 'actual_schedule' });
 Day_Part.hasMany(Needed_Employee, { as: 'needed_employee' });
 
 // drops all table, just put it in so that it doesn't give an error for creating the same table everytime during dev
-sequelize.drop()
-	.then(() => {
-		return User.sync();
-	})
+User.sync()
 	.then(() => {
 		return Schedule.sync();	
 	})
@@ -61,84 +61,49 @@ sequelize.drop()
 	})
 	.then(() => {
 		return Needed_Employee.sync();
-	})
-	.then(() => {
-		initialize();	// initializing database with dummy data, 
 	});
 
-// Save day_parts. Probably won't need it after initialization
-let saveDayParts = (dayParts) => {
-	return Promise.each(dayParts, (dayPart) => {
-		Day_Part.create({ name: dayPart });
-	});
-};
-
-// Saves the week start date and the corresponding schedule id
-let saveSchedule = (weekStart) => {
-	return Schedule.create({ monday_dates: weekStart.monday_dates });
-};
-
-// Saves one user
-let saveUser = (user) => {
-	return User.create({ name: user.name, role: user.role, password: user.password});
-};
-
-// Saves the schedule template
-let saveScheduleTemplate = (temp) => {
-	return Promise.each(temp, (day) => {
-		Schedule.find({ where: { monday_dates: day.monday_date } })
-			.then((result) => {
-				let schedule_id = result.id;
-				Day_Part.find({ where: { name: day.day_part } })
-					.then((result) => {
-						let day_part_id = result.id;
-						Needed_Employee.create({ 
-							employees_needed: day.employees_needed,
-							schedule_id: schedule_id,
-							day_part_id: day_part_id
-						});
-					})
-			})
-	});
-}
-
-// Saves availability for one employee
-let saveEmployeeAvailability = (avail) => {
-	return Promise.each(avail, (employeeAvail) => {
-		User.find({ where: {name: employeeAvail.name} })
-			.then((result) => {
-				let user_id = result.id;
-				Day_Part.find({ where: {name: employeeAvail.day_part} })
-					.then((result) => {
-						let day_part_id = result.id;
-						Employee_Availability.create({
-							is_available: employeeAvail.is_available,
-							user_id: user_id,
-							day_part_id: day_part_id
-						});
+let findAllEmployeeAvailability = () => {
+	let availability = [];
+	return Day_Part.findAll({ attributes: ['id'] })
+		.then((day_parts) => {
+			return Promise.each(day_parts, (day_part) => {
+				return Employee_Availability.findAll({ where: { day_part_id: day_part.dataValues.id, is_available: true }})
+					.then((avail) => {
+						availability.push(avail);
 					});
 			});
+		})
+		.then(() => {
+			return availabilityParser(availability);
+		});
+};
+
+const availabilityParser = (availability) => {
+	let availObj = {};
+	availability.forEach(availPerDayPart => {
+		availPerDayPart.forEach(availByEmp => {
+			if (!availObj[availByEmp.dataValues.day_part_id]) {
+				availObj[availByEmp.dataValues.day_part_id] = [availByEmp.dataValues.user_id];
+			} else {
+				availObj[availByEmp.dataValues.day_part_id].push(availByEmp.dataValues.user_id);
+			}
+		});
 	});
+	return availObj;
 }
 
-// initializes the database with dummy data
-let initialize = () => {
-	saveSchedule(dummyData.weekStart)
-		.then(() => {
-			return saveDayParts(dummyData.dayParts);
+const templateParser = (weekStart) => {
+	let tempObj = {};
+	return Schedule.find({ where: {monday_dates: weekStart} })
+		.then((schedule) => {
+			return Needed_Employee.findAll({ where: {schedule_id: schedule.dataValues.id, }});
 		})
-		.then(() => {
-			return Promise.each(dummyData.users, (user) => {
-				saveUser(user);
-			});	
-		})
-		.then(() => {
-			return saveScheduleTemplate(dummyData.temp1);
-		})
-		.then(() => {
-			return Promise.each(dummyData.avails, (avail) => {
-				return saveEmployeeAvailability(avail);
+		.then((template) => {
+			template.forEach(dayPart => {
+				tempObj[dayPart.dataValues.day_part_id] = dayPart.dataValues.employees_needed;
 			});
+			return tempObj;
 		});
 }
 
