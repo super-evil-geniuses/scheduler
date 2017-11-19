@@ -1,11 +1,8 @@
 const Sequelize = require('sequelize');
 const Promise = require('bluebird');
 
-<<<<<<< HEAD
-const sequelize = new Sequelize(process.env.DB_NAME || 'shiftly', process.env.DB_USER || 'postgres', process.env.DB_PASS || null, { host: process.env.DB_HOST || 'localhost', dialect: 'postgres' });
-=======
+
 const sequelize = new Sequelize(process.env.DB_NAME || 'shiftly', process.env.DB_USER || 'calebchoi', process.env.DB_PASS || null, { host: process.env.DB_HOST || 'localhost', dialect: 'postgres' });
->>>>>>> Changed database index.js to initialize on db:setup
 
 // underscored = (snake_case foreign keys)
 const User = sequelize.define('user', {
