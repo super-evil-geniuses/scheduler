@@ -1,20 +1,11 @@
 const expect = require('chai').expect;
 const pg = require('pg');
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> travisSetup
+
 /*
 Mock 'http' objects for testing Express routing functions, but could be used for testing any Node.js web server applications that have code that requires mockups of the request and response objects
 */
 const httpMocks = require('node-mocks-http');
-
-<<<<<<< HEAD
-=======
 const request = require('supertest'); //used for testing http
->>>>>>> adding test folder and spec
-=======
->>>>>>> travisSetup
 //require the necessary files
 const server = require('../server/index.js');
 const schema = require('../database/index.js');
