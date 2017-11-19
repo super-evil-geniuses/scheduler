@@ -4,4 +4,9 @@ language: node_js
 node_js:
   #latest stable Node.js release
   - "node"
+
+#npm install will still run on every build and will update/install any new packages added to your package.json file
+cache:
+  directories:
+    - "node_modules"
  
