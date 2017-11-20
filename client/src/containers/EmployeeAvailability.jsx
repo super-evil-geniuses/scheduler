@@ -44,7 +44,7 @@ class EmployeeAvailability extends React.Component {
               value={this.state.newAvailabilities[dayPart]}
               checked={this.state.newAvailabilities[dayPart]}
             />
-            <label htmlFor={idx}>{dayPart} </label>
+            <label htmlFor={idx}>{this.props.dayPartsMap[dayPart]} </label>
           </div>
         );
       });

@@ -20,7 +20,7 @@ class EmployeeEditor extends Component {
   render() {
     return (
       <div>
-        <EmployeeAvailability employee={this.state.selectedEmployee} />
+        <EmployeeAvailability employee={this.state.selectedEmployee} dayPartsMap={this.props.dayPartsMap} />
         {this.props.employees && 
         <EmployeeRoster 
           employees={this.props.employees}
@@ -33,6 +33,7 @@ class EmployeeEditor extends Component {
 
 const mapStateToProps = (state) => {
   let employees;
+  let dayPartsMap = {};
   if(state.users && state.employeeAvailabilities) {
     employees = state.users.filter((user) => {
       return user.role === 'employee';
@@ -49,10 +50,14 @@ const mapStateToProps = (state) => {
       employees[availability.user_id].availabilities[availability.day_part_id] = availability.is_available;
     });
   }
+  if(state.dayParts) {
+    state.dayParts.forEach((dayPart) => {
+      dayPartsMap[dayPart.id] = dayPart.name
+    })
+  }
   
   return {
-    users: state.users,
-    dayParts: state.dayParts,
+    dayPartsMap: dayPartsMap,
     employees: employees,
   };
   
