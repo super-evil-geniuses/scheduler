@@ -1,5 +1,5 @@
 import React from 'react';
-import EmployeeRosterItem from '../containers/EmployeeRosterItem.jsx';
+import EmployeeRosterItem from './EmployeeRosterItem.jsx';
 import _ from 'underscore';
 
 const EmployeeRoster = (props) => {

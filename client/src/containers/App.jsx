@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-//import { selectEmployee } from '../actions/index';
 import { getAllUsers } from '../actions/index';
 import { getAllEmployeeAvailabilities } from '../actions/index';
 import { getAllDayParts } from '../actions/index';

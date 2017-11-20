@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import EmployeeAvailability1 from './EmployeeAvailability1.jsx';
+import EmployeeAvailability from './EmployeeAvailability.jsx';
 import EmployeeRoster from '../components/EmployeeRoster.jsx';
 import { connect } from 'react-redux';
 
@@ -20,7 +20,7 @@ class EmployeeEditor extends Component {
   render() {
     return (
       <div>
-        <EmployeeAvailability1 employee={this.state.selectedEmployee} />
+        <EmployeeAvailability employee={this.state.selectedEmployee} />
         {this.props.employees && 
         <EmployeeRoster 
           employees={this.props.employees}

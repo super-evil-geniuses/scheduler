@@ -1,23 +1,6 @@
 const db = require('../database');
 const Promise = require('bluebird');
 
-// Takes new employeeAvailabilities and updates them in the database
-const updateEmployeeAvailability = (req, res, next) => {
-  return Promise.each(req.body.employeeAvailabilities, (employeeAvail) => {
-    const updates = { is_available: employeeAvail.is_available };
-    const conditions = {
-      where: {
-        user_id: employeeAvail.user_id,
-        day_part_id: employeeAvail.day_part_id,
-      },
-    };
-    return db.Employee_Availability.update(updates, conditions);
-  }).then((results) => {
-    req.empoloyeeAvailabilities = results;
-    next();
-  });
-}
-
 const getAllUsers = (req, res, next) => {
   db.User.findAll({})
     .then((allUsers) => {
@@ -46,6 +29,23 @@ const getAllDayParts = (req, res, next) => {
     }).catch((err) => {
       res.end(500, 'Error getting users');
     });
+};
+
+// Takes new employeeAvailabilities and updates them in the database
+const updateEmployeeAvailability = (req, res, next) => {
+  return Promise.each(req.body.employeeAvailabilities, (employeeAvail) => {
+    const updates = { is_available: employeeAvail.is_available };
+    const conditions = {
+      where: {
+        user_id: employeeAvail.user_id,
+        day_part_id: employeeAvail.day_part_id,
+      },
+    };
+    return db.Employee_Availability.update(updates, conditions);
+  }).then((updatedAvailabilities) => {
+    req.empoloyeeAvailabilities = updatedAvailabilities;
+    next();
+  });
 };
 
 module.exports = {

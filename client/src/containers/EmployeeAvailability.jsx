@@ -1,60 +1,67 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { selectEmployee } from '../actions/index';
-import { getAllUsers } from '../actions/index';
-import { getAllEmployeeAvailabilities } from '../actions/index';
-import { getAllDayParts } from '../actions/index';
+import { updateEmployeeAvailability } from '../actions/index';
+import _ from 'underscore';
 
-
-import EmployeeRoster from '../components/EmployeeRoster.jsx';
-
-import EmployeeAvailabilityCheckboxes from '../components/EmployeeAvailabilityCheckboxes.jsx';
-
-class EmployeeAvailability extends Component {
-
-  componentDidMount() {
-    this.props.getAllUsers();
-    this.props.getAllEmployeeAvailabilities();
-    this.props.getAllDayParts();
+class EmployeeAvailability extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      newAvailabilities: {}
+    }
   }
 
-  handleEmployeeSelect = (e) => {
-    const name = e.target.name;
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.employee != this.props.employee) {
+      const newAvailabilities = _.clone(nextProps.employee.availabilities);
+      this.setState({
+        newAvailabilities: newAvailabilities,
+      })
+    }
+  }
+
+  handleChange = (e) => {
+    let availabilities = this.state.newAvailabilities;
+    availabilities[e.target.name] = e.target.checked
     this.setState({
-      [name]: this.props.employeeAvailability[e.target.value]
-    });
+      newAvailabilities: availabilities
+    })
   }
 
   render() {
-
-    return (
-      <div>
-        <h2>Edit Employee Availability</h2>
-          {this.props.selectedEmployee && <EmployeeAvailabilityCheckboxes employee={this.props.selectedEmployee}/>}
-          <button className="create-submit-button" type="submit">Save</button>
-        {this.props.employees && <EmployeeRoster employees={this.props.employees} />}
-      </div>
-    );
+    if(!this.props.employee) {
+      return <div>Please select an employee</div>
+    } else {
+      let dayParts = Object.keys(this.state.newAvailabilities).map((dayPart, idx) => {
+        return (
+          <div key={`${this.props.employee.name}${idx}`}>
+            <input 
+              onClick={(e) => this.handleChange(e)}
+              type="checkbox"
+              id={idx}
+              name={dayPart}
+              value={this.state.newAvailabilities[dayPart]}
+              checked={this.state.newAvailabilities[dayPart]}
+            />
+            <label htmlFor={idx}>{dayPart} </label>
+          </div>
+        );
+      });
+  
+      return (
+        <div>
+          <h4>{this.props.employee.name}</h4>
+          {dayParts}
+          <button onClick={() => this.props.updateEmployeeAvailability(this.props.employee, this.state.newAvailabilities)}>SAVE</button>
+        </div>
+      ); 
+    }
   }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    employees: state.employees,
-    users: state.users,
-    dayParts: state.dayParts,
-    selectedEmployee: state.selectedEmployee,    
-  };
 };
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    selectEmployee: selectEmployee,
-    getAllUsers: getAllUsers,
-    getAllEmployeeAvailabilities: getAllEmployeeAvailabilities,
-    getAllDayParts: getAllDayParts,
-  }, dispatch);
+  return bindActionCreators({updateEmployeeAvailability: updateEmployeeAvailability}, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EmployeeAvailability);
+export default connect(null, mapDispatchToProps)(EmployeeAvailability);

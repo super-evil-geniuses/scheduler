@@ -25,7 +25,7 @@ app.get('/day_parts', utils.getAllDayParts, (req, res) => {
   res.end();
 });
 
-app.post('/employee_availability', utils.updateEmployeeAvailability, (req, res) => {
+app.patch('/employee_availability', utils.updateEmployeeAvailability, (req, res) => {
   res.write(JSON.stringify(req.empoloyeeAvailabilities));
   res.end();
 });
