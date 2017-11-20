@@ -19,7 +19,7 @@ const getAllEmployeeAvailabilities = () => {
 };
 
 const getAllDayParts = () => {
-  const response = axios.get('/users');
+  const response = axios.get('/day_parts');
 
   return {
     type: 'GET_DAY_PARTS',

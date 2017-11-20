@@ -42,8 +42,9 @@ class EmployeeAvailability extends Component {
 const mapStateToProps = (state) => {
   return {
     employees: state.employees,
-    selectedEmployee: state.selectedEmployee,
     users: state.users,
+    dayParts: state.dayParts,
+    selectedEmployee: state.selectedEmployee,    
   };
 };
 

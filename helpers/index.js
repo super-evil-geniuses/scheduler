@@ -45,9 +45,9 @@ const getAllEmployeeAvailabilities = (req, res, next) => {
 };
 
 const getAllDayParts = (req, res, next) => {
-  db.Employee_Availability.findAll({})
-    .then((allEmployeeAvailabilities) => {
-      req.employeeAvailabilities = allEmployeeAvailabilities;
+  db.Day_Part.findAll({})
+    .then((allDayParts) => {
+      req.dayParts = allDayParts;
       next();
     }).catch((err) => {
       res.end(500, 'Error getting users');
