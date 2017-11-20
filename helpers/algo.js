@@ -36,14 +36,15 @@ const templateParser = (weekStart) => {
 	let tempObj = {};
 	return db.Schedule.find({ where: {monday_dates: weekStart} })
 		.then((schedule) => {
-			return db.Needed_Employee.findAll({ where: {schedule_id: schedule.dataValues.id, }});
-		})
-		.then((template) => {
-			template.forEach(dayPart => {
-				tempObj[dayPart.dataValues.day_part_id] = dayPart.dataValues.employees_needed;
-			});
-			return tempObj;
-		});
+      let schedule_id = schedule.dataValues.id;
+			return db.Needed_Employee.findAll({ where: {schedule_id: schedule_id, }})
+    		.then((template) => {
+    			template.forEach(dayPart => {
+    				tempObj[dayPart.dataValues.day_part_id] = dayPart.dataValues.employees_needed;
+    			});
+    			return [tempObj, schedule_id];
+    		});
+    });
 }
 
 const scheduleGenerator = (allEmployeeAvail, temp) => {
@@ -71,7 +72,6 @@ const scheduleGenerator = (allEmployeeAvail, temp) => {
       let thisTry = currentDayPossibilities[i];
       //add employee shifts to the counter
       if (!willAnyEmployeeBeInOvertime(empShifts, thisTry) && !willHaveDouble(schedule[dayPart-1], thisTry)) {
-        // console.log('passed the tests, inserting on dayPart', dayPart)
         thisTry.forEach((e) => {
           empShifts[e] = empShifts[e] ? empShifts[e] + 1 : 1;
         })
@@ -113,13 +113,39 @@ const willHaveDouble = (amShift = [], pmShift) => {
   return false;
 }
 
+const reformatScheduleObj = (actual_schedule, schedule_id) => {
+  let reformat = [];
+  for (let dayPart in actual_schedule) {
+    actual_schedule[dayPart].forEach(employee => {
+      if (employee === "house") {
+        employee = null;
+      }
+      reformat.push({ user_id: employee, schedule_id: schedule_id, day_part_id: parseInt(dayPart) });
+    });
+  }
+  return reformat;
+}
+
 const generateSchedule = (weekStart) => {
   return findAllEmployeeAvailability()
     .then((availObj) => {
       let avail = availObj;
       return templateParser(weekStart)
-        .then((tempObj) => {
-          return scheduleGenerator(avail, tempObj);
+        .then((temp) => {
+          let template = temp[0];
+          let schedule_id = temp[1];
+
+          let actual_schedule = scheduleGenerator(avail, template);
+          let reformattedSchedule = reformatScheduleObj(actual_schedule, schedule_id);
+          return db.Actual_Schedule.destroy({ where: {schedule_id: schedule_id} })
+            .then(() => {
+              return Promise.each(reformattedSchedule, (scheduleObj) => {
+                return db.Actual_Schedule.create(scheduleObj);
+              })
+              .then(() => {
+                return reformattedSchedule;
+              });
+            })
         });
       });
 }

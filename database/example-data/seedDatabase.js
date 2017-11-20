@@ -75,7 +75,10 @@ let initialize = () => {
 			return Promise.each(dummyData.avails, (avail) => {
 				return saveEmployeeAvailability(avail);
 			});
-		});
+		})
+		.then(() => {
+			db.sequelize.close();
+		})
 }
 
 initialize();
