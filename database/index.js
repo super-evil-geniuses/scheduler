@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
 const Promise = require('bluebird');
+const Combinatorics = require('js-combinatorics');
+require('dotenv').config();
 
 const sequelize = new Sequelize(process.env.DB_NAME || 'shiftly', process.env.DB_USER || 'postgres', process.env.DB_PASS || null, { host: process.env.DB_HOST || 'localhost', dialect: 'postgres' });
 
@@ -59,50 +61,6 @@ User.sync()
 		return Needed_Employee.sync();
 	});
 
-let findAllEmployeeAvailability = () => {
-	let availability = [];
-	return Day_Part.findAll({ attributes: ['id'] })
-		.then((day_parts) => {
-			return Promise.each(day_parts, (day_part) => {
-				return Employee_Availability.findAll({ where: { day_part_id: day_part.dataValues.id, is_available: true }})
-					.then((avail) => {
-						availability.push(avail);
-					});
-			});
-		})
-		.then(() => {
-			return availabilityParser(availability);
-		});
-};
-
-const availabilityParser = (availability) => {
-	let availObj = {};
-	availability.forEach(availPerDayPart => {
-		availPerDayPart.forEach(availByEmp => {
-			if (!availObj[availByEmp.dataValues.day_part_id]) {
-				availObj[availByEmp.dataValues.day_part_id] = [availByEmp.dataValues.user_id];
-			} else {
-				availObj[availByEmp.dataValues.day_part_id].push(availByEmp.dataValues.user_id);
-			}
-		});
-	});
-	return availObj;
-}
-
-const templateParser = (weekStart) => {
-	let tempObj = {};
-	return Schedule.find({ where: {monday_dates: weekStart} })
-		.then((schedule) => {
-			return Needed_Employee.findAll({ where: {schedule_id: schedule.dataValues.id, }});
-		})
-		.then((template) => {
-			template.forEach(dayPart => {
-				tempObj[dayPart.dataValues.day_part_id] = dayPart.dataValues.employees_needed;
-			});
-			return tempObj;
-		});
-}
-
 module.exports = {
   User: User,
   Schedule: Schedule,
@@ -110,4 +68,5 @@ module.exports = {
   Actual_Schedule: Actual_Schedule,
   Needed_Employee: Needed_Employee,
   Day_Part: Day_Part,
+  sequelize: sequelize
 };
