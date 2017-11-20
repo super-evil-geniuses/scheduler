@@ -21,13 +21,6 @@ class EmployeeAvailability extends React.Component {
     }
   }
 
-  // componentDidMount = () => {
-  //   const newAvailabilities = _.clone(this.props.employee.availabilities);
-  //   this.setState({
-  //     newAvailabilities: newAvailabilities,
-  //   })
-  // }
-
   handleChange = (e) => {
     let availabilities = this.state.newAvailabilities;
     availabilities[e.target.name] = e.target.checked
