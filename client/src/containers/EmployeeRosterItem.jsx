@@ -1,7 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { selectEmployee } from '../actions/index';
 
 const EmployeeRosterItem = (props) => {
   return (
@@ -11,8 +8,4 @@ const EmployeeRosterItem = (props) => {
   );
 };
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({selectEmployee: selectEmployee}, dispatch);
-}
-
-export default connect(null, mapDispatchToProps)(EmployeeRosterItem);
+export default EmployeeRosterItem;

@@ -1,15 +1,34 @@
-import React from 'react';
-// import EmployeeAvailability1 from '../components/EmployeeAvailability1.jsx';
+import React, { Component } from 'react';
+import EmployeeAvailability1 from './EmployeeAvailability1.jsx';
 import EmployeeRoster from '../components/EmployeeRoster.jsx';
 import { connect } from 'react-redux';
 
-const EmployeeEditor = (props) => {
-  return (
-    <div>
-      {/* <EmployeeAvailability1 /> */}
-      {props.employees && <EmployeeRoster employees={props.employees}/>}
-    </div>
-  );
+class EmployeeEditor extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedEmployee: null,
+    };
+  }
+
+  selectEmployee = (employee) => {
+    this.setState({
+      selectedEmployee: employee
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        <EmployeeAvailability1 employee={this.state.selectedEmployee} />
+        {this.props.employees && 
+        <EmployeeRoster 
+          employees={this.props.employees}
+          selectEmployee={this.selectEmployee}
+        />}
+      </div>
+    );
+  }
 };
 
 const mapStateToProps = (state) => {
@@ -34,7 +53,6 @@ const mapStateToProps = (state) => {
   return {
     users: state.users,
     dayParts: state.dayParts,
-    selectedEmployee: state.selectedEmployee,
     employees: employees,
   };
   

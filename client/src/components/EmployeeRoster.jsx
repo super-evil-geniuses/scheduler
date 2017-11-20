@@ -4,9 +4,12 @@ import _ from 'underscore';
 
 const EmployeeRoster = (props) => {
   return (
-    _.map(props.employees, (employee) => {
-      return <EmployeeRosterItem employee={employee}/>;
-    })
+    <div>
+      <h2>Employee Roster</h2>
+      {_.map(props.employees, (employee) => {
+        return <EmployeeRosterItem key={employee.id} employee={employee} selectEmployee={props.selectEmployee}/>;
+      })}
+    </div>
   );
 };
 

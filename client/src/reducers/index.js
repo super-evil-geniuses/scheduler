@@ -1,14 +1,13 @@
 import { combineReducers } from 'redux';
 import EmployeeAvailabilitiesReducer from './reducer-employee-availabilities.js';
-import SelectedEmployeeReducer from './reducer-selected-employee.js';
-import EmployeesReducer from './reducer-employees.js';
+// import EmployeesReducer from './reducer-employees.js';
 import UsersReducer from './reducer-users.js';
 import DayPartsReducer from './reducer-day-parts.js';
 
 const rootReducer = combineReducers({
   employeeAvailabilities: EmployeeAvailabilitiesReducer,
-  employees: EmployeesReducer,
-  selectedEmployee: SelectedEmployeeReducer,
+  //employees: EmployeesReducer,
+  //selectedEmployee: SelectedEmployeeReducer,
   users: UsersReducer,
   dayParts: DayPartsReducer,
 });
