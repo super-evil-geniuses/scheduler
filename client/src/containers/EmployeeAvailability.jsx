@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { selectEmployee } from '../actions/index';
+import { getAllUsers } from '../actions/index';
+import { getAllEmployeeAvailabilities } from '../actions/index';
+import { getAllDayParts } from '../actions/index';
+
+
+import EmployeeRoster from '../components/EmployeeRoster.jsx';
 
 import EmployeeAvailabilityCheckboxes from '../components/EmployeeAvailabilityCheckboxes.jsx';
 
 class EmployeeAvailability extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentAvailabilities: {},
-      selectedEmployee: [],
-    };
+
+  componentDidMount() {
+    this.props.getAllUsers();
+    this.props.getAllEmployeeAvailabilities();
+    this.props.getAllDayParts();
   }
 
   handleEmployeeSelect = (e) => {
@@ -20,21 +27,13 @@ class EmployeeAvailability extends Component {
   }
 
   render() {
-    const employeeList = this.props.employeeAvailability.map((employeeAvail, idx) => {
-      return <option key={idx} value={idx}>{employeeAvail[0].name}</option>;
-    });
 
     return (
       <div>
         <h2>Edit Employee Availability</h2>
-        <form onSubmit={console.log('submit')}>
-          <select onChange={this.handleEmployeeSelect} className="create-input" name='selectedEmployee'>
-          <option disabled selected value> -- select an employee -- </option>
-            {employeeList}
-          </select>
-          <EmployeeAvailabilityCheckboxes availabilities={this.state.selectedEmployee}/>
+          {this.props.selectedEmployee && <EmployeeAvailabilityCheckboxes employee={this.props.selectedEmployee}/>}
           <button className="create-submit-button" type="submit">Save</button>
-        </form>
+        {this.props.employees && <EmployeeRoster employees={this.props.employees} />}
       </div>
     );
   }
@@ -42,8 +41,19 @@ class EmployeeAvailability extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    employeeAvailability: state.employeeAvailability
+    employees: state.employees,
+    selectedEmployee: state.selectedEmployee,
+    users: state.users,
   };
 };
 
-export default connect(mapStateToProps /*, mapDispatchToProps*/)(EmployeeAvailability);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    selectEmployee: selectEmployee,
+    getAllUsers: getAllUsers,
+    getAllEmployeeAvailabilities: getAllEmployeeAvailabilities,
+    getAllDayParts: getAllDayParts,
+  }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EmployeeAvailability);
