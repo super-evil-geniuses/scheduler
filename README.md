@@ -53,6 +53,7 @@ Once your db is set up, run the app by running each of these command in a sepera
 ```
 npm run react-dev
 npm run server-dev
+npm run db:setup (one time to seed the database with example data)
 ```
 
 

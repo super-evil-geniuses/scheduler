@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const Promise = require('bluebird');
 const Combinatorics = require('js-combinatorics');
+require('dotenv').config();
 
 const sequelize = new Sequelize(process.env.DB_NAME || 'shiftly', process.env.DB_USER || 'postgres', process.env.DB_PASS || null, { host: process.env.DB_HOST || 'localhost', dialect: 'postgres' });
 
@@ -67,4 +68,5 @@ module.exports = {
   Actual_Schedule: Actual_Schedule,
   Needed_Employee: Needed_Employee,
   Day_Part: Day_Part,
+  sequelize: sequelize
 };
