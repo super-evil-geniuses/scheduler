@@ -9,6 +9,7 @@ import { getAllScheduleDates } from '../actions/index';
 
 import EmployeeEditor from './EmployeeEditor.jsx';
 import ScheduleEditor from './ScheduleEditor.jsx';
+import ScheduleGenerator from './ScheduleGenerator.jsx';
 
 
 class App extends Component {
@@ -33,6 +34,7 @@ class App extends Component {
         </div>
           <ScheduleEditor />
           <EmployeeEditor />
+          <ScheduleGenerator />
         </div>
       </div>
     );
