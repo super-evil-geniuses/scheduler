@@ -1,11 +1,15 @@
 import React from 'react';
-import EmployeeRosterItem from '../containers/EmployeeRosterItem.jsx';
+import EmployeeRosterItem from './EmployeeRosterItem.jsx';
+import _ from 'underscore';
 
 const EmployeeRoster = (props) => {
   return (
-    props.employees.map((employee) => {
-      return <EmployeeRosterItem employee={employee}/>;
-    })
+    <div>
+      <h2>Employee Roster</h2>
+      {_.map(props.employees, (employee) => {
+        return <EmployeeRosterItem key={employee.id} employee={employee} selectEmployee={props.selectEmployee}/>;
+      })}
+    </div>
   );
 };
 

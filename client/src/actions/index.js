@@ -19,7 +19,7 @@ const getAllEmployeeAvailabilities = () => {
 };
 
 const getAllDayParts = () => {
-  const response = axios.get('/users');
+  const response = axios.get('/day_parts');
 
   return {
     type: 'GET_DAY_PARTS',
@@ -28,31 +28,23 @@ const getAllDayParts = () => {
 };
 
 
-const updateEmployeeAvailability = (employee, newAvailability) => {
-  const requestBody = Object.keys(newAvailability).map((dayPart) => {
-    return { user_id: employee.id, day_part_id: dayPart, is_available: newAvailability[dayPart] };
+const updateEmployeeAvailability = (employee, newAvailabilities) => {
+  const requestBody = Object.keys(newAvailabilities).map((dayPartId) => {
+    return { user_id: employee.id, day_part_id: dayPartId, is_available: newAvailabilities[dayPartId] };
   });
 
-  const response = axios.post('/employee_availability', {
+  const response = axios.patch('/employee_availability', {
     employeeAvailabilities: requestBody,
-  }); // this will return a promise, which the redux-promise middleware will WAIT for before it sends the action to reducers
-  console.log('RESPONSE', response);
+  });
+
   return {
     type: 'UPDATE_EMPLOYEE_AVAILABILITY',
     payload: response,
   };
 };
 
-const selectEmployee = (employee) => {
-  return {
-    type: 'SELECT_EMPLOYEE',
-    payload: employee,
-  };
-};
-
 module.exports = {
   updateEmployeeAvailability: updateEmployeeAvailability,
-  selectEmployee: selectEmployee,
   getAllUsers: getAllUsers,
   getAllEmployeeAvailabilities: getAllEmployeeAvailabilities,
   getAllDayParts: getAllDayParts,
