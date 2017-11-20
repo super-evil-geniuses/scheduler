@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const utils = require('../helpers');
 const bodyParser = require('body-parser');
+const generateSchedule = require('../helpers/algo.js').generateSchedule;
 
 const app = express();
 
@@ -39,6 +40,15 @@ app.post('/template-schedule', function (req, res) {
 
   res.send('template is stored');
 });
+
+//should be a post
+app.get('/generate-schedule', function(req, res) {
+	generateSchedule(new Date('11/13/17'))
+		.then((schedule) => {
+			// store actual schedule
+			res.send(schedule);
+		})
+})
 
 app.listen(PORT, console.log(`now listening on port ${PORT}`));
 
