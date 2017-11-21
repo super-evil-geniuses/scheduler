@@ -10,7 +10,7 @@
   "scripts": {
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon ./server/index.js",
-    "test": "mocha test --reporter spec",
+    "test": "mocha test --reporter spec --exit",
     "db:setup": "node database/example-data/seedDatabase.js"
   },
   "dependencies": {
