@@ -63,13 +63,19 @@ describe('Shiftly Test Spec', function() {
 
   let sequelize;
   let server;
+  let db;
+
+  before((done) => {
+    sequelize = new Sequelize(process.env.DB_NAME || 'shiftly', process.env.DB_USER || 'postgres', process.env.DB_PASS || null, { host: process.env.DB_HOST || 'localhost', dialect: 'postgres' });
+    db = schema(sequelize);
+    setTimeout(done, 1000);
+  })
 
   beforeEach((done) => {
-    sequelize = new Sequelize(process.env.DB_NAME || 'shiftly', process.env.DB_USER || 'postgres', process.env.DB_PASS || null, { host: process.env.DB_HOST || 'localhost', dialect: 'postgres' });
 
     /* Empty the db table before each test so that multiple tests
      * (or repeated runs of the tests) won't screw each other up: */
-    const db = schema(sequelize);
+    
     const tables = ['User', 'Schedule', 'Needed_Employee', 'Employee_Availability', 'Actual_Schedule'];
     Promise.each(tables, table => {
       return db[table].destroy({ where: {} });
@@ -79,10 +85,7 @@ describe('Shiftly Test Spec', function() {
     });
     
     afterEach(() => {
-      sequelize.close()
-      .then(() => {
-        server.close();
-      });
+      server.close();
     });
   });
 
