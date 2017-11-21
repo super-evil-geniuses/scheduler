@@ -11,6 +11,27 @@ const getAllUsers = (req, res, next) => {
     });
 };
 
+const getAllScheduleDates = (req, res, next) => {
+  db.Schedule.findAll({})
+    .then((allScheduleDates) => {
+      req.scheduleDates = allScheduleDates;
+      next();
+    }).catch((err) => {
+      res.end(500, 'Error getting users');
+    });
+};
+
+const getAllNeededEmployees = (req, res, next) => {
+  console.log("NEED");
+  db.Needed_Employee.findAll({})
+    .then((allNeededEmployees) => {
+      req.neededEmployees = allNeededEmployees;
+      next();
+    }).catch((err) => {
+      res.end(500, 'Error getting neededEmployees');
+    });
+};
+
 const getAllEmployeeAvailabilities = (req, res, next) => {
   db.Employee_Availability.findAll({})
     .then((allEmployeeAvailabilities) => {
@@ -53,4 +74,6 @@ module.exports = {
   updateEmployeeAvailability: updateEmployeeAvailability,
   getAllEmployeeAvailabilities: getAllEmployeeAvailabilities,
   getAllDayParts: getAllDayParts,
+  getAllNeededEmployees: getAllNeededEmployees,
+  getAllScheduleDates: getAllScheduleDates,
 };

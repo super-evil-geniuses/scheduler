@@ -1,65 +1,63 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateEmployeeAvailability } from '../actions/index';
+//import { updateScheduleAvailability } from '../actions/index';
 import _ from 'underscore';
 
-class EmployeeAvailability extends React.Component {
+class ScheduleAvailability extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      newAvailabilities: {}
+      newSchedule: {},
     }
   }
 
   componentWillUpdate(nextProps, nextState) {
-    if (nextProps.employee != this.props.employee) {
-      const newAvailabilities = _.clone(nextProps.employee.availabilities);
+    if (nextProps.schedule != this.props.schedule) {
+      const newSchedule = _.clone(nextProps.schedule.neededEmployees);
       this.setState({
-        newAvailabilities: newAvailabilities,
+        newSchedule: newSchedule,
       })
     }
   }
 
-  alterDay = (dayPart) => {    
-    let availabilities = this.state.newAvailabilities;
-    availabilities[dayPart] = !availabilities[dayPart];
+  alterDay = (e, dayPart) => {   
+    let schedule = this.state.newSchedule;
+    schedule[dayPart] = e.target.value;
     this.setState({
-      newAvailabilities: availabilities
+      newSchedule: schedule
     })
   }
 
-  mapDayPartsAsCheckboxes = (dayPart, idx) => {
+  mapDayPartsAsInputs = (dayPart, idx) => {
     return (
       <td
-      key={`${this.props.employee.name}${dayPart}`}
-      onClick={(e) => this.alterDay(dayPart)}>
-        <i name={dayPart} className="material-icons clickable day-checkbox">
-          {this.state.newAvailabilities[dayPart] ? 'check_box' : 'check_box_outline_blank' }
-        </i>
+      key={`${this.props.monDate}${dayPart}`}>
+        <input onChange={(e) => this.alterDay(e, dayPart)} name={dayPart} className="schedule-input-box" type="text" value={this.state.newSchedule[dayPart]}/>
       </td>
     );
   }
 
   render() {
     let renderBody;
-    if(!this.props.employee) {
+    if(!this.props.schedule) {
       renderBody = (
-        <h4>Please select an employee</h4>
+        <h4>Please select a schedule</h4>
       );
     } else {
 
-      let morningParts = Object.keys(this.state.newAvailabilities).filter((dayPart) => {
+      let morningParts = Object.keys(this.state.newSchedule).filter((dayPart) => {
         return dayPart % 2 !== 0;
-      }).map(this.mapDayPartsAsCheckboxes);
+      }).map(this.mapDayPartsAsInputs);
 
-      let afternoonParts = Object.keys(this.state.newAvailabilities).filter((dayPart) => {
+      let afternoonParts = Object.keys(this.state.newSchedule).filter((dayPart) => {
         return dayPart % 2 === 0;
-      }).map(this.mapDayPartsAsCheckboxes);
-  
+      }).map(this.mapDayPartsAsInputs);
+
       renderBody = (
         <div>
-          <h4>{this.props.employee.name}</h4>
+          <h4>Edit schedule</h4>
+          <p>How many employees do you need for each shift?</p>
           <table className="select-days-table">
             <tbody>
               <tr>
@@ -85,13 +83,13 @@ class EmployeeAvailability extends React.Component {
           <div className="employee-editor-save-btn">
             <button 
             className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent "
-            onClick={() => this.props.updateEmployeeAvailability(this.props.employee, this.state.newAvailabilities)}>
+            //onClick={() => this.props.updateEmployeeAvailability(this.props.employee, this.state.newAvailabilities)}
+            >
               Save
             </button>
           </div>
         </div>
       ); 
-      
     }
     return (
       <div className="employee-availability clear-fix">
@@ -102,7 +100,7 @@ class EmployeeAvailability extends React.Component {
 };
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({updateEmployeeAvailability: updateEmployeeAvailability}, dispatch);
+  return bindActionCreators({}, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(EmployeeAvailability);
+export default connect(null, mapDispatchToProps)(ScheduleAvailability);

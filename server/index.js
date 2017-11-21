@@ -26,6 +26,16 @@ app.get('/day_parts', utils.getAllDayParts, (req, res) => {
   res.end();
 });
 
+app.get('/needed_employees', utils.getAllNeededEmployees, (req, res) => {
+  res.write(JSON.stringify(req.neededEmployees));
+  res.end();
+});
+
+app.get('/schedule_dates', utils.getAllScheduleDates, (req, res) => {
+  res.write(JSON.stringify(req.scheduleDates));
+  res.end();
+});
+
 app.patch('/employee_availability', utils.updateEmployeeAvailability, (req, res) => {
   res.write(JSON.stringify(req.empoloyeeAvailabilities));
   res.end();
