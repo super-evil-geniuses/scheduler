@@ -19,7 +19,7 @@ class EmployeeEditor extends Component {
 
   render() {
     return (
-      <div className='mdl-cell mdl-cell--4-col'>
+      <div className='ratio-col-1'>
         <EmployeeAvailability employee={this.state.selectedEmployee} dayPartsMap={this.props.dayPartsMap} />
         {this.props.employees && 
         <EmployeeRoster 

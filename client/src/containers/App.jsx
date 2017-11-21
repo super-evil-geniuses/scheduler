@@ -17,8 +17,16 @@ class App extends Component {
 
   render() {
     return (
-      <div className='mdl-grid'>
-        <EmployeeEditor />
+      <div className="container clear-fix">
+        <div className="ratio-col-4">
+        <div className="editor-header">
+          <div className="container clear-fix">
+            <div className="ratio-col-2 editor-tab">Employees</div>
+            <div className="ratio-col-2 editor-tab">Schedule</div>
+          </div>
+        </div>
+          <EmployeeEditor />
+        </div>
       </div>
     );
   }
