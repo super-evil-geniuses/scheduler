@@ -33,17 +33,28 @@ const mapStateToProps = (state) => {
   let dayPartsMap = {};
   if (state.scheduleActual) {
     state.scheduleActual.forEach( (e) => {
-      schedules[e.user_id] = schedules[e.user_id] || [];
-      schedules[e.user_id].push(e.day_part_id);
+      if(e.user_id === null) {
+        schedules['HOUSE'] = schedules['HOUSE'] || [];
+        schedules['HOUSE'].push(e.day_part_id);
+      } else {
+        schedules[e.user_id] = schedules[e.user_id] || [];
+        schedules[e.user_id].push(e.day_part_id);
+      }
     });
     
     for (const sched in schedules) {
       let schedObj = {}
-      schedObj.name = state.users.filter( (user) => {
-        return user.id == sched;
-      })[0].name
+      if (sched === 'HOUSE') {
+        schedObj.name = 'HOUSE';
+        schedObj.schedule = schedules[sched];
+      } else {
+        schedObj.name = state.users.filter( (user) => {
+          return user.id == sched;
+        })[0].name
 
-      schedObj.schedule = schedules[sched];
+        schedObj.schedule = schedules[sched];
+      }
+
       scheduleArr.push(schedObj);
     }
   }
