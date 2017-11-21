@@ -2788,8 +2788,6 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _react = __webpack_require__(/*! react */ 2);\n\nvar _react2 = _interopRequireDefault(_react);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nvar Shift = function Shift(props) {\n  return _react2.default.createElement(\n    'div',\n    null,\n    'YOU\\'RE WORKING'\n  );\n};\n\nexports.default = Shift;//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMjM4LmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vL2NsaWVudC9zcmMvY29tcG9uZW50cy9TaGlmdC5qc3g/ZjI4MSJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgUmVhY3QgZnJvbSAncmVhY3QnO1xuXG5jb25zdCBTaGlmdCA9IChwcm9wcykgPT4gKFxuICA8ZGl2PlxuICBZT1UnUkUgV09SS0lOR1xuICA8L2Rpdj5cbilcblxuXG5leHBvcnQgZGVmYXVsdCBTaGlmdDtcblxuXG4vLyBXRUJQQUNLIEZPT1RFUiAvL1xuLy8gY2xpZW50L3NyYy9jb21wb25lbnRzL1NoaWZ0LmpzeCJdLCJtYXBwaW5ncyI6Ijs7Ozs7O0FBQUE7QUFDQTs7Ozs7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUFBO0FBQUE7QUFEQTtBQUNBO0FBTUEiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///238\n");
 
 /***/ }),
-/* 237 */,
-/* 238 */,
 /* 239 */
 /*!******************************************************!*\
   !*** ./client/src/containers/EmployeeRosterItem.jsx ***!
