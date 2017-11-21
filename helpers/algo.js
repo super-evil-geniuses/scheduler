@@ -149,5 +149,6 @@ const generateSchedule = (weekStart) => {
         });
       });
 }
-
 module.exports.generateSchedule = generateSchedule;
+//scheduleGenerator is exported for testing puroposes only
+module.exports.scheduleGenerator = scheduleGenerator;

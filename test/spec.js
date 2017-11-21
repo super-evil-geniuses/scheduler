@@ -13,6 +13,7 @@ const request = require('supertest'); //used for testing http
 const app = require('../server/app.js');
 const schema = require('../database/config.js');
 const port = process.env.PORT || 8080;
+const algo = require('../helpers/algo.js');
 
 /************
 /* The following code needs to be updated to work with postgres. This was taken from a shortly express
@@ -114,9 +115,125 @@ describe('Shiftly Test Spec', function() {
       .expect(`template is stored`, done);
   });
 
+
   it('should get a 200 response for getAllUsers request', function(done) {
     request(app)
       .get('/users')
       .expect(200, done);
   });
+});
+
+describe('Algo', function() {
+
+  let allEmployeeAvail = 
+{ '1': [ 1, 2, 5, 6, 7, 8, 9, 10 ],
+  '2': [ 1, 2, 5, 6, 7, 8, 10 ],
+  '3': [ 1, 2, 5, 6, 7, 8, 9, 10 ],
+  '4': [ 2, 5, 6, 7 ],
+  '5': [ 1, 3, 4, 5, 6, 7, 8, 9, 10 ],
+  '6': [ 1, 4, 6, 7, 8, 10 ],
+  '7': [ 1, 3, 5, 6, 7, 8, 9, 10 ],
+  '8': [ 5, 6, 10 ],
+  '9': [ 1, 3, 4, 5, 6, 7, 8, 9, 10 ],
+  '10': [ 1, 3, 4, 5, 6, 7, 8, 10 ],
+  '11': [ 1, 3, 4, 5, 6, 7, 8, 9, 10 ],
+  '12': [ 1, 3, 4, 5, 6, 8, 9, 10 ],
+  '13': [ 2, 4, 6, 7, 9 ],
+  '14': [ 2, 4, 5, 6, 7 ] };
+
+let temp = 
+{ '1': 1,
+  '2': 2,
+  '3': 2,
+  '4': 2,
+  '5': 2,
+  '6': 3,
+  '7': 2,
+  '8': 4,
+  '9': 3,
+  '10': 5,
+  '11': 4,
+  '12': 5,
+  '13': 3,
+  '14': 2 };
+
+  let result = algo.scheduleGenerator(allEmployeeAvail, temp);
+  it('algo should return an array', function(){
+    expect(result).to.be.a('object');
+  });
+
+  it('algo should schedule exactly as many servers as specified', function(){
+    expect(result['1']).to.have.lengthOf(temp['1']);
+    expect(result['2']).to.have.lengthOf(temp['2']);
+    expect(result['3']).to.have.lengthOf(temp['3']);
+    expect(result['4']).to.have.lengthOf(temp['4']);
+    expect(result['5']).to.have.lengthOf(temp['5']);
+    expect(result['6']).to.have.lengthOf(temp['6']);
+    expect(result['7']).to.have.lengthOf(temp['7']);
+    expect(result['8']).to.have.lengthOf(temp['8']);
+    expect(result['9']).to.have.lengthOf(temp['9']);
+    expect(result['10']).to.have.lengthOf(temp['10']);
+    expect(result['11']).to.have.lengthOf(temp['11']);
+    expect(result['12']).to.have.lengthOf(temp['12']);
+    expect(result['13']).to.have.lengthOf(temp['13']);
+    expect(result['14']).to.have.lengthOf(temp['14']);
+  });
+
+  it('algo should not schedule employees on days they aren\'t available', function () {
+    expect(result['4'].indexOf(1)).to.equal(-1);
+    expect(result['8'].indexOf(1)).to.equal(-1);
+    expect(result['13'].indexOf(1)).to.equal(-1);
+    expect(result['14'].indexOf(1)).to.equal(-1);
+
+    expect(result['5'].indexOf(2)).to.equal(-1);
+    expect(result['6'].indexOf(2)).to.equal(-1);
+    expect(result['7'].indexOf(2)).to.equal(-1);
+    expect(result['8'].indexOf(2)).to.equal(-1);
+    expect(result['9'].indexOf(2)).to.equal(-1);
+    expect(result['10'].indexOf(2)).to.equal(-1);
+    expect(result['11'].indexOf(2)).to.equal(-1);
+    expect(result['12'].indexOf(2)).to.equal(-1);
+
+    expect(result['1'].indexOf(3)).to.equal(-1);
+    expect(result['2'].indexOf(3)).to.equal(-1);
+    expect(result['3'].indexOf(3)).to.equal(-1);
+    expect(result['4'].indexOf(3)).to.equal(-1);
+    expect(result['6'].indexOf(3)).to.equal(-1);
+    expect(result['8'].indexOf(3)).to.equal(-1);
+    expect(result['13'].indexOf(3)).to.equal(-1);
+    expect(result['14'].indexOf(3)).to.equal(-1);
+
+    expect(result['1'].indexOf(4)).to.equal(-1);
+    expect(result['2'].indexOf(4)).to.equal(-1);
+    expect(result['3'].indexOf(4)).to.equal(-1);
+    expect(result['4'].indexOf(4)).to.equal(-1);
+    expect(result['7'].indexOf(4)).to.equal(-1);
+    expect(result['8'].indexOf(4)).to.equal(-1);
+
+    expect(result['6'].indexOf(5)).to.equal(-1);
+    expect(result['13'].indexOf(5)).to.equal(-1);
+
+    expect(result['8'].indexOf(7)).to.equal(-1);
+    expect(result['12'].indexOf(7)).to.equal(-1);
+    
+    expect(result['4'].indexOf(8)).to.equal(-1);
+    expect(result['8'].indexOf(8)).to.equal(-1);
+    expect(result['13'].indexOf(8)).to.equal(-1);
+    expect(result['14'].indexOf(8)).to.equal(-1);
+
+    expect(result['2'].indexOf(9)).to.equal(-1);
+    expect(result['4'].indexOf(9)).to.equal(-1);
+    expect(result['6'].indexOf(9)).to.equal(-1);
+    expect(result['8'].indexOf(9)).to.equal(-1);
+    expect(result['10'].indexOf(9)).to.equal(-1);
+    expect(result['14'].indexOf(9)).to.equal(-1);
+
+    expect(result['4'].indexOf(10)).to.equal(-1);
+    expect(result['13'].indexOf(10)).to.equal(-1);
+    expect(result['14'].indexOf(10)).to.equal(-1);
+  });
+
+  it('algo should autofill house shift if not enough employees are available', function(){
+    expect(result['8'].indexOf('house')).to.not.equal(-1);
+  })
 });
