@@ -1,5 +1,8 @@
 const expect = require('chai').expect;
 const pg = require('pg');
+const Sequelize = require('sequelize');
+const Promise = require('bluebird');
+require('dotenv').config();
 
 /*
 Mock 'http' objects for testing Express routing functions, but could be used for testing any Node.js web server applications that have code that requires mockups of the request and response objects
@@ -7,10 +10,8 @@ Mock 'http' objects for testing Express routing functions, but could be used for
 const httpMocks = require('node-mocks-http');
 const request = require('supertest'); //used for testing http
 //require the necessary files
-const server = require('../server/index.js');
-const schema = require('../database/index.js');
-const helpers = require('../helpers/index.js');
-
+const app = require('../server/app.js');
+const schema = require('../database/config.js');
 const port = process.env.PORT || 8080;
 
 /************
@@ -58,9 +59,36 @@ const port = process.env.PORT || 8080;
 //   });
 // });
 
-describe('POST /template-schedule', function() {
+describe('Shiftly Test Spec', function() {
+
+  let sequelize;
+  let server;
+
+  beforeEach((done) => {
+    sequelize = new Sequelize(process.env.DB_NAME || 'shiftly', process.env.DB_USER || 'postgres', process.env.DB_PASS || null, { host: process.env.DB_HOST || 'localhost', dialect: 'postgres' });
+
+    /* Empty the db table before each test so that multiple tests
+     * (or repeated runs of the tests) won't screw each other up: */
+    const db = schema(sequelize);
+    const tables = ['User', 'Schedule', 'Needed_Employee', 'Employee_Availability', 'Actual_Schedule'];
+    Promise.each(tables, table => {
+      return db[table].destroy({ where: {} });
+    })
+    .then(() => {
+      server = app.listen(port, done);
+    });
+    
+    afterEach(() => {
+      sequelize.close()
+      .then(() => {
+        server.close();
+      });
+    });
+  });
+
+
   it('sent a template object and was successfully stored in the db', function(done) {
-    request(server)
+    request(app)
       .post('/template-schedule')
       .set('Content-Type', 'application/json')
       .send(JSON.stringify({
