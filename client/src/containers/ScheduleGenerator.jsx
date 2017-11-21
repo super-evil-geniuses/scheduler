@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateEmployeeAvailability } from '../actions/index';
+import { generateSchedule } from '../actions/index';
 import _ from 'underscore';
 import moment from 'moment';
 
@@ -35,11 +35,14 @@ class ScheduleGenerator extends React.Component {
           <div>{this.state.mondayDate.calendar()}</div>
         </div>
         <div>
-          <button type="button" onClick={() => { console.log('lets get generated');}}>Generate Schedule</button>
+          <button type="button" onClick={() => { this.props.generateSchedule(this.state.mondayDate);}}>Generate Schedule</button>
         </div>
       </div>
       )
   }
 }
 
-export default ScheduleGenerator;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ generateSchedule: generateSchedule })
+}
+export default connect(null, mapDispatchToProps)(ScheduleGenerator);
