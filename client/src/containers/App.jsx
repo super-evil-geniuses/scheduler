@@ -6,6 +6,8 @@ import { getAllEmployeeAvailabilities } from '../actions/index';
 import { getAllDayParts } from '../actions/index';
 
 import EmployeeEditor from './EmployeeEditor.jsx';
+import ScheduleEditor from './ScheduleEditor.jsx';
+
 
 class App extends Component {
 
@@ -17,14 +19,15 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container clear-fix">
+      <div className="app-container clear-fix">
         <div className="ratio-col-4">
         <div className="editor-header">
           <div className="container clear-fix">
-            <div className="ratio-col-2 editor-tab">Employees</div>
-            <div className="ratio-col-2 editor-tab">Schedule</div>
+            <div className="ratio-col-2 editor-tab clickable">Employees</div>
+            <div className="ratio-col-2 editor-tab clickable">Schedule</div>
           </div>
         </div>
+          <ScheduleEditor />
           <EmployeeEditor />
         </div>
       </div>
