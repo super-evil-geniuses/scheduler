@@ -33,7 +33,7 @@ class EmployeeEditor extends Component {
 
 const mapStateToProps = (state) => {
   let employees;
-  let dayPartsMap = {};
+  const dayPartsMap = {};
   if(state.users && state.employeeAvailabilities) {
     employees = state.users.filter((user) => {
       return user.role === 'employee';

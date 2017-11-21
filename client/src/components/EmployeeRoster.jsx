@@ -5,15 +5,6 @@ import _ from 'underscore';
 const EmployeeRoster = (props) => {
   return (
     <div>
-      {/* <div className="mdl-list__item">
-      <span className="mdl-list__item-primary-content">
-        <i className="material-icons mdl-list__item-avatar">account_circle</i>
-        <span>Add an employee</span>
-      </span>
-      <button className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-        <i className="material-icons">add</i>
-      </button>
-    </div> */}
     <div className="list-item clear-fix clickable">
       <div className="ratio-col-4-3" >
         <div>

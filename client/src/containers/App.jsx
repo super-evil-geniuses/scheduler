@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux';
 import { getAllUsers } from '../actions/index';
 import { getAllEmployeeAvailabilities } from '../actions/index';
 import { getAllDayParts } from '../actions/index';
+import { getAllNeededEmployees } from '../actions/index';
+import { getAllScheduleDates } from '../actions/index';
 
 import EmployeeEditor from './EmployeeEditor.jsx';
 import ScheduleEditor from './ScheduleEditor.jsx';
@@ -15,6 +17,8 @@ class App extends Component {
     this.props.getAllUsers();
     this.props.getAllEmployeeAvailabilities();
     this.props.getAllDayParts();
+    this.props.getAllNeededEmployees();
+    this.props.getAllScheduleDates();
   }
 
   render() {
@@ -40,6 +44,8 @@ function mapDispatchToProps(dispatch) {
     getAllUsers: getAllUsers,
     getAllEmployeeAvailabilities: getAllEmployeeAvailabilities,
     getAllDayParts: getAllDayParts,
+    getAllNeededEmployees: getAllNeededEmployees,
+    getAllScheduleDates: getAllScheduleDates,
   }, dispatch);
 }
 
