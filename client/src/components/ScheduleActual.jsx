@@ -49,8 +49,25 @@ const mapStateToProps = (state) => {
   }
   
   if(state.dayParts) {
+    let forwardFacingDayParts = [
+      null,
+      'Monday AM',
+      'Monday PM',
+      'Tuesday AM',
+      'Tuesday PM',
+      'Wednesday AM',
+      'Wednesday PM',
+      'Thursday AM',
+      'Thursday PM',
+      'Friday AM',
+      'Friday PM',
+      'Saturday AM',
+      'Saturday PM',
+      'Sunday AM',
+      'Sunday PM',
+    ];
     state.dayParts.forEach((dayPart) => {
-      dayPartsMap[dayPart.id] = dayPart.name
+      dayPartsMap[dayPart.id] = forwardFacingDayParts[dayPart.id];
     })
   }
 
