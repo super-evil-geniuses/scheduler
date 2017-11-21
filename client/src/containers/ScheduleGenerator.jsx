@@ -12,7 +12,8 @@ class ScheduleGenerator extends React.Component {
       mondayDate: null,
     }
   }
-  getNextMondayDate () {
+  
+  getNextMondayDate = () => {
     let monday, today = new Date();
     if (today.getDay() === 1) {
       monday = moment().add(7, 'days');

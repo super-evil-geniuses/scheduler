@@ -35,7 +35,7 @@ class EmployeeAvailability extends React.Component {
       key={`${this.props.employee.name}${dayPart}`}
       onClick={(e) => this.alterDay(dayPart)}>
         <i name={dayPart} className="material-icons clickable day-checkbox">
-          {this.state.newAvailabilities[dayPart] ? 'check_box' : 'check_box_outline_blank' }
+          {this.state.newAvailabilities[dayPart] ? 'lens' : 'radio_button_unchecked' }
         </i>
       </td>
     );
