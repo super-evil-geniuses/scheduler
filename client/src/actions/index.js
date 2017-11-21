@@ -9,6 +9,15 @@ const getAllUsers = () => {
   };
 };
 
+const getAllScheduleDates = () => {
+  const response = axios.get('/schedule_dates');
+
+  return {
+    type: 'GET_SCHEDULE_DATES',
+    payload: response,
+  };
+};
+
 const getAllEmployeeAvailabilities = () => {
   const response = axios.get('/employee_availabilities');
 
@@ -23,6 +32,15 @@ const getAllDayParts = () => {
 
   return {
     type: 'GET_DAY_PARTS',
+    payload: response,
+  };
+};
+
+const getAllNeededEmployees = () => {
+  const response = axios.get('/needed_employees');
+
+  return {
+    type: 'GET_NEEDED_EMPLOYEES',
     payload: response,
   };
 };
@@ -48,4 +66,6 @@ module.exports = {
   getAllUsers: getAllUsers,
   getAllEmployeeAvailabilities: getAllEmployeeAvailabilities,
   getAllDayParts: getAllDayParts,
+  getAllNeededEmployees: getAllNeededEmployees,
+  getAllScheduleDates: getAllScheduleDates,
 };
