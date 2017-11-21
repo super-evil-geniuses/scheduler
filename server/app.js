@@ -50,10 +50,9 @@ app.post('/template-schedule', function (req, res) {
 });
 
 app.post('/generate_schedule', (req, res) => {
-  // console.log(req.body);
+  
   generateSchedule(new Date(req.body.mondayDate))
     .then((schedule) => {
-      console.log(schedule);
       res.write(JSON.stringify(schedule));
       res.end();
     })
