@@ -35,7 +35,7 @@ class ScheduleGenerator extends React.Component {
           <div>{this.state.mondayDate.calendar()}</div>
         </div>
         <div>
-          <button type="button" onClick={() => { this.props.generateSchedule(this.state.mondayDate);}}>Generate Schedule</button>
+          <button type="button" onClick={() => { this.props.generateSchedule(/*this.state.mondayDate.calendar() commented out for testing purposes*/'11/13/17');}}>Generate Schedule</button>
         </div>
       </div>
       )
