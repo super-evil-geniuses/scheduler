@@ -113,4 +113,10 @@ describe('Shiftly Test Spec', function() {
       }))
       .expect(`template is stored`, done);
   });
+
+  it('should get a 200 response for getAllUsers request', function(done) {
+    request(app)
+      .get('/users')
+      .expect(200, done);
+  });
 });
