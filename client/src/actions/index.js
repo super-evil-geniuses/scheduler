@@ -49,7 +49,7 @@ const getAllNeededEmployees = () => {
 
 const generateSchedule = (mondayDate) => {
   const response = axios.post('/generate_schedule', { mondayDate });
-
+// debugger;
   return {
     type: 'GET_ACTUAL_SCHEDULE',
     payload: response,

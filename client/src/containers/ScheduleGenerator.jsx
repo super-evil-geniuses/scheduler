@@ -43,6 +43,6 @@ class ScheduleGenerator extends React.Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ generateSchedule: generateSchedule })
+  return bindActionCreators({ generateSchedule: generateSchedule }, dispatch)
 }
 export default connect(null, mapDispatchToProps)(ScheduleGenerator);
