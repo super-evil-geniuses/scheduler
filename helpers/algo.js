@@ -65,7 +65,6 @@ const scheduleGenerator = (allEmployeeAvail, temp) => {
   const findSolution = (possibilities, empShifts, dayPart) => {
     //for every dayPart 
     let currentDayPossibilities = possibilities[dayPart];
-    console.log(currentDayPossibilities);
     //iterate over all possibilites
     //for every possibility
     for (let i = 0; i < currentDayPossibilities.length; i++) {
