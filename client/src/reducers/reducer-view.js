@@ -1,4 +1,4 @@
-const view = (state = 'login', action) => {
+const view = (state = 'employeeEditor', action) => {
 	switch(action.type) {
     case 'CHANGE_VIEW':
       return action.view;

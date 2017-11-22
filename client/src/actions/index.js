@@ -79,6 +79,13 @@ const updateEmployeeAvailability = (employee, newAvailabilities) => {
   };
 };
 
+const changeView = (newView) => {
+  return {
+    type: 'CHANGE_VIEW',
+    view: newView,
+  }
+};
+
 module.exports = {
   generateSchedule: generateSchedule,
   updateEmployeeAvailability: updateEmployeeAvailability,
@@ -88,4 +95,5 @@ module.exports = {
   getAllNeededEmployees: getAllNeededEmployees,
   getAllScheduleDates: getAllScheduleDates,
   addEmployee: addEmployee,
+  changeView: changeView,
 };
