@@ -40,14 +40,6 @@ app.patch('/employee_availability', utils.updateEmployeeAvailability, (req, res)
   res.end();
 });
 
-// app.post('/template-schedule', function (req, res) {
-//   let mondayDate = req.body.mondayDate;
-  
-//   //store the template
-
-//   res.send('template is stored');
-// });
-
 app.post('/add_employee', utils.addUser, utils.getAllDayParts, utils.addEmployeeAvailability, (req, res) => {
   res.json(req.user);
 });
