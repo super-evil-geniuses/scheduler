@@ -91,29 +91,29 @@ describe('Shiftly Test Spec', function() {
   });
 
 
-  it('sent a template object and was successfully stored in the db', function(done) {
-    request(app)
-      .post('/template-schedule')
-      .set('Content-Type', 'application/json')
-      .send(JSON.stringify({
-        mondayDate: new Date('11/13/17'),
-        monA: 2,
-        monP: 2,
-        tuesA: 2,
-        tuesA: 2,
-        wedsA: 2,
-        wedsP: 2,
-        thursA: 2,
-        thursP: 2,
-        friA: 2,
-        friP: 2,
-        satA: 2,
-        satP: 2,
-        sunA: 2,
-        sunP: 2
-      }))
-      .expect(`template is stored`, done);
-  });
+  // it('sent a template object and was successfully stored in the db', function(done) {
+  //   request(app)
+  //     .post('/template-schedule')
+  //     .set('Content-Type', 'application/json')
+  //     .send(JSON.stringify({
+  //       mondayDate: new Date('11/13/17'),
+  //       monA: 2,
+  //       monP: 2,
+  //       tuesA: 2,
+  //       tuesA: 2,
+  //       wedsA: 2,
+  //       wedsP: 2,
+  //       thursA: 2,
+  //       thursP: 2,
+  //       friA: 2,
+  //       friP: 2,
+  //       satA: 2,
+  //       satP: 2,
+  //       sunA: 2,
+  //       sunP: 2
+  //     }))
+  //     .expect(`template is stored`, done);
+  // });
 
 
   it('should get a 200 response for getAllUsers request', function(done) {
