@@ -87,7 +87,7 @@ const changeView = (newView) => {
 };
 
 const login = (creds) => {
-  const response = axios('/login', { creds });
+  const response = axios.post('/login', { creds });
 
   return {
     type: 'GET_ALL',
@@ -95,8 +95,8 @@ const login = (creds) => {
   }
 }
 
-const signUp = (cred) => {
-  const response = axios('/signUp', { creds });
+const signUp = (creds) => {
+  const response = axios.post('/signup', { creds });
 
   return {
     type: 'GET_ALL',
@@ -105,7 +105,6 @@ const signUp = (cred) => {
 }
 
 module.exports = {
-  changeView: changeView,
   generateSchedule: generateSchedule,
   updateEmployeeAvailability: updateEmployeeAvailability,
   getAllUsers: getAllUsers,
@@ -115,4 +114,6 @@ module.exports = {
   getAllScheduleDates: getAllScheduleDates,
   addEmployee: addEmployee,
   changeView: changeView,
+  login: login,
+  signUp: signUp,
 };

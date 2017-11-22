@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { changeView } from '../actions/index';
+import { changeView, login } from '../actions/index';
 
 const Login = (props) => (
   <div className="employee-availability clear-fix">
@@ -32,7 +32,7 @@ const Login = (props) => (
 );
 
 function mapDispatchToProps(dispatch){
-  return bindActionCreators({ changeView }, dispatch);
+  return bindActionCreators({ changeView, login }, dispatch);
 }
 
 export default connect(null, mapDispatchToProps)(Login);

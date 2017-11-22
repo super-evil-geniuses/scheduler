@@ -27,13 +27,18 @@ module.exports = (sequelize) => {
 		name: { type: Sequelize.STRING, unique: true }
 	}, {underscored: true, timestamps: false});
 
+	const Sessions = sequelize.define('sessions', {
+		session: Sequelize.STRING,
+	}, {underscored: true, timestamps: false});
+
 	const db = {
 		User: User,
 		Schedule: Schedule,
 		Employee_Availability: Employee_Availability,
 		Actual_Schedule: Actual_Schedule,
 		Needed_Employee: Needed_Employee,
-		Day_Part: Day_Part
+		Day_Part: Day_Part,
+		Sessions: Sessions,
 	};
 
 	return db;

@@ -66,4 +66,11 @@ app.get('/generate-schedule', function(req, res) {
     })
 })
 
+app.post('/login', (req, res) => {
+  console.log(req.body);
+})
+app.post('/signup', (req, res) => {
+  console.log(req.body);
+})
+
 module.exports = app;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { changeView } from '../actions/index';
+import { changeView, signUp } from '../actions/index';
 
 const SignUp = (props) => (
   <div className="employee-availability clear-fix">
@@ -22,7 +22,8 @@ const SignUp = (props) => (
               let password = document.getElementById('password').value;
               props.signUp({ username, password })
             }
-          } />
+          } 
+          className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent " />
         </div>
     </form>
     <p>
@@ -32,7 +33,7 @@ const SignUp = (props) => (
 );
 
 function mapDispatchToProps(dispatch){
-  return bindActionCreators({ changeView }, dispatch);
+  return bindActionCreators({ changeView, signUp }, dispatch);
 }
 
 export default connect(null, mapDispatchToProps)(SignUp);
