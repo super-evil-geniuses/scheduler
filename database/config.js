@@ -27,8 +27,8 @@ module.exports = (sequelize) => {
 		name: { type: Sequelize.STRING, unique: true }
 	}, {underscored: true, timestamps: false});
 
-	const Sessions = sequelize.define('sessions', {
-		session: Sequelize.STRING,
+	const Session = sequelize.define('session', {
+		session: { type: Sequelize.STRING, unique: true }
 	}, {underscored: true, timestamps: false});
 
 	const db = {
@@ -38,7 +38,7 @@ module.exports = (sequelize) => {
 		Actual_Schedule: Actual_Schedule,
 		Needed_Employee: Needed_Employee,
 		Day_Part: Day_Part,
-		Sessions: Sessions,
+		Session: Session,
 	};
 
 	return db;

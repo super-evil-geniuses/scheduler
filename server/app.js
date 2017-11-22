@@ -1,12 +1,15 @@
 const express = require('express');
 const utils = require('../helpers/index.js');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const generateSchedule = require('../helpers/algo.js').generateSchedule;
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(utils.checkSession);
 
 app.use(express.static(__dirname + '/../client/dist/compiled'));
 

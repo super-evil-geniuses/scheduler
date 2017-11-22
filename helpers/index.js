@@ -1,11 +1,11 @@
 const db = require('../database');
 const Promise = require('bluebird');
+const crypto = require('crypto');
 
 const getAllUsers = (req, res, next) => {
   db.User.findAll({})
     .then((allUsers) => {
       req.users = allUsers;
-      console.log('all users: ', allUsers)
       next();
     }).catch((err) => {
       res.end(500, 'Error getting users');
@@ -109,6 +109,36 @@ const updateEmployeeAvailability = (req, res, next) => {
   });
 };
 
+const newSession = (req, res) => {
+  let session = {};
+  session.session = crypto.randomBytes(32).toString('hex');
+  session.user = null;
+  res.cookie('shiftly', session.session);
+  return session;
+};
+
+const checkSession = (req, res, next) => {
+  return new Promise((resolve, reject) => {
+    if (req.cookies['shiftly']) {
+      resolve(db.Sessions.findAll({ session: req.cookies['shiftly'] }));
+    } else {
+      resolve();
+    }
+  })
+  .then((session) => {
+    console.log('in then clause', session);
+    if (session) {
+      return session;
+    } else {
+      return newSession(req, res);
+    }
+  }).then((session) => {
+    req.session = session;
+    next();
+  })
+};
+
+
 module.exports = {
   getAllUsers: getAllUsers,
   updateEmployeeAvailability: updateEmployeeAvailability,
@@ -118,4 +148,5 @@ module.exports = {
   getAllScheduleDates: getAllScheduleDates,
   addUser: addUser,
   addEmployeeAvailability: addEmployeeAvailability,
+  checkSession: checkSession,
 };
