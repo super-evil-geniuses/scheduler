@@ -12,7 +12,8 @@ import EmployeeEditor from './EmployeeEditor.jsx';
 import ScheduleEditor from './ScheduleEditor.jsx';
 import ScheduleGenerator from './ScheduleGenerator.jsx';
 import ScheduleActual from '../components/ScheduleActual.jsx';
-
+import Login from './Login.jsx';
+import SignUp from './SignUp.jsx';
 
 class App extends Component {
 
