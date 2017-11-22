@@ -87,6 +87,7 @@ const changeView = (newView) => {
 };
 
 module.exports = {
+  changeView: changeView,
   generateSchedule: generateSchedule,
   updateEmployeeAvailability: updateEmployeeAvailability,
   getAllUsers: getAllUsers,

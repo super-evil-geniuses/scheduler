@@ -11,6 +11,7 @@ import View from './reducer-view.js';
 const rootReducer = combineReducers({
   employeeAvailabilities: EmployeeAvailabilitiesReducer,
   scheduleActual: ScheduleActual,
+  view: View,
   //employees: EmployeesReducer,
   //selectedEmployee: SelectedEmployeeReducer,
   users: UsersReducer,
