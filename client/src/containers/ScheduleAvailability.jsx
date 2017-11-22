@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-//import { updateScheduleAvailability } from '../actions/index';
+import { updateScheduleAvailability } from '../actions/index';
 import _ from 'underscore';
 
 class ScheduleAvailability extends React.Component {
@@ -23,7 +23,7 @@ class ScheduleAvailability extends React.Component {
 
   alterDay = (e, dayPart) => {   
     let schedule = this.state.newSchedule;
-    schedule[dayPart] = e.target.value;
+    schedule[dayPart] = e.target.value ? parseInt(e.target.value) : e.target.value;
     this.setState({
       newSchedule: schedule
     })
@@ -54,42 +54,82 @@ class ScheduleAvailability extends React.Component {
         return dayPart % 2 === 0;
       }).map(this.mapDayPartsAsInputs);
 
-      renderBody = (
-        <div>
-          <h4>Edit schedule</h4>
-          <p>How many employees do you need for each shift?</p>
-          <table className="select-days-table">
-            <tbody>
-              <tr>
-                <th scope="row"></th>
-                <th scope="col">Mon</th>
-                <th scope="col">Tue</th>
-                <th scope="col">Wed</th>
-                <th scope="col">Thu</th>
-                <th scope="col">Fri</th>
-                <th scope="col">Sat</th>
-                <th scope="col">Sun</th>
-              </tr>
-              <tr>
-                <th scope="row">AM</th>
-                {morningParts}  
-              </tr>
-              <tr>
-                <th scope="row">PM</th>
-                {afternoonParts}
-              </tr>
-            </tbody>
-          </table>
-          <div className="employee-editor-save-btn">
-            <button 
-            className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent "
-            //onClick={() => this.props.updateEmployeeAvailability(this.props.employee, this.state.newAvailabilities)}
-            >
-              Save
-            </button>
+      if (this.props.schedule.id) {
+        renderBody = (
+          <div>
+            <h4>Edit schedule</h4>
+            <p>How many employees do you need for each shift?</p>
+            <table className="select-days-table">
+              <tbody>
+                <tr>
+                  <th scope="row"></th>
+                  <th scope="col">Mon</th>
+                  <th scope="col">Tue</th>
+                  <th scope="col">Wed</th>
+                  <th scope="col">Thu</th>
+                  <th scope="col">Fri</th>
+                  <th scope="col">Sat</th>
+                  <th scope="col">Sun</th>
+                </tr>
+                <tr>
+                  <th scope="row">AM</th>
+                  {morningParts}  
+                </tr>
+                <tr>
+                  <th scope="row">PM</th>
+                  {afternoonParts}
+                </tr>
+              </tbody>
+            </table>
+            <div className="employee-editor-save-btn">
+              <button 
+              className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent "
+              onClick={() => this.props.updateScheduleAvailability(this.props.schedule, this.state.newSchedule)}
+              >
+                Save
+              </button>
+            </div>
           </div>
-        </div>
-      ); 
+        );
+      } else {
+        renderBody = (
+          <div>
+            <h4>Create schedule</h4>
+            <input type="text" placeholder="Date (e.g. 11/13/17)"></input>
+            <p>How many employees do you need for each shift?</p>
+            <table className="select-days-table">
+              <tbody>
+                <tr>
+                  <th scope="row"></th>
+                  <th scope="col">Mon</th>
+                  <th scope="col">Tue</th>
+                  <th scope="col">Wed</th>
+                  <th scope="col">Thu</th>
+                  <th scope="col">Fri</th>
+                  <th scope="col">Sat</th>
+                  <th scope="col">Sun</th>
+                </tr>
+                <tr>
+                  <th scope="row">AM</th>
+                  {morningParts}  
+                </tr>
+                <tr>
+                  <th scope="row">PM</th>
+                  {afternoonParts}
+                </tr>
+              </tbody>
+            </table>
+            <div className="employee-editor-save-btn">
+              <button 
+              className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent "
+              //onClick={() => this.props.updateEmployeeAvailability(this.props.employee, this.state.newAvailabilities)}
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        );   
+      }
     }
     return (
       <div className="employee-availability clear-fix">
@@ -100,7 +140,7 @@ class ScheduleAvailability extends React.Component {
 };
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({}, dispatch);
+  return bindActionCreators({updateScheduleAvailability: updateScheduleAvailability}, dispatch);
 }
 
 export default connect(null, mapDispatchToProps)(ScheduleAvailability);

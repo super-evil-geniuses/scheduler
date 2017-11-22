@@ -79,6 +79,21 @@ const updateEmployeeAvailability = (employee, newAvailabilities) => {
   };
 };
 
+const updateScheduleAvailability = (schedule, newAvailabilities) => {
+  const requestBody = Object.keys(newAvailabilities).map((dayPartId) => {
+    return { schedule_id: schedule.id, day_part_id: dayPartId, employees_needed: newAvailabilities[dayPartId] };
+  });
+
+  const response = axios.patch('/schedule_availability', {
+    scheduleAvailabilities: requestBody,
+  });
+
+  return {
+    type: 'UPDATE_SCHEDULE_AVAILABILITY',
+    payload: response,
+  };
+};
+
 const changeView = (newView) => {
   return {
     type: 'CHANGE_VIEW',
@@ -93,6 +108,7 @@ module.exports = {
   getAllEmployeeAvailabilities: getAllEmployeeAvailabilities,
   getAllDayParts: getAllDayParts,
   getAllNeededEmployees: getAllNeededEmployees,
+  updateScheduleAvailability: updateScheduleAvailability,
   getAllScheduleDates: getAllScheduleDates,
   addEmployee: addEmployee,
   changeView: changeView,
