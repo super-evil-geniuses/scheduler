@@ -49,13 +49,20 @@ const getAllNeededEmployees = () => {
 
 const generateSchedule = (mondayDate) => {
   const response = axios.post('/generate_schedule', { mondayDate });
-// debugger;
+
   return {
     type: 'GET_ACTUAL_SCHEDULE',
     payload: response,
   }
 };
 
+const addEmployee = (username) => {
+  const response = axios.post('/add_employee', { username });
+  return {
+    type: 'ADD_EMPLOYEE',
+    payload: response,
+  };
+};
 
 const updateEmployeeAvailability = (employee, newAvailabilities) => {
   const requestBody = Object.keys(newAvailabilities).map((dayPartId) => {
@@ -80,4 +87,5 @@ module.exports = {
   getAllDayParts: getAllDayParts,
   getAllNeededEmployees: getAllNeededEmployees,
   getAllScheduleDates: getAllScheduleDates,
+  addEmployee: addEmployee,
 };
