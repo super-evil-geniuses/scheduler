@@ -44,6 +44,11 @@ app.post('/add_employee', utils.addUser, utils.getAllDayParts, utils.addEmployee
   res.json(req.user);
 });
 
+app.patch('/schedule_availability', utils.updateScheduleAvailability, (req, res) => {
+  res.write(JSON.stringify(req.scheduleAvailabilities));
+  res.end();
+});
+
 app.post('/generate_schedule', (req, res) => {
   
   generateSchedule(new Date(req.body.mondayDate))

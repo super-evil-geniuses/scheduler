@@ -106,12 +106,29 @@ const updateEmployeeAvailability = (req, res, next) => {
   });
 };
 
+const updateScheduleAvailability = (req, res, next) => {
+  return Promise.each(req.body.scheduleAvailabilities, (scheduleAvail) => {
+    const updates = { employees_needed: scheduleAvail.employees_needed };
+    const conditions = {
+      where: {
+        schedule_id: scheduleAvail.schedule_id,
+        day_part_id: scheduleAvail.day_part_id,
+      },
+    };
+    return db.Needed_Employee.update(updates, conditions);
+  }).then((updatedAvailabilities) => {
+    req.scheduleAvailabilities = updatedAvailabilities;
+    next();
+  });
+};
+
 module.exports = {
   getAllUsers: getAllUsers,
   updateEmployeeAvailability: updateEmployeeAvailability,
   getAllEmployeeAvailabilities: getAllEmployeeAvailabilities,
   getAllDayParts: getAllDayParts,
   getAllNeededEmployees: getAllNeededEmployees,
+  updateScheduleAvailability: updateScheduleAvailability,
   getAllScheduleDates: getAllScheduleDates,
   addUser: addUser,
   addEmployeeAvailability: addEmployeeAvailability,

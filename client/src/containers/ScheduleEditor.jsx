@@ -11,20 +11,30 @@ class ScheduleEditor extends Component {
     }
   }
 
-  selectSchedule = (schedule) => {
-    this.setState({
-      selectedSchedule: schedule
-    })
+  selectSchedule = (id) => {
+    if (id) {
+      this.setState({
+        selectedSchedule: this.props.scheduleNeeds[id]
+      })
+    } else {
+      this.setState({
+        selectedSchedule: {id: null, monDate: null, neededEmployees: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0}}
+      })
+    }
   }
 
   render() {
     return (
       <div className='ratio-col-1'>
-        <ScheduleAvailability schedule={this.state.selectedSchedule} dayPartsMap={this.props.dayPartsMap} />
         {this.props.scheduleNeeds && 
-          <div onClick={(e) => this.selectSchedule(this.props.scheduleNeeds[1])}>
-            Select schedule test
-          </div>}
+          <select onChange={(e) => this.selectSchedule(e.target.value)}>
+            <option defaultValue='' disabled selected>Select a template...</option>
+            {Object.keys(this.props.scheduleNeeds).map(id => {
+              return <option value={id}>{this.props.scheduleNeeds[id].monDate.substr(0, 10)}</option>
+            })}
+            <option value=''>Create a new template</option>
+          </select>}
+        <ScheduleAvailability schedule={this.state.selectedSchedule} dayPartsMap={this.props.dayPartsMap} />
       </div>
     );
   }
