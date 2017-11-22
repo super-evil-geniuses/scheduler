@@ -2,7 +2,7 @@ import React from 'react';
 import Off from './Off.jsx';
 import Shift from './Shift.jsx';
 
-const EmployeeSchedule = (props) => (
+const EmployeeSchedule = props => (
   <div>
     <div>
       {props.schedule.name}

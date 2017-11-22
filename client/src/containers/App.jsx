@@ -50,7 +50,9 @@ class App extends Component {
             <div className="ratio-col-2 editor-tab clickable" onClick={() => { this.props.changeView('scheduleEditor')}}>Schedule</div>
           </div>
         </div>
-          {this.renderView()}
+        {this.renderView()}
+        </div>
+        <div className="ratio-col-4-3">
           <ScheduleGenerator />
           <ScheduleActual />
         </div>

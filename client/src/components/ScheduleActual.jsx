@@ -4,21 +4,18 @@ import { connect } from 'react-redux';
 import EmployeeSchedule from './EmployeeSchedule.jsx';
 
 
-const ScheduleActual = (props) => (
-  <div>
-    <div>todo date</div>
-    <br></br>
+const ScheduleActual = props => (
+  <div className="container clear-fix">
     <div>
       {(() => {
-        let divs = [];
+        let divs = [<div className="ratio-col-8 schedule-date-header">TEST</div>];
           if (props.dayPartsMap) {
             for(let i = 1; i < 15; i++) {
-              divs.push(<div key={i}>{props.dayPartsMap[i]}</div>);
+              divs.push(<div className="ratio-col-16 schedule-date-header" key={i}>{props.dayPartsMap[i]}</div>);
             }
           }
         return divs;
       })()}
-      <br></br><br></br>
       {props.schedules.map((sched) => {
         return <EmployeeSchedule schedule={sched} />;
       })

@@ -29,14 +29,12 @@ class ScheduleGenerator extends React.Component {
   }
   render() {
     return (
-      <div>
-      <br></br>
-        This is the schedule Generator
+      <div className="schedule-generator clear-fix">
         <div>
-          <div>{this.state.mondayDate.calendar()}</div>
+          <div>Week of <span className='schedule-generator-date'>{this.state.mondayDate.format("MMMM Do YYYY")}</span></div>
         </div>
-        <div>
-          <button type="button" onClick={() => { this.props.generateSchedule(/*this.state.mondayDate.calendar() commented out for testing purposes*/'11/13/17');}}>Generate Schedule</button>
+        <div className='schedule-generator-button'>
+          <button className="btn-primary clickable" type="button" onClick={() => { this.props.generateSchedule(/*this.state.mondayDate.calendar() commented out for testing purposes*/'11/13/17');}}>Generate</button>
         </div>
       </div>
       )
