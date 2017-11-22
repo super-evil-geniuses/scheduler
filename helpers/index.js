@@ -5,6 +5,7 @@ const getAllUsers = (req, res, next) => {
   db.User.findAll({})
     .then((allUsers) => {
       req.users = allUsers;
+      console.log('all users: ', allUsers)
       next();
     }).catch((err) => {
       res.end(500, 'Error getting users');
@@ -52,6 +53,42 @@ const getAllDayParts = (req, res, next) => {
     });
 };
 
+const addUser = (req, res, next) => {
+  db.User.create({
+    name: req.body.username,
+    role: 'employee',
+    password: null,
+  })
+    .then((user) => {
+      req.user = user;
+      next();
+    }).catch((err) => {
+      res.end(500, `Error adding new user: ${err}`);
+    });
+};
+
+const addEmployeeAvailability = (req, res, next) => {
+  const parsedUserId = JSON.parse(JSON.stringify(req.user)).id;
+  const parsedDayPartsKeys = Object.keys(req.dayParts);
+
+  Promise.each(parsedDayPartsKeys, (key) => {
+    const id = JSON.parse(key) + 1;
+    return db.Employee_Availability.create({
+      is_available: false,
+      user_id: parsedUserId,
+      day_part_id: id,
+    })
+      .catch((err) => {
+        res.status(500).send(`error adding availability for daypartid ${id}: ${err}`);
+      });
+  })
+    .then(() => {
+      next();
+    }).catch((err) => {
+      res.status(500).send(`error adding availability for user ${parsedUserId}: ${err}`);
+    });
+};
+
 // Takes new employeeAvailabilities and updates them in the database
 const updateEmployeeAvailability = (req, res, next) => {
   return Promise.each(req.body.employeeAvailabilities, (employeeAvail) => {
@@ -76,4 +113,6 @@ module.exports = {
   getAllDayParts: getAllDayParts,
   getAllNeededEmployees: getAllNeededEmployees,
   getAllScheduleDates: getAllScheduleDates,
+  addUser: addUser,
+  addEmployeeAvailability: addEmployeeAvailability,
 };
