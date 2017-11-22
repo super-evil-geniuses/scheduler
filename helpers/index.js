@@ -126,7 +126,6 @@ const checkSession = (req, res, next) => {
     }
   })
   .then((session) => {
-    console.log('in then clause', session);
     if (session) {
       return session;
     } else {
@@ -138,8 +137,30 @@ const checkSession = (req, res, next) => {
   })
 };
 
+const passHash = (password) => {
+  let shasum = crypto.createHash('sha256');
+  shasum.update(password);
+  return shasum.digest('hex');
+}
+
+const authenticate = (req, res, next) => {
+  //get user info from user db;
+  db.User.findOne({ name: req.body.creds.username })
+  .then((user) => {
+    if (passHash(req.body.creds.password) === user.password) {
+      req.session.user = user.name;
+      next();
+    } else {
+      res.status(401).send('incorrect username or password');
+    }
+  })
+  //compare hashed password to password from db
+  //if password is correct, add user to req.session
+}
+
 
 module.exports = {
+  authenticate: authenticate,
   getAllUsers: getAllUsers,
   updateEmployeeAvailability: updateEmployeeAvailability,
   getAllEmployeeAvailabilities: getAllEmployeeAvailabilities,

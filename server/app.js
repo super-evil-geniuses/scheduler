@@ -69,8 +69,11 @@ app.get('/generate-schedule', function(req, res) {
     })
 })
 
-app.post('/login', (req, res) => {
+app.post('/login', utils.authenticate, (req, res) => {
   console.log(req.body);
+  //get user info from user db;
+  //compare hashed password to password from db
+  //if password is correct, add user to req.session
 })
 app.post('/signup', (req, res) => {
   console.log(req.body);
