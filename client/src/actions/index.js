@@ -86,6 +86,15 @@ const changeView = (newView) => {
   }
 };
 
+const login = (creds) => {
+  const response = axios('/login', { creds });
+
+  return {
+    type: 'GET_ACTUAL_SCHEDULE',
+    payload: response,
+  }
+}
+
 module.exports = {
   changeView: changeView,
   generateSchedule: generateSchedule,

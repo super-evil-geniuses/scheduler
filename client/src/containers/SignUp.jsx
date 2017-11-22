@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { changeView } from '../actions/index';
 
 const SignUp = (props) => (
   <div className="employee-availability clear-fix">
@@ -15,17 +16,23 @@ const SignUp = (props) => (
           <input id="password" type="password" name="password" />
         </div>
         <div>
-          <input type="submit" value="SignUp" />
+          <input type="button" value="Sign Up" onClick={
+            () => {
+              let username = document.getElementById('username').value;
+              let password = document.getElementById('password').value;
+              props.signUp({ username, password })
+            }
+          } />
         </div>
     </form>
     <p>
-      <a href="">Login</a>
+      <a onClick={() => { props.changeView('login')}}>Login</a>
     </p>
   </div>
 );
 
 function mapDispatchToProps(dispatch){
-  return bindActionCreators({}, dispatch);
+  return bindActionCreators({ changeView }, dispatch);
 }
 
 export default connect(null, mapDispatchToProps)(SignUp);
