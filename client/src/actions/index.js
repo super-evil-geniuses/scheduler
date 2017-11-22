@@ -90,7 +90,16 @@ const login = (creds) => {
   const response = axios('/login', { creds });
 
   return {
-    type: 'GET_ACTUAL_SCHEDULE',
+    type: 'GET_ALL',
+    payload: response,
+  }
+}
+
+const signUp = (cred) => {
+  const response = axios('/signUp', { creds });
+
+  return {
+    type: 'GET_ALL',
     payload: response,
   }
 }

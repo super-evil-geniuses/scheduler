@@ -8,6 +8,8 @@ const employeeAvailabilities = (state = null, action) => {
       }).concat(action.payload.data);
     case 'ADD_EMPLOYEE':
       return action.payload.data.employeeAvailabilities;
+    case 'GET_ALL':
+      return action.payload.data.employeeAvailabilities;
     default:
       return state;
   }
