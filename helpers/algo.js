@@ -65,7 +65,6 @@ const scheduleGenerator = (allEmployeeAvail, temp) => {
   const findSolution = (possibilities, empShifts, dayPart) => {
     //for every dayPart 
     let currentDayPossibilities = possibilities[dayPart];
-    console.log(currentDayPossibilities);
     //iterate over all possibilites
     //for every possibility
     for (let i = 0; i < currentDayPossibilities.length; i++) {
@@ -150,5 +149,6 @@ const generateSchedule = (weekStart) => {
         });
       });
 }
-
 module.exports.generateSchedule = generateSchedule;
+//scheduleGenerator is exported for testing puroposes only
+module.exports.scheduleGenerator = scheduleGenerator;

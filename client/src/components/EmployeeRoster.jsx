@@ -1,5 +1,6 @@
 import React from 'react';
 import EmployeeRosterItem from '../containers/EmployeeRosterItem.jsx';
+import AddEmployee from '../containers/AddEmployee.jsx';
 import _ from 'underscore';
 
 const EmployeeRoster = (props) => {
@@ -9,7 +10,7 @@ const EmployeeRoster = (props) => {
       <div className="ratio-col-4-3" >
         <div>
           <i className="material-icons employee-edit-profile">account_circle</i>
-          <span>Add new employee</span> 
+          <span>Add new employee <AddEmployee /></span> 
         </div>
       </div>
       <div className="ratio-col-4" >
