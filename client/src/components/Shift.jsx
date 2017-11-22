@@ -2,7 +2,7 @@ import React from 'react';
 
 const Shift = (props) => (
   <div>
-  YOU'RE WORKING
+  YOU'RE WORKING!
   </div>
 )
 
