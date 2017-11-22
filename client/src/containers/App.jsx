@@ -6,6 +6,7 @@ import { getAllEmployeeAvailabilities } from '../actions/index';
 import { getAllDayParts } from '../actions/index';
 import { getAllNeededEmployees } from '../actions/index';
 import { getAllScheduleDates } from '../actions/index';
+import { changeView } from '../actions/index';
 
 import EmployeeEditor from './EmployeeEditor.jsx';
 import ScheduleEditor from './ScheduleEditor.jsx';
@@ -23,24 +24,43 @@ class App extends Component {
     this.props.getAllScheduleDates();
   }
 
+  renderView(){
+
+    if (this.props.view === 'login') {
+      return <Login />;
+    } else if (this.props.view === 'signup') {
+      return <SignUp />
+    } else if (this.props.view === 'employeeEditor') {
+      return <EmployeeEditor />;
+    } else if (this.props.view === 'scheduleEditor') {
+      return <ScheduleEditor />;
+    } else {
+      return <div></div>;
+    }
+
+  }
+
   render() {
     return (
       <div className="app-container clear-fix">
         <div className="ratio-col-4">
         <div className="editor-header">
           <div className="container clear-fix">
-            <div className="ratio-col-2 editor-tab clickable">Employees</div>
-            <div className="ratio-col-2 editor-tab clickable">Schedule</div>
+            <div className="ratio-col-2 editor-tab clickable" onClick={() => { this.props.changeView('employeeEditor')}}>Employees</div>
+            <div className="ratio-col-2 editor-tab clickable" onClick={() => { this.props.changeView('scheduleEditor')}}>Schedule</div>
           </div>
         </div>
-          <ScheduleEditor />
-          <EmployeeEditor />
+          {this.renderView()}
           <ScheduleGenerator />
           <ScheduleActual />
         </div>
       </div>
     );
   }
+}
+
+function mapStateToProps(state) {
+  return { view: state.view, };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -50,7 +70,8 @@ function mapDispatchToProps(dispatch) {
     getAllDayParts: getAllDayParts,
     getAllNeededEmployees: getAllNeededEmployees,
     getAllScheduleDates: getAllScheduleDates,
+    changeView: changeView,
   }, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
