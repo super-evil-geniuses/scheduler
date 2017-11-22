@@ -69,7 +69,7 @@ const addUser = (req, res, next) => {
 const addEmployeeAvailability = (req, res, next) => {
   const parsedUserId = JSON.parse(JSON.stringify(req.user)).id;
   const parsedDayPartsKeys = Object.keys(req.dayParts);
-
+  req.employeeAvailability = {};
   Promise.each(parsedDayPartsKeys, (key) => {
     const id = JSON.parse(key) + 1;
     return db.Employee_Availability.create({
@@ -77,11 +77,15 @@ const addEmployeeAvailability = (req, res, next) => {
       user_id: parsedUserId,
       day_part_id: id,
     })
+      .then((availability) => {
+        req.employeeAvailability[key] = availability;
+      })
       .catch((err) => {
         res.status(500).send(`error adding availability for daypartid ${id}: ${err}`);
       });
   })
     .then(() => {
+      console.log(`req.employeeAvailability: ${req.employeeAvailability}`)
       next();
     }).catch((err) => {
       res.status(500).send(`error adding availability for user ${parsedUserId}: ${err}`);

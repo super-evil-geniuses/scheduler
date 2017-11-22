@@ -78,24 +78,33 @@ describe('Shiftly Test Spec', () => {
     });
   });
 
-  xdescribe('Middleware:', () => {
-    xit('adding a new employee creates the records in employee\'s availability table and sets all the availabilities to false', (done) => {
-      request(app)
-        .post('/add_employee')
-        .set('Content-Type', 'application/json')
-        .send({
-          username: 'Alice',
-        })
-        .end((err, res) => {
-          if (err) { throw err; }
-          expect(res.body.name).to.equal('Alice');
-          done();
-        });
+  describe('Middleware:', () => {
+    // let req = httpMocks.createRequest({
+    //   method: 'GET',
+    //   url: '/add_employee',
+    //   data: {username: 'Alice'},
+    // });
+
+    // let res = httpMocks.createResponse();
+
+    let reqOptions = {
+      method: 'GET',
+      url: '/add_employee',
+      data: {username: 'Alice'}
+    }
+    let resOptions = {};
+
+    let obj = httpMocks.createMocks(reqOptions, resOptions)
+
+
+    it('adding a new employee creates the records in employee\'s availability table and sets all the availabilities to false', (done) => {
+      expect(obj.req).to.equal('hi');
+      done();
     });
 
   });
 
-  describe('Algo', () => {
+  xdescribe('Algo', () => {
 
     let allEmployeeAvail = {
       '1': [ 1, 2, 5, 6, 7, 8, 9, 10 ],
