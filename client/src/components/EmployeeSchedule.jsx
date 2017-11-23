@@ -1,6 +1,4 @@
 import React from 'react';
-import Off from './Off.jsx';
-import Shift from './Shift.jsx';
 
 const EmployeeSchedule = (props) => {
   let shifts = [<div key="shiftblock" className="ratio-col-8 schedule-name">{props.schedule.name}<br/><span className="schedule-hours">{props.schedule.schedule.length * 6}</span></div>];
