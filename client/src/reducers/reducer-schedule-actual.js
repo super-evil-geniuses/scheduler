@@ -3,7 +3,7 @@ const scheduleActual = (state = null, action) => {
     case 'GET_ACTUAL_SCHEDULE':
       return action.payload.data;
     case 'GET_ALL':
-      return action.payload.data.scheduleActual;
+      return action.payload.data.scheduleActual || state;
     default:
       return state;
   }

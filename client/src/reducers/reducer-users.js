@@ -5,7 +5,7 @@ const users = (state = null, action) => {
     case 'ADD_EMPLOYEE':
       return state.concat(action.payload.data.user);
     case 'GET_ALL':
-      return action.payload.data.users;
+      return action.payload.data.users || state;
     default:
       return state;
   }

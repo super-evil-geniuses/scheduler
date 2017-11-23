@@ -17,13 +17,13 @@ import SignUp from './SignUp.jsx';
 
 class App extends Component {
 
-  componentWillMount() {
-    this.props.getAllUsers();
-    this.props.getAllEmployeeAvailabilities();
-    this.props.getAllDayParts();
-    this.props.getAllNeededEmployees();
-    this.props.getAllScheduleDates();
-  }
+  // componentWillMount() {
+  //   this.props.getAllUsers();
+  //   this.props.getAllEmployeeAvailabilities();
+  //   this.props.getAllDayParts();
+  //   this.props.getAllNeededEmployees();
+  //   this.props.getAllScheduleDates();
+  // }
 
   renderView(){
 
@@ -72,11 +72,11 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    getAllUsers: getAllUsers,
-    getAllEmployeeAvailabilities: getAllEmployeeAvailabilities,
-    getAllDayParts: getAllDayParts,
-    getAllNeededEmployees: getAllNeededEmployees,
-    getAllScheduleDates: getAllScheduleDates,
+    // getAllUsers: getAllUsers,
+    // getAllEmployeeAvailabilities: getAllEmployeeAvailabilities,
+    // getAllDayParts: getAllDayParts,
+    // getAllNeededEmployees: getAllNeededEmployees,
+    // getAllScheduleDates: getAllScheduleDates,
     changeView: changeView,
   }, dispatch);
 }

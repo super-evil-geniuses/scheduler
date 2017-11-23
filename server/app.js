@@ -69,14 +69,28 @@ app.get('/generate-schedule', function(req, res) {
     })
 })
 
-app.post('/login', utils.authenticate, (req, res) => {
-  console.log(req.body);
-  //get user info from user db;
-  //compare hashed password to password from db
-  //if password is correct, add user to req.session
+app.post('/login', 
+  utils.authenticate, 
+  utils.getAllDayParts, 
+  utils.getAllUsers,
+  utils.getAllNeededEmployees,
+  utils.getAllEmployeeAvailabilities,
+  utils.getAllScheduleDates,
+  (req, res) => {
+  let obj = {};
+  obj.dayParts = req.dayParts;
+  obj.view = 'employeeEditor';
+  obj.users = req.users;
+  obj.neededEmployees = req.neededEmployees;
+  obj.employeeAvailabilities = req.employeeAvailabilities;
+  obj.scheduleDates = req.scheduleDates;
+  res.json(obj);
 })
-app.post('/signup', (req, res) => {
-  console.log(req.body);
+app.post('/signup', utils.createUser, utils.getAllDayParts, (req, res) => {
+  let obj = {};
+  obj.dayParts = req.dayParts;
+  obj.view = 'employeeEditor';
+  res.json(obj);
 })
 
 module.exports = app;

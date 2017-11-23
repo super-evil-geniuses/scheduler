@@ -9,7 +9,7 @@ const employeeAvailabilities = (state = null, action) => {
     case 'ADD_EMPLOYEE':
       return action.payload.data.employeeAvailabilities;
     case 'GET_ALL':
-      return action.payload.data.employeeAvailabilities;
+      return action.payload.data.employeeAvailabilities || state;
     default:
       return state;
   }

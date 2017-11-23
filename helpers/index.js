@@ -114,6 +114,7 @@ const newSession = (req, res) => {
   session.session = crypto.randomBytes(32).toString('hex');
   session.user = null;
   res.cookie('shiftly', session.session);
+  console.log('session', session);
   return session;
 };
 
@@ -145,8 +146,9 @@ const passHash = (password) => {
 
 const authenticate = (req, res, next) => {
   //get user info from user db;
-  db.User.findOne({ name: req.body.creds.username })
+  db.User.findAll({ where: {name: req.body.creds.username} })
   .then((user) => {
+    user = user[0].dataValues;
     if (passHash(req.body.creds.password) === user.password) {
       req.session.user = user.name;
       next();
@@ -154,12 +156,34 @@ const authenticate = (req, res, next) => {
       res.status(401).send('incorrect username or password');
     }
   })
-  //compare hashed password to password from db
-  //if password is correct, add user to req.session
-}
+};
+
+const createUser = (req, res, next) => {
+  console.log(passHash(req.body.creds.password));
+  db.User.create({
+    name: req.body.creds.username,
+    role: 'manager',
+    password: passHash(req.body.creds.password)
+  }).then(() => {
+    req.session.user = req.body.creds.username;
+    next();
+  })
+};
+
+// const gatherSignupData = (req, res, next) => {
+//   let respObj = {view, allDayParts, employee};
+//   respObj.view = 'employeeEditor';
+//   db.Day_Part.findAll({})
+//   .then((allDayParts) => {
+//     respObj.dayParts = allDayParts;
+//     console.log(respObj);
+//     res.json(respObj);
+//   })
+// }
 
 
 module.exports = {
+  createUser: createUser,
   authenticate: authenticate,
   getAllUsers: getAllUsers,
   updateEmployeeAvailability: updateEmployeeAvailability,

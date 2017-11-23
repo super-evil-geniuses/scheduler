@@ -89,7 +89,7 @@ const scheduleGenerator = (allEmployeeAvail, temp) => {
       }  
     }
   };
-
+  console.log(allCombinations);
   findSolution(allCombinations, {}, 1);
   return completedSchedules[Math.floor(Math.random()*10)];
 }

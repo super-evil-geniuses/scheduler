@@ -3,7 +3,7 @@ const neededEmployees = (state = null, action) => {
     case 'GET_NEEDED_EMPLOYEES':
       return action.payload.data;
     case 'GET_ALL':
-      return action.payload.data.neededEmployees;
+      return action.payload.data.neededEmployees || state;
     default:
       return state;
   }
