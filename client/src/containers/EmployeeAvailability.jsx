@@ -94,7 +94,7 @@ class EmployeeAvailability extends React.Component {
           </table>
           <div className="employee-editor-save-btn">
             <button 
-            className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent "
+            className="btn-main"
             onClick={() => this.props.updateEmployeeAvailability(this.props.employee, this.state.newAvailabilities)}>
               Save
             </button>
