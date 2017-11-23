@@ -121,19 +121,20 @@ const newSession = (req, res) => {
 const checkSession = (req, res, next) => {
   return new Promise((resolve, reject) => {
     if (req.cookies['shiftly']) {
-      resolve(db.Sessions.findAll({ session: req.cookies['shiftly'] }));
+      resolve(db.Sessions.findAll( {where: { session: req.cookies['shiftly'] } }));
     } else {
       resolve();
     }
   })
   .then((session) => {
-    if (session) {
-      return session;
+    if (session.length > 0) {
+      return { session: session[0].dataValues.session };
     } else {
       return newSession(req, res);
     }
   }).then((session) => {
     req.session = session;
+    console.log(session);
     next();
   })
 };
@@ -148,10 +149,18 @@ const authenticate = (req, res, next) => {
   //get user info from user db;
   db.User.findAll({ where: {name: req.body.creds.username} })
   .then((user) => {
+    if (user.length === 0) {
+      res.status(401).send('incorrect username or password');
+      return;
+    }
     user = user[0].dataValues;
     if (passHash(req.body.creds.password) === user.password) {
       req.session.user = user.name;
-      next();
+      console.log(req.session);
+      db.Sessions.create({session: req.session.session, user_id: user.id})
+      .then(() => {
+        next();
+      })
     } else {
       res.status(401).send('incorrect username or password');
     }
@@ -159,28 +168,18 @@ const authenticate = (req, res, next) => {
 };
 
 const createUser = (req, res, next) => {
-  console.log(passHash(req.body.creds.password));
   db.User.create({
     name: req.body.creds.username,
     role: 'manager',
     password: passHash(req.body.creds.password)
-  }).then(() => {
+  }).then((data) => {
     req.session.user = req.body.creds.username;
-    next();
+    db.Sessions.create({session: req.session.session, user_id: data.dataValues.id})
+    .then(() => {
+      next();
+    })
   })
 };
-
-// const gatherSignupData = (req, res, next) => {
-//   let respObj = {view, allDayParts, employee};
-//   respObj.view = 'employeeEditor';
-//   db.Day_Part.findAll({})
-//   .then((allDayParts) => {
-//     respObj.dayParts = allDayParts;
-//     console.log(respObj);
-//     res.json(respObj);
-//   })
-// }
-
 
 module.exports = {
   createUser: createUser,
