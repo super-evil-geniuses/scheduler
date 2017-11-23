@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux';
 import { updateEmployeeAvailability } from '../actions/index';
 import _ from 'underscore';
 
+import AddEmployee from './AddEmployee.jsx';
+
 class EmployeeAvailability extends React.Component {
   constructor(props) {
     super(props);
@@ -12,8 +14,16 @@ class EmployeeAvailability extends React.Component {
     }
   }
 
+  componentWillMount() {
+    if(this.props.employee.availabilities) {
+      this.setState({
+        newAvailabilities: this.props.employee.availabilities
+      })
+    }
+  }
+
   componentWillUpdate(nextProps, nextState) {
-    if (nextProps.employee != this.props.employee) {
+    if (nextProps.employee != this.props.employee && nextProps.employee.availabilities) {
       const newAvailabilities = _.clone(nextProps.employee.availabilities);
       this.setState({
         newAvailabilities: newAvailabilities,
@@ -43,9 +53,9 @@ class EmployeeAvailability extends React.Component {
 
   render() {
     let renderBody;
-    if(!this.props.employee) {
+    if(this.props.employee === 'create') {
       renderBody = (
-        <h4>Please select an employee</h4>
+        <AddEmployee />
       );
     } else {
 

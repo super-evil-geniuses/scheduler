@@ -29,7 +29,7 @@ class ScheduleGenerator extends React.Component {
   }
   render() {
     return (
-      <div className="schedule-generator clear-fix">
+      <div className="schedule-generator clear-fix overlay">
         <div>
           <div>Week of <span className='schedule-generator-date'>{this.state.mondayDate.format("MMMM Do YYYY")}</span></div>
         </div>

@@ -110,7 +110,7 @@ h4 {
 
 .employee-edit-button {
   vertical-align: middle;
-  color: rgb(243, 31, 98);
+  color: rgb(234, 183, 105);
 }
 
 .employee-edit-profile {
@@ -121,7 +121,7 @@ h4 {
 }
 
 .editor-header {
-  background-color: #3f51b5;
+  background-color: rgb(0, 150, 136);
   color: white;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
   position: relative;
@@ -150,7 +150,7 @@ h4 {
 }
 
 .day-checkbox {
-  color: #3f51b5;
+  color: rgb(234, 183, 105);
 }
 
 .clickable {
@@ -166,11 +166,11 @@ h4 {
 }
 
 .schedule-generator {
-  background-color: #3f51b5;
+  background-image: url('./assets/trees.jpg');
+  background-color: rgb(0, 150, 136);
   color: white;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
   position: relative;
-  z-index: 10;
   padding: 20px;
 }
 
@@ -198,5 +198,51 @@ h4 {
 }
 
 .schedule-date-header {
-  min-width: 10px;
+  padding: 10px;
+  text-align: center;
+}
+
+.schedule-block {
+  padding: 10px;
+  height: 30px;
+}
+
+.schedule-shift-on {
+  background-color: rgb(234, 183, 105);
+  border-radius: 2px;
+}
+
+.schedule-shift-off {
+  background-color: rgb(255, 255, 255);
+}
+
+.schedule-name {
+  text-align: right;
+  vertical-align: middle;
+  padding-right: 10px;
+}
+
+.schedule-hours {
+  font-size: 12px;
+  color: rgba(0,0,0,.5);
+}
+
+.schedule-row {
+  padding: 5px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.schedule-actual {
+  padding: 40px 16px;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.component-block {
+  margin: 5px;
+}
+
+.no-employee-schedule {
+  text-align: center;
+  padding: 100px 0 0 0;
 }
