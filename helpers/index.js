@@ -23,7 +23,6 @@ const getAllScheduleDates = (req, res, next) => {
 };
 
 const getAllNeededEmployees = (req, res, next) => {
-  console.log("NEED");
   db.Needed_Employee.findAll({})
     .then((allNeededEmployees) => {
       req.neededEmployees = allNeededEmployees;

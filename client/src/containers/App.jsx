@@ -44,16 +44,22 @@ class App extends Component {
     return (
       <div className="app-container clear-fix">
         <div className="ratio-col-4">
-        <div className="editor-header">
-          <div className="container clear-fix">
-            <div className="ratio-col-2 editor-tab clickable" onClick={() => { this.props.changeView('employeeEditor')}}>Employees</div>
-            <div className="ratio-col-2 editor-tab clickable" onClick={() => { this.props.changeView('scheduleEditor')}}>Schedule</div>
+        <div className="component-block">
+          <div className="editor-header">
+            <div className="container clear-fix">
+              <div className="ratio-col-2 editor-tab clickable" onClick={() => { this.props.changeView('employeeEditor')}}>Employees</div>
+              <div className="ratio-col-2 editor-tab clickable" onClick={() => { this.props.changeView('scheduleEditor')}}>Schedule</div>
+            </div>
           </div>
+        {this.renderView()}
         </div>
-          {this.renderView()}
+      </div>
+        <div className="ratio-col-4-3">
+        <div className="component-block">
           <ScheduleGenerator />
           <ScheduleActual />
         </div>
+      </div>
       </div>
     );
   }
