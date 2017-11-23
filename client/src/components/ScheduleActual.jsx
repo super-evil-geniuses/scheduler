@@ -4,28 +4,34 @@ import { connect } from 'react-redux';
 import EmployeeSchedule from './EmployeeSchedule.jsx';
 
 
-const ScheduleActual = (props) => (
-  <div>
-    <div>todo date</div>
-    <br></br>
-    <div>
-      {(() => {
-        let divs = [];
-          if (props.dayPartsMap) {
-            for(let i = 1; i < 15; i++) {
-              divs.push(<div key={i}>{props.dayPartsMap[i]}</div>);
-            }
-          }
-        return divs;
-      })()}
-      <br></br><br></br>
-      {props.schedules.map((sched) => {
-        return <EmployeeSchedule schedule={sched} />;
-      })
-      }
+const ScheduleActual = (props) => {
+
+  let morningEvenings = [<div key={'block'} className="ratio-col-8 schedule-block schedule-hours"></div>];
+
+  for (let i = 0; i < 14; i++) {
+    morningEvenings.push(<div key={`${i}shift`} className="ratio-col-16 schedule-block  schedule-hours">{i % 2 === 0 ? 'AM' : 'PM'}</div>)
+  }
+
+  return (
+    <div className="container clear-fix schedule-actual">
+      <div className="schedule-date-header">
+        <div className="ratio-col-8 schedule-block "/>
+        <div className="ratio-col-8 schedule-block ">Mon</div>
+        <div className="ratio-col-8 schedule-block ">Tue</div>
+        <div className="ratio-col-8 schedule-block ">Wed</div>
+        <div className="ratio-col-8 schedule-block ">Thur</div>
+        <div className="ratio-col-8 schedule-block ">Fri</div>
+        <div className="ratio-col-8 schedule-block ">Sat</div>
+        <div className="ratio-col-8 schedule-block ">Sun</div>
+        {morningEvenings}
+      </div>
+        {props.schedules.map((sched,idx) => {
+          return <EmployeeSchedule key={`${sched.name}${idx}`} schedule={sched} />;
+        })}
     </div>
-  </div>
-)
+  )
+  
+}
 
 const mapStateToProps = (state) => {
 	let schedules = {};
