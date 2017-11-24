@@ -1,16 +1,15 @@
 import React from 'react';
 import EmployeeRosterItem from '../containers/EmployeeRosterItem.jsx';
-import AddEmployee from '../containers/AddEmployee.jsx';
 import _ from 'underscore';
 
 const EmployeeRoster = (props) => {
   return (
     <div>
-    <div className="list-item clear-fix clickable">
+    <div className="list-item clear-fix clickable" onClick={() => props.selectEmployee('create')}>
       <div className="ratio-col-4-3" >
         <div>
           <i className="material-icons employee-edit-profile">account_circle</i>
-          <span>Add new employee <AddEmployee /></span> 
+          <span>Add new employee</span> 
         </div>
       </div>
       <div className="ratio-col-4" >
