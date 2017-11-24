@@ -61,7 +61,18 @@ const scheduleGenerator = (allEmployeeAvail, temp) => {
   }
 
   let schedule = {};
+  let cheapSolution = [];
   let completedSchedules = [];
+
+  const findCheapSolution = (possibilities) => {
+    let rocker = true;
+    for (const dayPart in possibilities) {
+      schedule[dayPart] = rocker ? possibilities[dayPart][0] : possibilities[dayPart][possibilities[dayPart].length - 1];
+      rocker = !rocker;
+    }
+    let completed = Object.assign({}, schedule);
+    cheapSolution.push(completed);
+  };
   const findSolution = (possibilities, empShifts, dayPart) => {
     //for every dayPart 
     let currentDayPossibilities = possibilities[dayPart];
@@ -89,14 +100,16 @@ const scheduleGenerator = (allEmployeeAvail, temp) => {
       }  
     }
   };
+  findCheapSolution(allCombinations);
+  schedule = {};
   findSolution(allCombinations, {}, 1);
-  return completedSchedules[Math.floor(Math.random()*10)];
+  return completedSchedules.length ? completedSchedules[Math.floor(Math.random()*10)] : cheapSolution[0];
 }
 
 const willAnyEmployeeBeInOvertime = (shiftCounts, proposedShift) => {
   let overtime = false;
   proposedShift.forEach((e) => {
-    if(shiftCounts[e] >= 5) {
+    if(shiftCounts[e] >= 6) {
       overtime = true;
     }
   })
