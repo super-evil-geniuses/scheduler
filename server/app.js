@@ -40,8 +40,11 @@ app.patch('/employee_availability', utils.updateEmployeeAvailability, (req, res)
   res.end();
 });
 
-app.post('/add_employee', utils.addUser, utils.getAllDayParts, utils.addEmployeeAvailability, (req, res) => {
-  res.json(req.user);
+app.post('/add_employee', utils.addUser, utils.getAllDayParts, utils.addEmployeeAvailability, utils.getAllEmployeeAvailabilities, (req, res) => {
+  res.json({ 
+    user: req.user,
+    employeeAvailabilities: req.employeeAvailabilities, 
+  });
 });
 
 app.post('/generate_schedule', (req, res) => {
