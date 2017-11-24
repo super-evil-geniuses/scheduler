@@ -9,6 +9,7 @@ class AddEmployee extends React.Component {
     super(props);
     this.state = {
       newEmployeeName: '',
+      newEmployeePassword: '',
     };
   }
 
@@ -17,11 +18,20 @@ class AddEmployee extends React.Component {
       <div className="list-item clear-fix clickable">
         Username:
         <input
+          className="Username"
           type="text"
           value={this.state.newEmployeeName}
           onChange={e => this.setState({ newEmployeeName: e.target.value })}
         />
-        <button onClick={() => this.props.addEmployee(this.state.newEmployeeName)}>Add</button>
+        <br></br>
+        Password:
+        <input
+          className="Password"
+          type="text"
+          value={this.state.newEmployeePassword}
+          onChange={e => this.setState({ newEmployeePassword: e.target.value })}
+        />
+        <button onClick={() => this.props.addEmployee(this.state.newEmployeeName, this.state.newEmployeePassword)}>Add</button>
       </div>
     );
   }

@@ -53,10 +53,11 @@ const getAllDayParts = (req, res, next) => {
 };
 
 const addUser = (req, res, next) => {
+  console.log(req.body);
   db.User.create({
     name: req.body.username,
     role: 'employee',
-    password: null,
+    password: passHash(req.body.password),
   })
     .then((user) => {
       req.user = user;
