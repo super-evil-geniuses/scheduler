@@ -1,8 +1,8 @@
 import React from 'react';
 
 const FlashMessage = (props) => (
-  <div>
-  <h4>{props.message.toUpperCase()}</h4>
+  <div className="container flash-message">
+  {props.message.toUpperCase()}
   </div>
 	)
 
