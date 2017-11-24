@@ -106,7 +106,7 @@ describe('Shiftly Backend Test Spec', () => {
             }],
           })
             .then((results) => {
-              expect(results).not.be.empty;
+              expect(results).to.not.be.empty;
               done();
             })
             .catch(error =>
