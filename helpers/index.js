@@ -192,12 +192,11 @@ const createUser = (req, res, next) => {
 };
 
 const redirectIfLoggedIn = (req, res, next) => {
-  // if (req.session.user) {
-  //   console.log('redircting');
-  //   res.redirect('/welcome_back');
-  // } else {
-  //   next();
-  // }
+  if (!req.session.user) {
+    res.send();
+    return;
+  } 
+  console.log('redirecting');
   next();
 };
 

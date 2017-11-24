@@ -9,7 +9,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(utils.checkSession, utils.redirectIfLoggedIn);
+app.use(utils.checkSession);
 
 app.use(express.static(__dirname + '/../client/dist/compiled'));
 
@@ -70,6 +70,7 @@ app.get('/generate-schedule', function(req, res) {
 })
 
 app.get('/welcome_back',
+  utils.redirectIfLoggedIn,
 utils.getAllDayParts, 
   utils.getAllUsers,
   utils.getAllNeededEmployees,

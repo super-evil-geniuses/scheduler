@@ -7,6 +7,7 @@ import { getAllDayParts } from '../actions/index';
 import { getAllNeededEmployees } from '../actions/index';
 import { getAllScheduleDates } from '../actions/index';
 import { changeView } from '../actions/index';
+import { checkedIfLoggedIn } from '../actions/index';
 
 import EmployeeEditor from './EmployeeEditor.jsx';
 import ScheduleEditor from './ScheduleEditor.jsx';
@@ -17,13 +18,14 @@ import SignUp from './SignUp.jsx';
 
 class App extends Component {
 
-  // componentWillMount() {
+  componentWillMount() {
+    this.props.checkedIfLoggedIn();
   //   this.props.getAllUsers();
   //   this.props.getAllEmployeeAvailabilities();
   //   this.props.getAllDayParts();
   //   this.props.getAllNeededEmployees();
   //   this.props.getAllScheduleDates();
-  // }
+  }
 
   renderView(){
 
@@ -77,6 +79,7 @@ function mapDispatchToProps(dispatch) {
     // getAllDayParts: getAllDayParts,
     // getAllNeededEmployees: getAllNeededEmployees,
     // getAllScheduleDates: getAllScheduleDates,
+    checkedIfLoggedIn: checkedIfLoggedIn,
     changeView: changeView,
   }, dispatch);
 }

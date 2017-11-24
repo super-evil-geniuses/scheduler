@@ -103,7 +103,17 @@ const signUp = (creds) => {
   }
 }
 
+const checkedIfLoggedIn = () => {
+  const response = axios.get('/welcome_back');
+
+  return {
+    type: 'GET_ALL',
+    payload: response,
+  }
+}
+
 module.exports = {
+  checkedIfLoggedIn: checkedIfLoggedIn,
   generateSchedule: generateSchedule,
   updateEmployeeAvailability: updateEmployeeAvailability,
   getAllUsers: getAllUsers,
