@@ -86,7 +86,33 @@ const changeView = (newView) => {
   }
 };
 
+const login = (creds) => {
+  const response = axios.post('/login', { creds })
+  return {
+    type: 'GET_ALL',
+    payload: response,
+  }
+}
+
+const signUp = (creds) => {
+  const response = axios.post('/signup', { creds });
+  return {
+    type: 'GET_ALL',
+    payload: response,
+  }
+}
+
+const checkedIfLoggedIn = () => {
+  const response = axios.get('/welcome_back');
+
+  return {
+    type: 'GET_ALL',
+    payload: response,
+  }
+}
+
 module.exports = {
+  checkedIfLoggedIn: checkedIfLoggedIn,
   generateSchedule: generateSchedule,
   updateEmployeeAvailability: updateEmployeeAvailability,
   getAllUsers: getAllUsers,
@@ -96,4 +122,6 @@ module.exports = {
   getAllScheduleDates: getAllScheduleDates,
   addEmployee: addEmployee,
   changeView: changeView,
+  login: login,
+  signUp: signUp,
 };

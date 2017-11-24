@@ -1,11 +1,11 @@
 const db = require('../database');
 const Promise = require('bluebird');
+const crypto = require('crypto');
 
 const getAllUsers = (req, res, next) => {
   db.User.findAll({})
     .then((allUsers) => {
       req.users = allUsers;
-      console.log('all users: ', allUsers)
       next();
     }).catch((err) => {
       res.end(500, 'Error getting users');
@@ -109,7 +109,104 @@ const updateEmployeeAvailability = (req, res, next) => {
   });
 };
 
+const newSession = (req, res) => {
+  let session = {};
+  session.session = crypto.randomBytes(32).toString('hex');
+  session.user = null;
+  res.cookie('shiftly', session.session);
+  console.log('session', session);
+  return session;
+};
+
+const checkSession = (req, res, next) => {
+  return new Promise((resolve, reject) => {
+    if (req.cookies['shiftly']) {
+      resolve(db.Sessions.findAll( {where: { session: req.cookies['shiftly'] } }));
+    } else {
+      resolve([]);
+    }
+  })
+  .then((session) => {
+    if (session.length > 0) {
+      db.User.findAll({ where: { id: session[0].dataValues.user_id}})
+      .then((user) => {
+        let obj =  { session: session[0].dataValues.session }; 
+        if (user.length) {
+          obj.user = user[0].dataValues.name;
+        }
+        
+        req.session = obj;
+        next();
+      })
+    } else {
+      req.session = newSession(req, res);
+      next();
+    }
+  })
+};
+
+const passHash = (password) => {
+  let shasum = crypto.createHash('sha256');
+  shasum.update(password);
+  return shasum.digest('hex');
+}
+
+const authenticate = (req, res, next) => {
+  //get user info from user db;
+  if (req.session.user) {
+    next();
+    return;
+  }
+  db.User.findAll({ where: {name: req.body.creds.username} })
+  .then((user) => {
+    if (user.length === 0) {
+      res.status(201).send({ flashMessage: 'incorrect username or password'});
+      return;
+    }
+    user = user[0].dataValues;
+    if (passHash(req.body.creds.password) === user.password) {
+      req.session.user = user.name;
+      console.log(req.session);
+      db.Sessions.create({session: req.session.session, user_id: user.id})
+      .then(() => {
+        next();
+      })
+    } else {
+      res.status(201).send({ flashMessage: 'incorrect username or password'});
+    }
+  })
+};
+
+const createUser = (req, res, next) => {
+  db.User.create({
+    name: req.body.creds.username,
+    role: 'manager',
+    password: passHash(req.body.creds.password)
+  }).then((data) => {
+    req.session.user = req.body.creds.username;
+    db.Sessions.create({session: req.session.session, user_id: data.dataValues.id})
+    .then(() => {
+      next();
+    })
+  }).catch((err) => {
+    res.status(201).send({ flashMessage: `username "${req.body.creds.username}" already exists`})
+  })
+};
+
+const redirectIfLoggedIn = (req, res, next) => {
+  if (!req.session.user) {
+    res.send();
+    return;
+  } 
+  console.log('redirecting');
+  next();
+};
+
+
 module.exports = {
+  redirectIfLoggedIn: redirectIfLoggedIn,
+  createUser: createUser,
+  authenticate: authenticate,
   getAllUsers: getAllUsers,
   updateEmployeeAvailability: updateEmployeeAvailability,
   getAllEmployeeAvailabilities: getAllEmployeeAvailabilities,
@@ -118,4 +215,5 @@ module.exports = {
   getAllScheduleDates: getAllScheduleDates,
   addUser: addUser,
   addEmployeeAvailability: addEmployeeAvailability,
+  checkSession: checkSession,
 };
