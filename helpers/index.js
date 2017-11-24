@@ -123,19 +123,25 @@ const checkSession = (req, res, next) => {
     if (req.cookies['shiftly']) {
       resolve(db.Sessions.findAll( {where: { session: req.cookies['shiftly'] } }));
     } else {
-      resolve();
+      resolve([]);
     }
   })
   .then((session) => {
     if (session.length > 0) {
-      return { session: session[0].dataValues.session };
+      db.User.findAll({ where: { id: session[0].dataValues.user_id}})
+      .then((user) => {
+        let obj =  { session: session[0].dataValues.session }; 
+        if (user.length) {
+          obj.user = user[0].dataValues.name;
+        }
+        
+        req.session = obj;
+        next();
+      })
     } else {
-      return newSession(req, res);
+      req.session = newSession(req, res);
+      next();
     }
-  }).then((session) => {
-    req.session = session;
-    console.log(session);
-    next();
   })
 };
 
@@ -147,6 +153,10 @@ const passHash = (password) => {
 
 const authenticate = (req, res, next) => {
   //get user info from user db;
+  if (req.session.user) {
+    next();
+    return;
+  }
   db.User.findAll({ where: {name: req.body.creds.username} })
   .then((user) => {
     if (user.length === 0) {
@@ -181,7 +191,19 @@ const createUser = (req, res, next) => {
   })
 };
 
+const redirectIfLoggedIn = (req, res, next) => {
+  // if (req.session.user) {
+  //   console.log('redircting');
+  //   res.redirect('/welcome_back');
+  // } else {
+  //   next();
+  // }
+  next();
+};
+
+
 module.exports = {
+  redirectIfLoggedIn: redirectIfLoggedIn,
   createUser: createUser,
   authenticate: authenticate,
   getAllUsers: getAllUsers,
