@@ -20,7 +20,9 @@ const Login = (props) => (
             () => {
               let username = document.getElementById('username').value;
               let password = document.getElementById('password').value;
-              props.login({ username, password })
+              props.login({ username, password });
+              document.getElementById('username').value = '';
+              document.getElementById('password').value = '';
             }
           } />
         </div>

@@ -20,7 +20,9 @@ const SignUp = (props) => (
             () => {
               let username = document.getElementById('username').value;
               let password = document.getElementById('password').value;
-              props.signUp({ username, password })
+              props.signUp({ username, password });
+              document.getElementById('username').value = '';
+              document.getElementById('password').value = '';
             }
           } 
           className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent " />

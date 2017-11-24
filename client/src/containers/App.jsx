@@ -13,6 +13,7 @@ import EmployeeEditor from './EmployeeEditor.jsx';
 import ScheduleEditor from './ScheduleEditor.jsx';
 import ScheduleGenerator from './ScheduleGenerator.jsx';
 import ScheduleActual from '../components/ScheduleActual.jsx';
+import FlashMessage from '../components/FlashMessage.jsx';
 import Login from './Login.jsx';
 import SignUp from './SignUp.jsx';
 
@@ -25,6 +26,14 @@ class App extends Component {
   //   this.props.getAllDayParts();
   //   this.props.getAllNeededEmployees();
   //   this.props.getAllScheduleDates();
+  }
+
+  renderFlashMessage() {
+    if (this.props.flashMessage) {
+      return <FlashMessage message={this.props.flashMessage} />
+    } else {
+      return;
+    }
   }
 
   renderView(){
@@ -54,6 +63,7 @@ class App extends Component {
               <div className="ratio-col-2 editor-tab clickable" onClick={() => { this.props.changeView('scheduleEditor')}}>Schedule</div>
             </div>
           </div>
+        {this.renderFlashMessage()}
         {this.renderView()}
         </div>
       </div>
@@ -69,7 +79,7 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-  return { view: state.view, };
+  return { view: state.view, flashMessage: state.flashMessage};
 }
 
 function mapDispatchToProps(dispatch) {

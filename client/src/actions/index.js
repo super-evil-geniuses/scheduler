@@ -87,8 +87,7 @@ const changeView = (newView) => {
 };
 
 const login = (creds) => {
-  const response = axios.post('/login', { creds });
-
+  const response = axios.post('/login', { creds })
   return {
     type: 'GET_ALL',
     payload: response,

@@ -160,7 +160,7 @@ const authenticate = (req, res, next) => {
   db.User.findAll({ where: {name: req.body.creds.username} })
   .then((user) => {
     if (user.length === 0) {
-      res.status(401).send('incorrect username or password');
+      res.status(201).send({ flashMessage: 'incorrect username or password'});
       return;
     }
     user = user[0].dataValues;
@@ -172,7 +172,7 @@ const authenticate = (req, res, next) => {
         next();
       })
     } else {
-      res.status(401).send('incorrect username or password');
+      res.status(201).send({ flashMessage: 'incorrect username or password'});
     }
   })
 };
@@ -188,6 +188,8 @@ const createUser = (req, res, next) => {
     .then(() => {
       next();
     })
+  }).catch((err) => {
+    res.status(201).send({ flashMessage: `username "${req.body.creds.username}" already exists`})
   })
 };
 
