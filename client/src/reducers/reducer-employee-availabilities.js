@@ -6,6 +6,8 @@ const employeeAvailabilities = (state = null, action) => {
       return state.filter((availability) => {
         return availability.user_id !== action.payload.data[0].user_id;
       }).concat(action.payload.data);
+    case 'ADD_EMPLOYEE':
+      return action.payload.data.employeeAvailabilities;
     default:
       return state;
   }

@@ -16,7 +16,7 @@ const algo = require('../helpers/algo.js');
 const utils = require('../helpers/index.js');
 const port = process.env.PORT || 8080;
 
-describe('Shiftly Test Spec', () => {
+describe('Shiftly Backend Test Spec', () => {
 
   let sequelize;
   let server;
@@ -24,7 +24,18 @@ describe('Shiftly Test Spec', () => {
 
   before((done) => {
     sequelize = new Sequelize(process.env.DB_NAME || 'shiftly', process.env.DB_USER || 'postgres', process.env.DB_PASS || null, { host: process.env.DB_HOST || 'localhost', dialect: 'postgres' });
+    // debugger
     db = schema(sequelize);
+    db.User.hasMany(db.Actual_Schedule, { as: 'actual_schedule'});
+    db.User.hasMany(db.Employee_Availability, { as: 'employee_availability' });
+    db.Employee_Availability.belongsTo(db.User);
+    db.Schedule.hasMany(db.Actual_Schedule, { as: 'actual_schedule'});
+    db.Schedule.hasMany(db.Needed_Employee, { as: 'needed_employee' });
+
+    db.Day_Part.hasMany(db.Employee_Availability, { as: 'employee_availability' });
+    db.Day_Part.hasMany(db.Actual_Schedule, { as: 'actual_schedule' });
+    db.Day_Part.hasMany(db.Needed_Employee, { as: 'needed_employee' });
+
     setTimeout(done, 1000);
   })
 
@@ -46,17 +57,17 @@ describe('Shiftly Test Spec', () => {
     });
   });
 
-  xdescribe('Server Routing:', () => {
+  describe('Server Routing:', () => {
     it('should get 200 response with /add_employee endpoint', (done) => {
       request(app)
         .post('/add_employee')
         .set('Content-Type', 'application/json')
         .send({
-          username: 'Al',
+          username: 'Bob',
         })
         .expect(200, done);
     });
-    
+
     it('adding a new employee creates a new user record', (done) => {
       request(app)
         .post('/add_employee')
@@ -66,7 +77,7 @@ describe('Shiftly Test Spec', () => {
         })
         .end((err, res) => {
           if (err) { throw err; }
-          expect(res.body.name).to.equal('Alice');
+          expect(res.body.user.name).to.equal('Alice');
           done();
         });
     });
@@ -78,21 +89,30 @@ describe('Shiftly Test Spec', () => {
     });
   });
 
-  xdescribe('Middleware:', () => {
-    xit('adding a new employee creates the records in employee\'s availability table and sets all the availabilities to false', (done) => {
+  describe('Middleware:', () => {
+    it('adding a new employee creates a employee availability records for the new employee', (done) => {
       request(app)
         .post('/add_employee')
         .set('Content-Type', 'application/json')
         .send({
           username: 'Alice',
         })
-        .end((err, res) => {
-          if (err) { throw err; }
-          expect(res.body.name).to.equal('Alice');
-          done();
+        .end((err) => {
+          if (err) { done(err); }
+          return db.Employee_Availability.findAll({
+            where: { '$user.name$': 'Alice' },
+            include: [{
+              model: db.User,
+            }],
+          })
+            .then((results) => {
+              expect(results).to.not.be.empty;
+              done();
+            })
+            .catch(error =>
+              done(error));
         });
     });
-
   });
 
   describe('Algo', () => {
