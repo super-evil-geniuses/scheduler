@@ -7,10 +7,13 @@ import NeededEmployeesReducer from './reducer-needed-employees.js';
 import ScheduleDatesReducer from './reducer-schedule-dates.js';
 import ScheduleActual from './reducer-schedule-actual.js';
 import View from './reducer-view.js';
+import FlashMessage from './reducer-flash-message.js';
 
 const rootReducer = combineReducers({
+  flashMessage: FlashMessage,
   employeeAvailabilities: EmployeeAvailabilitiesReducer,
   scheduleActual: ScheduleActual,
+  view: View,
   //employees: EmployeesReducer,
   //selectedEmployee: SelectedEmployeeReducer,
   users: UsersReducer,

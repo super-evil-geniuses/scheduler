@@ -6,6 +6,8 @@ const sequelize = new Sequelize(process.env.DB_NAME || 'shiftly', process.env.DB
 
 const db = config(sequelize);
 
+db.User.hasMany(db.Session, {as: 'session'});
+
 // One-to-Many Relationships
 db.User.hasMany(db.Actual_Schedule, { as: 'actual_schedule'});
 db.User.hasMany(db.Employee_Availability, { as: 'employee_availability' });
@@ -33,6 +35,9 @@ db.User.sync()
 	})
 	.then(() => {
 		return db.Needed_Employee.sync();
+	})
+	.then(() => {
+		return db.Session.sync();
 	});
 
 module.exports = {
@@ -42,5 +47,6 @@ module.exports = {
   Actual_Schedule: db.Actual_Schedule,
   Needed_Employee: db.Needed_Employee,
   Day_Part: db.Day_Part,
-  sequelize: sequelize
+  sequelize: sequelize,
+  Sessions: db.Session,
 };
