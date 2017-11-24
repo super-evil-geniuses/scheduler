@@ -116,16 +116,6 @@ const willAnyEmployeeBeInOvertime = (shiftCounts, proposedShift) => {
   return overtime;
 }
 
-const willAnyEmployeeBeInMinimalOvertime = (shiftCounts, proposedShift) => {
-  let overtime = false;
-  proposedShift.forEach((e) => {
-    if(shiftCounts[e] >= 8) {
-      overtime = true;
-    }
-  })
-  return overtime;
-}
-
 const willHaveDouble = (amShift = [], pmShift) => {
   for (let i = 0; i < amShift.length; i++) {
     if (pmShift.includes(amShift[i])) {
