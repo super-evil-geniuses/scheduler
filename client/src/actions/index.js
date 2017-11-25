@@ -79,6 +79,36 @@ const updateEmployeeAvailability = (employee, newAvailabilities) => {
   };
 };
 
+const updateNeededEmployees = (schedule, newAvailabilities) => {
+  const requestBody = Object.keys(newAvailabilities).map((dayPartId) => {
+    return { schedule_id: schedule.id, day_part_id: dayPartId, employees_needed: newAvailabilities[dayPartId] };
+  });
+
+  const response = axios.patch('/needed_employees', {
+    scheduleAvailabilities: requestBody,
+  });
+
+  return {
+    type: 'UPDATE_NEEDED_EMPLOYEES',
+    payload: response,
+  };
+};
+
+const createScheduleTemplate = (monDate, scheduleTemplate) => {
+  const requestBody = Object.keys(scheduleTemplate).map((dayPartId) => {
+    return { monday_dates: monDate, day_part_id: dayPartId, employees_needed: scheduleTemplate[dayPartId] };
+  });
+
+  const response = axios.post('/needed_employees', {
+    scheduleTemplate: requestBody
+  });
+
+  return {
+    type: 'CREATE_SCHEDULE_TEMPLATE',
+    payload: response,
+  };
+};
+
 const changeView = (newView) => {
   return {
     type: 'CHANGE_VIEW',
@@ -119,7 +149,9 @@ module.exports = {
   getAllEmployeeAvailabilities: getAllEmployeeAvailabilities,
   getAllDayParts: getAllDayParts,
   getAllNeededEmployees: getAllNeededEmployees,
+  updateNeededEmployees: updateNeededEmployees,
   getAllScheduleDates: getAllScheduleDates,
+  createScheduleTemplate: createScheduleTemplate,
   addEmployee: addEmployee,
   changeView: changeView,
   login: login,

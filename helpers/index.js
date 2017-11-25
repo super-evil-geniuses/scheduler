@@ -118,6 +118,54 @@ const updateEmployeeAvailability = (req, res, next) => {
   });
 };
 
+const updateNeededEmployees = (req, res, next) => {
+  return Promise.each(req.body.scheduleAvailabilities, (scheduleAvail) => {
+    const updates = { employees_needed: scheduleAvail.employees_needed };
+    const conditions = {
+      where: {
+        schedule_id: scheduleAvail.schedule_id,
+        day_part_id: scheduleAvail.day_part_id,
+      },
+    };
+    return db.Needed_Employee.update(updates, conditions);
+  }).then((updatedTemplate) => {
+    req.scheduleTemplate = updatedTemplate;
+    next();
+  }).catch((err) => {
+    res.end(500, 'Error updating needed employees');
+  });
+};
+
+const createScheduleDate = (req, res, next) => {
+  db.Schedule.create({
+    monday_dates: new Date(req.body.scheduleTemplate[0].monday_dates)
+  }).then((scheduleDate)=> {
+    req.scheduleTemplate = {};
+    req.scheduleTemplate.monday_date = scheduleDate;
+    next();
+  }).catch((err) => {
+    res.end(500, 'Error creating new schedule date');
+  });
+};
+
+const createScheduleTemplate = (req, res, next) => {
+  let newTemplate = [];
+  return Promise.each(req.body.scheduleTemplate, (key) => {
+    return db.Needed_Employee.create({
+      employees_needed: key.employees_needed,
+      schedule_id: req.scheduleTemplate.monday_date.dataValues.id,
+      day_part_id: parseInt(key.day_part_id),
+    }).then((entry) => {
+      newTemplate.push(entry);
+    });
+  }).then(() => {
+    req.scheduleTemplate.template = newTemplate;
+    next();
+  }).catch((err) => {
+    res.end(err);
+  });
+};
+
 const newSession = (req, res) => {
   let session = {};
   session.session = crypto.randomBytes(32).toString('hex');
@@ -251,4 +299,7 @@ module.exports = {
   addUser: addUser,
   addEmployeeAvailability: addEmployeeAvailability,
   checkSession: checkSession,
+  updateNeededEmployees: updateNeededEmployees,
+  createScheduleDate:createScheduleDate,
+  createScheduleTemplate: createScheduleTemplate,
 };

@@ -50,6 +50,16 @@ app.post('/add_employee', utils.addUser, utils.getAllDayParts, utils.addEmployee
   });
 });
 
+app.patch('/needed_employees', utils.updateNeededEmployees, (req, res) => {
+  res.write(JSON.stringify(req.scheduleTemplate));
+  res.end();
+});
+
+app.post('/needed_employees', utils.createScheduleDate, utils.createScheduleTemplate, (req, res) => {
+  res.write(JSON.stringify(req.scheduleTemplate));
+  res.end();
+});
+
 app.post('/generate_schedule', (req, res) => {
   
   generateSchedule(new Date(req.body.mondayDate))
