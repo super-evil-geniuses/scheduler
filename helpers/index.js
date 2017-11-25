@@ -283,8 +283,19 @@ const sendEmployeeInfo = (req, res, next) => {
   next();
 };
 
+const destroySession = (req, res, next) => {
+  console.log('destroying session');
+  db.Sessions.destroy({ where:{session: req.session.session} })
+  .then(() => {
+    console.log('creating new session');
+    req.session = newSession(req, res);
+    next();
+  })
+};
+
 
 module.exports = {
+  destroySession: destroySession,
   sendEmployeeInfo: sendEmployeeInfo,
   getAllActualSchedules: getAllActualSchedules,
   redirectIfLoggedIn: redirectIfLoggedIn,
