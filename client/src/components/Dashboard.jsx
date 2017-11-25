@@ -22,7 +22,7 @@ class Dashboard extends Component {
 
     return (
       <div className="dashboard-container">
-        <div className="ratio-col-4">
+        <div className="ratio-col-4 major-component">
           <div className="component-block">
             <div className="editor-header">
               <div className="container clear-fix">
@@ -33,7 +33,7 @@ class Dashboard extends Component {
           {editorView}
           </div>
         </div>
-        <div className="ratio-col-4-3">
+        <div className="ratio-col-4-3 major-component">
           <div className="component-block">
             <ScheduleGenerator />
             <ScheduleActual />
