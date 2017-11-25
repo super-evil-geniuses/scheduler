@@ -281,6 +281,7 @@ h4 {
 
 .dashboard-container {
   margin: 10px;
+  min-width: 1400px;
 }
 
 .credentials {
@@ -316,4 +317,18 @@ h4 {
   border: 1px solid rgb(207, 98, 84);
   background-color: rgb(252, 192, 182);
   color: rgb(207, 98, 84);
+}
+
+
+
+@media (max-width: 900px) {
+  .dashboard-container {
+    min-width: 100%;
+    margin: 0;
+  }
+
+  .major-component {
+    width: 100%;
+    margin: 0;
+  }
 }
