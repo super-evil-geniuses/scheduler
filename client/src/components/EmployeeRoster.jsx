@@ -18,7 +18,7 @@ const EmployeeRoster = (props) => {
       </div>
     </div>
     </div>
-      {_.map(props.employees, (employee) => {
+      {props.employees && _.map(props.employees, (employee) => {
         return <EmployeeRosterItem key={employee.id} employee={employee} selectEmployee={props.selectEmployee}/>;
       })}
     </div>

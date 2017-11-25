@@ -21,11 +21,11 @@ class EmployeeEditor extends Component {
     return (
       <div className='ratio-col-1'>
         {this.state.selectedEmployee && <EmployeeAvailability employee={this.state.selectedEmployee} dayPartsMap={this.props.dayPartsMap} />}
-        {this.props.employees && 
+
         <EmployeeRoster 
           employees={this.props.employees}
           selectEmployee={this.selectEmployee}
-        />}
+        />
       </div>
     );
   }

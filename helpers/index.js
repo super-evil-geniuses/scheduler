@@ -83,7 +83,7 @@ const addEmployeeAvailability = (req, res, next) => {
   Promise.each(parsedDayPartsKeys, (key) => {
     const id = JSON.parse(key) + 1;
     return db.Employee_Availability.create({
-      is_available: false,
+      is_available: true,
       user_id: parsedUserId,
       day_part_id: id,
     })
