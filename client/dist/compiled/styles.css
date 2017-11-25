@@ -319,8 +319,6 @@ h4 {
   color: rgb(207, 98, 84);
 }
 
-
-
 @media (max-width: 900px) {
   .dashboard-container {
     min-width: 100%;
