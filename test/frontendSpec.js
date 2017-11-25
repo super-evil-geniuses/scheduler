@@ -1,5 +1,6 @@
 import users from '../client/src/reducers/reducer-users';
 import employeeAvailabilities from '../client/src/reducers/reducer-employee-availabilities';
+import scheduleDates from '../client/src/reducers/reducer-schedule-dates';
 
 describe('Shiftly Frontend Test Spec', () => {
   describe('users reducer', () => {
@@ -65,5 +66,42 @@ describe('Shiftly Frontend Test Spec', () => {
       
     });
   })
+
+  describe('schedule dates reducer', () => {
+    const initialState = null;
+    const stateWithOneScheduleTemp = [{
+      id: 1,
+      monday_dates: "2017-11-13T08:00:00.000Z"
+    }];
+    const stateWithAddedScheduleTemp = [{
+      id: 1,
+      monday_dates: "2017-11-13T08:00:00.000Z"
+    }, {
+      id: 2,
+      monday_dates: "2017-11-27T08:00:00.000Z"
+    }];
+
+    it('should return the initial state', () => {
+      expect(scheduleDates(undefined, {})).toEqual(initialState)
+    })
+    
+    it('should change the state with the action get schedules', () => {
+      expect(scheduleDates(undefined, {
+        type: 'GET_SCHEDULE_DATES',
+        payload: {data: stateWithOneScheduleTemp}
+      })).toEqual(stateWithOneScheduleTemp)
+    })
+
+    it('should change the state with the action create schedule template', () => {
+      expect(users(stateWithOneScheduleTemp, {
+        type: 'CREATE_SCHEDULE_TEMPLATE',
+        payload: {data: {monday_date: {
+          id: 2,
+          monday_dates: "2017-11-27T08:00:00.000Z",
+        }}}
+      })).toEqual(stateWithAddedScheduleTemp)
+    })
+  })
+
 })
 

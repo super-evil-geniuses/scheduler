@@ -87,6 +87,54 @@ describe('Shiftly Backend Test Spec', () => {
         .get('/users')
         .expect(200, done);
     });
+
+    it('should get 200 response for patch request with /needed_employee endpoint', (done) => {
+      request(app)
+        .patch('/needed_employees')
+        .set('Content-Type', 'application/json')
+        .send({
+          scheduleAvailabilities: [{
+            employees_needed: 1,
+            day_part_id: 1,
+            schedule_id: 1
+          }],
+        })
+        .expect(200, done);
+    });
+
+    it('should get 200 response for post request with /needed_employee endpoint', (done) => {
+      request(app)
+        .post('/needed_employees')
+        .set('Content-Type', 'application/json')
+        .send({
+          scheduleTemplate: [{
+            employees_needed: 1,
+            day_part_id: 1,
+            monday_dates: '11/27/17'
+          }],
+        })
+        .expect(200, done);
+    });
+
+    it('creating a new schedule template responds with new monday date and schedule template', (done) => {
+      request(app)
+        .post('/needed_employees')
+        .set('Content-Type', 'application/json')
+        .send({
+          scheduleTemplate: [{
+            employees_needed: 1,
+            day_part_id: 1,
+            monday_dates: '11/27/17'
+          }],
+        })
+        .end((err, res) => {
+          if (err) {
+            throw err;
+          }
+          expect(res).to.not.equal(undefined);
+          done();
+        });
+    });
   });
 
   describe('Middleware:', () => {
@@ -110,6 +158,57 @@ describe('Shiftly Backend Test Spec', () => {
               done();
             })
             .catch(error =>
+              done(error));
+        });
+    });
+
+    it('creating a new schedule template should store new monday date into db', (done) => {
+      request(app)
+        .post('/needed_employees')
+        .set('Content-Type', 'application/json')
+        .send({
+          scheduleTemplate: [{
+            employees_needed: 1,
+            day_part_id: 1,
+            monday_dates: '11/27/17'
+          }],
+        })
+        .end((err, res) => {
+          if (err) {
+            throw err;
+          }
+          return db.Schedule.find()
+            .then((results) => {
+              let monDate = JSON.stringify(results.dataValues.monday_dates);
+              expect(monDate.substr(1,10)).to.equal('2017-11-27');
+              done();
+            })
+            .catch(error => 
+              done(error));
+        });
+    });
+
+    it('creating a new schedule template should store new template into db', (done) => {
+      request(app)
+        .post('/needed_employees')
+        .set('Content-Type', 'application/json')
+        .send({
+          scheduleTemplate: [{
+            employees_needed: 1,
+            day_part_id: 1,
+            monday_dates: '11/27/17'
+          }],
+        })
+        .end((err, res) => {
+          if (err) {
+            throw err;
+          }
+          return db.Schedule.find()
+            .then((results) => {
+              expect(results).to.not.be.empty;
+              done();
+            })
+            .catch(error => 
               done(error));
         });
     });
