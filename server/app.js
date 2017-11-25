@@ -127,11 +127,17 @@ app.post('/signup', utils.createUser, utils.getAllDayParts, (req, res) => {
   res.json(obj);
 })
 
-app.post('/logout', (req, res) => {
+app.post('/logout', utils.destroySession, (req, res) => {
   console.log('LOGGING CURRENT USER OUT');
-  //destroy session
-  //return object will all null values
-  //return object with view = login
+  let obj = {};
+  obj.dayParts = null
+  obj.view = 'login';
+  obj.users = null;
+  obj.scheduleActual = null;
+  obj.neededEmployees = null;
+  obj.employeeAvailabilities = null;
+  obj.scheduleDates = null;
+  res.json(obj);
 })
 
 module.exports = app;
