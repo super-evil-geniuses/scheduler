@@ -122,7 +122,7 @@ const login = (creds) => {
     type: 'GET_ALL',
     payload: response,
   }
-}
+};
 
 const signUp = (creds) => {
   const response = axios.post('/signup', { creds });
@@ -130,7 +130,16 @@ const signUp = (creds) => {
     type: 'GET_ALL',
     payload: response,
   }
+};
+
+const logout = () => {
+const response = axios.post('/logout');
+
+return {
+  type: 'GET_ALL',
+  payload: response,
 }
+};
 
 const checkedIfLoggedIn = () => {
   const response = axios.get('/welcome_back');
@@ -139,9 +148,10 @@ const checkedIfLoggedIn = () => {
     type: 'GET_ALL',
     payload: response,
   }
-}
+};
 
 module.exports = {
+  logout: logout,
   checkedIfLoggedIn: checkedIfLoggedIn,
   generateSchedule: generateSchedule,
   updateEmployeeAvailability: updateEmployeeAvailability,

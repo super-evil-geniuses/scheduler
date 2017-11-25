@@ -8,6 +8,7 @@ import { getAllNeededEmployees } from '../actions/index';
 import { getAllScheduleDates } from '../actions/index';
 import { changeView } from '../actions/index';
 import { checkedIfLoggedIn } from '../actions/index';
+import { logout } from '../actions/index';
 
 import Dashboard from '../components/Dashboard.jsx';
 import FlashMessage from '../components/FlashMessage.jsx';
@@ -62,7 +63,7 @@ class App extends Component {
             <div className="nav-item nav-signup" onClick={() => { this.props.changeView('signup')}}>
               Sign up
             </div>
-            <div className="nav-item nav-logout">
+            <div className="nav-item nav-logout" onClick={() => { this.props.logout()}}>
               Log out
             </div>
           </div>
@@ -87,6 +88,7 @@ function mapDispatchToProps(dispatch) {
     // getAllScheduleDates: getAllScheduleDates,
     checkedIfLoggedIn: checkedIfLoggedIn,
     changeView: changeView,
+    logout: logout,
   }, dispatch);
 }
 
