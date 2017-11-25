@@ -127,4 +127,11 @@ app.post('/signup', utils.createUser, utils.getAllDayParts, (req, res) => {
   res.json(obj);
 })
 
+app.post('/logout', (req, res) => {
+  console.log('LOGGING CURRENT USER OUT');
+  //destroy session
+  //return object will all null values
+  //return object with view = login
+})
+
 module.exports = app;
