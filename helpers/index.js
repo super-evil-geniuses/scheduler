@@ -95,7 +95,6 @@ const addEmployeeAvailability = (req, res, next) => {
       });
   })
     .then(() => {
-      console.log(`req.employeeAvailability: ${req.employeeAvailability}`)
       next();
     }).catch((err) => {
       res.status(500).send(`error adding availability for user ${parsedUserId}: ${err}`);
@@ -124,7 +123,6 @@ const newSession = (req, res) => {
   session.session = crypto.randomBytes(32).toString('hex');
   session.user = null;
   res.cookie('shiftly', session.session);
-  console.log('session', session);
   return session;
 };
 
@@ -145,7 +143,6 @@ const checkSession = (req, res, next) => {
           obj.user = user[0].dataValues.name;
           obj.role = user[0].dataValues.role;
         }
-        console.log('LOOK AT ME!', obj);
         req.session = obj;
         next();
       })
@@ -178,7 +175,6 @@ const authenticate = (req, res, next) => {
     if (passHash(req.body.creds.password) === user.password) {
       req.session.user = user.name;
       req.session.role = user.role;
-      console.log(req.session);
       db.Sessions.create({session: req.session.session, user_id: user.id})
       .then(() => {
         next();
@@ -211,7 +207,6 @@ const redirectIfLoggedIn = (req, res, next) => {
     res.send();
     return;
   } 
-  console.log('in redirect clause', req.session);
   console.log('redirecting');
   next();
 };
