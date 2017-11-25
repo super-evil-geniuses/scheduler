@@ -19,7 +19,6 @@ h4 {
 
 .app-container {
   width: 100%;
-  padding: 20px;
 }
 .container {
   width: 100%;
@@ -259,4 +258,77 @@ h4 {
 .no-employee-schedule {
   text-align: center;
   padding: 100px 0 0 0;
+}
+
+.navbar {
+  background-color: white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+.nav-right {
+  float: right;
+}
+
+.nav-left {
+  float: left;
+}
+
+.nav-item {
+  display: inline-block;
+  padding: 10px;
+}
+
+.dashboard-container {
+  margin: 10px;
+  min-width: 1400px;
+}
+
+.credentials {
+  min-height: 100px;
+  padding: 25px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: white;
+  margin: auto;
+  width: 400px;
+  margin-top: 50px;
+}
+
+.btn-credentials {
+  float: right;
+  padding-top:20px;
+}
+
+.credentials-label {
+  display: block;
+  padding: 10px 0;
+}
+
+.credentials-input {
+  height: 30px;
+  width: 100%;
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.flash-message {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid rgb(207, 98, 84);
+  background-color: rgb(252, 192, 182);
+  color: rgb(207, 98, 84);
+}
+
+
+
+@media (max-width: 900px) {
+  .dashboard-container {
+    min-width: 100%;
+    margin: 0;
+  }
+
+  .major-component {
+    width: 100%;
+    margin: 0;
+  }
 }

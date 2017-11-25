@@ -3,20 +3,20 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { changeView, login } from '../actions/index';
 
-const Login = (props) => (
-  <div className="employee-availability clear-fix">
+const Login = props => (
+  <div className="credentials clear-fix">
     <h4>Login</h4>
     <form >
         <div>
-          <label>Username:</label>
-          <input id="username" type="text" name="username" />
+          <label className="credentials-label">Username:</label>
+          <input className="credentials-input" id="username" type="text" name="username" />
         </div>
         <div>
-          <label>Password:</label>
-          <input id="password" type="password" name="password" />
+          <label className="credentials-label">Password:</label>
+          <input className="credentials-input" id="password" type="password" name="password" />
         </div>
-        <div>
-          <input type="button" value="Login" onClick={
+        <div className="btn-credentials">
+          <input className="btn-main clickable" type="button" value="Login" onClick={
             () => {
               let username = document.getElementById('username').value;
               let password = document.getElementById('password').value;
@@ -27,9 +27,6 @@ const Login = (props) => (
           } />
         </div>
     </form>
-    <p>
-      <a onClick={() => { props.changeView('signup')}}>Create an Account &rarr;</a>
-    </p>
   </div>
 );
 

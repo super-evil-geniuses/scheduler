@@ -9,10 +9,7 @@ import { getAllScheduleDates } from '../actions/index';
 import { changeView } from '../actions/index';
 import { checkedIfLoggedIn } from '../actions/index';
 
-import EmployeeEditor from './EmployeeEditor.jsx';
-import ScheduleEditor from './ScheduleEditor.jsx';
-import ScheduleGenerator from './ScheduleGenerator.jsx';
-import ScheduleActual from '../components/ScheduleActual.jsx';
+import Dashboard from '../components/Dashboard.jsx';
 import FlashMessage from '../components/FlashMessage.jsx';
 import Login from './Login.jsx';
 import SignUp from './SignUp.jsx';
@@ -36,43 +33,42 @@ class App extends Component {
     }
   }
 
-  renderView(){
-
+  renderView() {
     if (this.props.view === 'login') {
       return <Login />;
     } else if (this.props.view === 'signup') {
       return <SignUp />
     } else if (this.props.view === 'employeeEditor') {
-      return <EmployeeEditor />;
+      return <Dashboard />;
     } else if (this.props.view === 'scheduleEditor') {
-      return <ScheduleEditor />;
-    } else {
-      return <div></div>;
+      return <Dashboard />;
     }
-
+    return <div />;
   }
 
   render() {
     return (
       <div className="app-container clear-fix">
-        <div className="ratio-col-4">
-        <div className="component-block">
-          <div className="editor-header">
-            <div className="container clear-fix">
-              <div className="ratio-col-2 editor-tab clickable" onClick={() => { this.props.changeView('employeeEditor')}}>Employees</div>
-              <div className="ratio-col-2 editor-tab clickable" onClick={() => { this.props.changeView('scheduleEditor')}}>Schedule</div>
+        <div className="navbar clear-fix">
+          <div className="nav-left">
+            <div className="nav-item nav-logo">
+              Shiftly
             </div>
           </div>
-        {this.renderFlashMessage()}
-        {this.renderView()}
+          <div className="nav-right">
+            <div className="nav-item nav-login" onClick={() => { this.props.changeView('login')}}>
+              Log in
+            </div>
+            <div className="nav-item nav-signup" onClick={() => { this.props.changeView('signup')}}>
+              Sign up
+            </div>
+            <div className="nav-item nav-logout">
+              Log out
+            </div>
+          </div>
         </div>
-      </div>
-        <div className="ratio-col-4-3">
-        <div className="component-block">
-          <ScheduleGenerator />
-          <ScheduleActual />
-        </div>
-      </div>
+         {this.renderFlashMessage()}
+         {this.renderView()}
       </div>
     );
   }
