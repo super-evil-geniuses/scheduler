@@ -52,11 +52,21 @@ const getAllDayParts = (req, res, next) => {
     });
 };
 
+const getAllActualSchedules = (req, res, next) => {
+  db.Actual_Schedule.findAll({})
+  .then((schedules) => {
+    req.actual_schedules = schedules;
+    next();
+  }).catch((err) => {
+    res.end(500, 'Error getting schedules');
+  })
+};
+
 const addUser = (req, res, next) => {
   db.User.create({
     name: req.body.username,
     role: 'employee',
-    password: null,
+    password: passHash(req.body.password),
   })
     .then((user) => {
       req.user = user;
@@ -85,7 +95,6 @@ const addEmployeeAvailability = (req, res, next) => {
       });
   })
     .then(() => {
-      console.log(`req.employeeAvailability: ${req.employeeAvailability}`)
       next();
     }).catch((err) => {
       res.status(500).send(`error adding availability for user ${parsedUserId}: ${err}`);
@@ -114,7 +123,6 @@ const newSession = (req, res) => {
   session.session = crypto.randomBytes(32).toString('hex');
   session.user = null;
   res.cookie('shiftly', session.session);
-  console.log('session', session);
   return session;
 };
 
@@ -133,8 +141,8 @@ const checkSession = (req, res, next) => {
         let obj =  { session: session[0].dataValues.session }; 
         if (user.length) {
           obj.user = user[0].dataValues.name;
+          obj.role = user[0].dataValues.role;
         }
-        
         req.session = obj;
         next();
       })
@@ -166,7 +174,7 @@ const authenticate = (req, res, next) => {
     user = user[0].dataValues;
     if (passHash(req.body.creds.password) === user.password) {
       req.session.user = user.name;
-      console.log(req.session);
+      req.session.role = user.role;
       db.Sessions.create({session: req.session.session, user_id: user.id})
       .then(() => {
         next();
@@ -184,6 +192,7 @@ const createUser = (req, res, next) => {
     password: passHash(req.body.creds.password)
   }).then((data) => {
     req.session.user = req.body.creds.username;
+    req.session.role =data.dataValues.role;
     db.Sessions.create({session: req.session.session, user_id: data.dataValues.id})
     .then(() => {
       next();
@@ -202,8 +211,34 @@ const redirectIfLoggedIn = (req, res, next) => {
   next();
 };
 
+const sendEmployeeInfo = (req, res, next) => {
+  if (req.session.role === 'employee') {
+    let obj = {};
+    obj.dayParts = req.dayParts;
+    obj.users = req.users.filter((user) => {
+      return user.dataValues.name === req.session.user;
+    })
+    .map((e) => e.dataValues);
+    obj.scheduleActual = req.actual_schedules.filter((sched) => {
+      return sched.user_id === obj.users[0].id;
+    })
+    .map((e) => e.dataValues);
+    obj.employeeAvailabilities = req.employeeAvailabilities.filter((avail) => {
+      return avail.dataValues.user_id === obj.users[0].id;
+    })
+    .map((e) => e.dataValues);
+    obj.scheduleDates = req.scheduleDates;
+    obj.view = 'employeeEditor';
+    res.json(obj);
+    return;
+  }
+  next();
+};
+
 
 module.exports = {
+  sendEmployeeInfo: sendEmployeeInfo,
+  getAllActualSchedules: getAllActualSchedules,
   redirectIfLoggedIn: redirectIfLoggedIn,
   createUser: createUser,
   authenticate: authenticate,

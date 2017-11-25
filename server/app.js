@@ -71,15 +71,18 @@ app.get('/generate-schedule', function(req, res) {
 
 app.get('/welcome_back',
   utils.redirectIfLoggedIn,
-utils.getAllDayParts, 
+  utils.getAllDayParts, 
   utils.getAllUsers,
-  utils.getAllNeededEmployees,
+  utils.getAllActualSchedules,
   utils.getAllEmployeeAvailabilities,
   utils.getAllScheduleDates,
+  utils.sendEmployeeInfo,
+  utils.getAllNeededEmployees,
   (req, res) => {
   let obj = {};
   obj.dayParts = req.dayParts;
   obj.view = 'employeeEditor';
+  obj.scheduleActual = req.actual_schedules;
   obj.users = req.users;
   obj.neededEmployees = req.neededEmployees;
   obj.employeeAvailabilities = req.employeeAvailabilities;
@@ -91,14 +94,17 @@ app.post('/login',
   utils.authenticate, 
   utils.getAllDayParts, 
   utils.getAllUsers,
-  utils.getAllNeededEmployees,
+  utils.getAllActualSchedules,
   utils.getAllEmployeeAvailabilities,
   utils.getAllScheduleDates,
+  utils.sendEmployeeInfo,
+  utils.getAllNeededEmployees,
   (req, res) => {
   let obj = {};
   obj.dayParts = req.dayParts;
   obj.view = 'employeeEditor';
   obj.users = req.users;
+  obj.scheduleActual = req.actual_schedules;
   obj.neededEmployees = req.neededEmployees;
   obj.employeeAvailabilities = req.employeeAvailabilities;
   obj.scheduleDates = req.scheduleDates;
