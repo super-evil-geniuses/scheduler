@@ -13,9 +13,7 @@ export default WeekPicker;
 /*
 
 
-On initialize - get selectedWeek as this week;
-
-schedule generator:
+On app initialization - get selectedWeek state as this upcoming monday; DONE
 
 Edit week -->
 
@@ -29,7 +27,15 @@ Pick a week
     Render: No schedule saved for this week in cal
 
 
-on selectedWeek redux change
+on selectedWeek redux change:
+
+scheduleEditor receives the state as the prop
+  Check if needed-employees exists for that week
+  if YES ->
+    Populate them in the boxes.
+  if NO ->
+    Populate 0s in the boxes.
+
 Check if there is a schedule saved for selected week
   if yes -->
     Pull up needed employees from that week for schedule template
