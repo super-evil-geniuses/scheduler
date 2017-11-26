@@ -112,7 +112,6 @@ const scheduleGenerator = (allEmployeeAvail, temp) => {
   findCheapSolution(allCombinations);
   schedule = {};
   findSolution(allCombinations, {}, 1);
-  console.log("THIISISIS", completedSchedules[0]);
   return completedSchedules.length ? completedSchedules[Math.floor(Math.random()*completedSchedules.length)] : cheapSolution[0];
 }
 
