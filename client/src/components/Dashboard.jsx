@@ -47,7 +47,6 @@ class Dashboard extends Component {
             selectedWeek={this.props.selectedWeek}
             weekHasActualSchedule={this.props.weekHasActualSchedule}
             weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}
-            selectedWeekScheduleId={this.props.selectedWeekScheduleId}
             selectedWeekActualSchedule={this.props.selectedWeekActualSchedule}/>
           </div>
         </div>
