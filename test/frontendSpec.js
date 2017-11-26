@@ -108,6 +108,7 @@ describe('Shiftly Frontend Test Spec', () => {
     monday.setDate(monday.getDate() + (1 + 7 - monday.getDay()) % 7);
 
     it('should return an initial state of next monday', () => {
+      console.log(`monday: ${monday}`)
       expect(selectedWeek(undefined, {}).toDateString()).toEqual(monday.toDateString());
     });
   });
