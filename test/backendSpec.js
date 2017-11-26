@@ -14,7 +14,7 @@ const app = require('../server/app.js');
 const schema = require('../database/config.js');
 const algo = require('../helpers/algo.js');
 const utils = require('../helpers/index.js');
-const dummyData = require('../database/example-data/dummyData.js');
+// const dummyData = require('../database/example-data/dummyData.js');
 const port = process.env.PORT || 8080;
 
 describe('Shiftly Backend Test Spec', () => {
@@ -37,13 +37,13 @@ describe('Shiftly Backend Test Spec', () => {
     db.Day_Part.hasMany(db.Actual_Schedule, { as: 'actual_schedule' });
     db.Day_Part.hasMany(db.Needed_Employee, { as: 'needed_employee' });
 
-    setTimeout(() => {
-      dummyData.dayParts.forEach(dayPart => {
-        db.Day_Part.create({
-          name: dayPart,
-        });
-      });
-    }, 500);
+    // setTimeout(() => {
+    //   dummyData.dayParts.forEach(dayPart => {
+    //     db.Day_Part.create({
+    //       name: dayPart,
+    //     });
+    //   });
+    // }, 500);
 
     setTimeout(done, 1000);
   })
