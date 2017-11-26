@@ -36,7 +36,7 @@ const ScheduleActual = (props) => {
 const mapStateToProps = (state) => {
 	let schedules = {};
   let scheduleArr = [];
-  let dayPartsMap = {};
+  //let dayPartsMap = {};
   if (state.scheduleActual) {
     state.scheduleActual.forEach( (e) => {
       if(e.user_id === null) {
@@ -65,30 +65,30 @@ const mapStateToProps = (state) => {
     }
   }
   
-  if(state.dayParts) {
-    let forwardFacingDayParts = [
-      null,
-      'Monday AM',
-      'Monday PM',
-      'Tuesday AM',
-      'Tuesday PM',
-      'Wednesday AM',
-      'Wednesday PM',
-      'Thursday AM',
-      'Thursday PM',
-      'Friday AM',
-      'Friday PM',
-      'Saturday AM',
-      'Saturday PM',
-      'Sunday AM',
-      'Sunday PM',
-    ];
-    state.dayParts.forEach((dayPart) => {
-      dayPartsMap[dayPart.id] = forwardFacingDayParts[dayPart.id];
-    })
-  }
+  // if(state.dayParts) {
+  //   let forwardFacingDayParts = [
+  //     null,
+  //     'Monday AM',
+  //     'Monday PM',
+  //     'Tuesday AM',
+  //     'Tuesday PM',
+  //     'Wednesday AM',
+  //     'Wednesday PM',
+  //     'Thursday AM',
+  //     'Thursday PM',
+  //     'Friday AM',
+  //     'Friday PM',
+  //     'Saturday AM',
+  //     'Saturday PM',
+  //     'Sunday AM',
+  //     'Sunday PM',
+  //   ];
+  //   state.dayParts.forEach((dayPart) => {
+  //     dayPartsMap[dayPart.id] = forwardFacingDayParts[dayPart.id];
+  //   })
+  // }
 
-  return { schedules: scheduleArr, dayPartsMap };
+  return { schedules: scheduleArr };
 }
 
 export default connect(mapStateToProps)(ScheduleActual);
