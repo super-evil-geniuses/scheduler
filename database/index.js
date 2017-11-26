@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const config = require('./config.js');
 require('dotenv').config();
 
-console.log('config vars', process.env.DATABASE_URL)
+console.log('config vars', Boolean(process.env.DATABASE_URL))
 if (process.env.DATABASE_URL) {
   const sequelize = new Sequelize(process.env.DATABASE_URL, {dialect: 'postgres'});	
 } else {
