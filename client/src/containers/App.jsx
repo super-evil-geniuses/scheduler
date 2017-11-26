@@ -39,9 +39,7 @@ class App extends Component {
       return <Login />;
     } else if (this.props.view === 'signup') {
       return <SignUp />
-    } else if (this.props.view === 'employeeEditor') {
-      return <Dashboard />;
-    } else if (this.props.view === 'scheduleEditor') {
+    } else if (this.props.view === 'employeeEditor' || this.props.view === 'scheduleEditor') {
       return <Dashboard />;
     }
     return <div />;
@@ -88,7 +86,12 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-  return { view: state.view, flashMessage: state.flashMessage, users: state.users};
+  return {
+    view: state.view,
+    flashMessage: state.flashMessage,
+    users: state.users,
+    selectedWeek: state.selectedWeek,
+  };
 }
 
 function mapDispatchToProps(dispatch) {

@@ -60,8 +60,7 @@ app.post('/needed_employees', utils.createScheduleDate, utils.createScheduleTemp
   res.end();
 });
 
-app.post('/generate_schedule', (req, res) => {
-  
+app.post('/generate_schedule', (req, res) => { 
   generateSchedule(new Date(req.body.mondayDate))
     .then((schedule) => {
       res.write(JSON.stringify(schedule));
@@ -70,14 +69,14 @@ app.post('/generate_schedule', (req, res) => {
 })
 
 
-//should be a post
-app.get('/generate-schedule', function(req, res) {
-  generateSchedule(new Date('11/13/17'))
-    .then((schedule) => {
-      // store actual schedule
-      res.send(schedule);
-    })
-})
+// //should be a post
+// app.get('/generate-schedule', function(req, res) {
+//   generateSchedule(new Date('11/13/17'))
+//     .then((schedule) => {
+//       // store actual schedule
+//       res.send(schedule);
+//     })
+// })
 
 app.get('/welcome_back',
   utils.redirectIfLoggedIn,
@@ -123,9 +122,7 @@ app.post('/login',
 app.post('/signup', utils.createUser, utils.getAllDayParts, (req, res) => {
   let obj = {};
   obj.dayParts = req.dayParts;
-  obj.view = 'login'; //TEMP WORK AROUND
-    // obj.view = 'employeeEditor'; 
-
+  obj.view = 'employeeEditor';
   res.json(obj);
 })
 

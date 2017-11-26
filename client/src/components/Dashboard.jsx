@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import moment from 'moment';
+
+
 import EmployeeEditor from '../containers/EmployeeEditor.jsx';
 import ScheduleEditor from '../containers/ScheduleEditor.jsx';
 import ScheduleGenerator from '../containers/ScheduleGenerator.jsx';
@@ -35,8 +39,14 @@ class Dashboard extends Component {
         </div>
         <div className="ratio-col-4-3 major-component">
           <div className="component-block">
-            <ScheduleGenerator />
-            <ScheduleActual />
+            <ScheduleGenerator
+            selectedWeek={this.props.selectedWeek}
+            weekHasActualSchedule={this.props.weekHasActualSchedule}
+            weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}/>
+            <ScheduleActual
+            selectedWeek={this.props.selectedWeek}
+            weekHasActualSchedule={this.props.weekHasActualSchedule}
+            weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}/>
           </div>
         </div>
       </div>
@@ -44,4 +54,39 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+function mapStateToProps(state) {
+  let scheduleId = null;
+  let weekHasActualSchedule = false;
+  let weekHasAtLeastOneNeededEmployee = false;
+
+  const selectedWeekObj = state.scheduleDates.find((el) => {
+    return el.monday_dates.toString().substr(0, 10) === state.selectedWeek;
+  });
+  scheduleId = selectedWeekObj ? selectedWeekObj.id : null;
+
+  if (scheduleId) {
+    const scheduleFound = state.scheduleActual.find((el) => {
+      return el.schedule_id === scheduleId
+    });
+    if (scheduleFound) {
+      weekHasActualSchedule = true;
+    }
+    const countOfNeededEmployees = state.neededEmployees.filter((el)=> {
+      return el.schedule_id === scheduleId;
+    }).reduce((acc, el) => {
+      return acc + el.employees_needed;
+    }, 0);
+    if (countOfNeededEmployees > 0) {
+      weekHasAtLeastOneNeededEmployee = true;
+    }
+  }
+
+  return {
+    selectedWeek: state.selectedWeek,
+    // scheduleId: scheduleId,
+    weekHasActualSchedule: weekHasActualSchedule,
+    weekHasAtLeastOneNeededEmployee: weekHasAtLeastOneNeededEmployee
+  }
+}
+
+export default connect(mapStateToProps)(Dashboard);
