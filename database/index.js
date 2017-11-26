@@ -2,7 +2,11 @@ const Sequelize = require('sequelize');
 const config = require('./config.js');
 require('dotenv').config();
 
-const sequelize = new Sequelize(process.env.DATABASE_URL);
+if (process.env.IS_HEROKU) {
+  const sequelize = new Sequelize(process.env.DATABASE_URL);	
+} else {
+  const sequelize = new Sequelize(process.env.DB_NAME || 'shiftly', process.env.DB_USER || 'postgres', process.env.DB_PASS || null, { host: process.env.DB_HOST || 'localhost', dialect: 'postgres' });
+}
 
 const db = config(sequelize);
 
