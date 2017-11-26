@@ -150,6 +150,13 @@ const checkedIfLoggedIn = () => {
   }
 };
 
+const selectWeek = (monDate) => {
+  return {
+    type: 'SELECT_WEEK',
+    payload: monDate,
+  }
+};
+
 module.exports = {
   logout: logout,
   checkedIfLoggedIn: checkedIfLoggedIn,
@@ -166,4 +173,5 @@ module.exports = {
   changeView: changeView,
   login: login,
   signUp: signUp,
+  selectWeek: selectWeek,
 };
