@@ -3,7 +3,7 @@ const users = (state = null, action) => {
     case 'GET_USERS':
       return action.payload.data;
     case 'ADD_EMPLOYEE':
-      return state.concat(action.payload.data.user);
+      return state ? state.concat(action.payload.data.user) : action.payload.data.user;
     case 'GET_ALL':
       return action.payload.data.users || state;
     case 'REMOVE_LOGGED_IN_DETAILS':

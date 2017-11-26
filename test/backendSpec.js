@@ -64,6 +64,7 @@ describe('Shiftly Backend Test Spec', () => {
         .set('Content-Type', 'application/json')
         .send({
           username: 'Bob',
+          password: 'Bob',
         })
         .expect(200, done);
     });
@@ -74,6 +75,7 @@ describe('Shiftly Backend Test Spec', () => {
         .set('Content-Type', 'application/json')
         .send({
           username: 'Alice',
+          password: 'Alice',
         })
         .end((err, res) => {
           if (err) { throw err; }
@@ -138,12 +140,13 @@ describe('Shiftly Backend Test Spec', () => {
   });
 
   describe('Middleware:', () => {
-    it('adding a new employee creates a employee availability records for the new employee', (done) => {
+    it('adding a new employee creates employee availability records for the new employee', (done) => {
       request(app)
         .post('/add_employee')
         .set('Content-Type', 'application/json')
         .send({
           username: 'Alice',
+          password: 'alice',
         })
         .end((err) => {
           if (err) { done(err); }
@@ -154,6 +157,7 @@ describe('Shiftly Backend Test Spec', () => {
             }],
           })
             .then((results) => {
+              console.log(`results ${JSON.stringify(results)}`)
               expect(results).to.not.be.empty;
               done();
             })
