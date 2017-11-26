@@ -4,8 +4,10 @@ require('dotenv').config();
 
 console.log('config vars', Boolean(process.env.DATABASE_URL))
 if (process.env.DATABASE_URL) {
+	console.log('IF IS RUNNING..............')
   const sequelize = new Sequelize(process.env.DATABASE_URL, {dialect: 'postgres'});	
 } else {
+	console.log('ELSE IS RUNNING..............')
   const sequelize = new Sequelize(process.env.DB_NAME || 'shiftly', process.env.DB_USER || 'postgres', process.env.DB_PASS || null, { host: process.env.DB_HOST || 'localhost', dialect: 'postgres' });
 }
 
