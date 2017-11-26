@@ -1,6 +1,7 @@
 import users from '../client/src/reducers/reducer-users';
 import employeeAvailabilities from '../client/src/reducers/reducer-employee-availabilities';
 import scheduleDates from '../client/src/reducers/reducer-schedule-dates';
+import selectedWeek from '../client/src/reducers/reducer-selected-week';
 
 describe('Shiftly Frontend Test Spec', () => {
   describe('users reducer', () => {
@@ -63,7 +64,6 @@ describe('Shiftly Frontend Test Spec', () => {
         type: 'GET_EMPLOYEE_AVAILABILITIES',
         payload: {data: stateWithSingleUserAvailabilities}
       })).toEqual(stateWithSingleUserAvailabilities);
-      
     });
   })
 
@@ -102,6 +102,15 @@ describe('Shiftly Frontend Test Spec', () => {
       })).toEqual(stateWithAddedScheduleTemp)
     })
   })
+
+  describe('selectedWeek reducer', () => {
+    const monday = new Date();
+    monday.setDate(monday.getDate() + (1 + 7 - monday.getDay()) % 7);
+
+    it('should return an initial state of next monday', () => {
+      expect(selectedWeek(undefined, {}).toDateString()).toEqual(monday.toDateString());
+    });
+  });
 
 })
 

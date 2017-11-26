@@ -68,6 +68,7 @@ const mapStateToProps = (state) => {
   return {
     dayPartsMap: dayPartsMap,
     scheduleNeeds: scheduleNeeds,
+    selectedWeek: state.selectedWeek
   };
 };
 
