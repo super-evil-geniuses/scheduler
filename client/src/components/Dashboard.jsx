@@ -59,6 +59,8 @@ function mapStateToProps(state) {
   let scheduleId = null;
   let weekHasActualSchedule = false;
   let weekHasAtLeastOneNeededEmployee = false;
+  let actualSchedule = null;
+  
   if (state.scheduleDates) {
     const selectedWeekObj = state.scheduleDates.find((el) => {
         return el.monday_dates.toString().substr(0, 10) === state.selectedWeek;
