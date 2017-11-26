@@ -60,23 +60,23 @@ function mapStateToProps(state) {
   let weekHasAtLeastOneNeededEmployee = false;
 
   const selectedWeekObj = state.scheduleDates.find((el) => {
-    return moment(el.monday_dates).format('MMMM Do YYYY') === moment(state.selectedWeek).format('MMMM Do YYYY');
+    return el.monday_dates.toString().substr(0, 10) === state.selectedWeek;
   });
   scheduleId = selectedWeekObj ? selectedWeekObj.id : null;
-  
-  if(scheduleId) {
+
+  if (scheduleId) {
     const scheduleFound = state.scheduleActual.find((el) => {
       return el.schedule_id === scheduleId
-    })
-    if(scheduleFound) {
+    });
+    if (scheduleFound) {
       weekHasActualSchedule = true;
     }
     const countOfNeededEmployees = state.neededEmployees.filter((el)=> {
       return el.schedule_id === scheduleId;
     }).reduce((acc, el) => {
-      return acc + el.employees_needed
+      return acc + el.employees_needed;
     }, 0);
-    if(countOfNeededEmployees > 0) {
+    if (countOfNeededEmployees > 0) {
       weekHasAtLeastOneNeededEmployee = true;
     }
   }

@@ -122,9 +122,7 @@ app.post('/login',
 app.post('/signup', utils.createUser, utils.getAllDayParts, (req, res) => {
   let obj = {};
   obj.dayParts = req.dayParts;
-  obj.view = 'login'; //TEMP WORK AROUND
-    // obj.view = 'employeeEditor'; 
-
+  obj.view = 'employeeEditor';
   res.json(obj);
 })
 
