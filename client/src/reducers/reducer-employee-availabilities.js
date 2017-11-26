@@ -7,7 +7,7 @@ const employeeAvailabilities = (state = null, action) => {
         return availability.user_id !== action.payload.data[0].user_id;
       }).concat(action.payload.data);
     case 'ADD_EMPLOYEE':
-      return action.payload.data.employeeAvailabilities;
+      return state ? state.concat(action.payload.data.employeeAvailabilities) : action.payload.data.employeeAvailabilities;
     case 'GET_ALL':
       return action.payload.data.employeeAvailabilities || state;
     case 'REMOVE_LOGGED_IN_DETAILS':
