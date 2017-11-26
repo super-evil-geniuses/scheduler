@@ -40,7 +40,8 @@
     "redux": "^3.7.2",
     "redux-promise": "^0.5.3",
     "sequelize": "^4.22.6",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "webpack": "^3.8.1"
   },
   "devDependencies": {
     "babel-cli": "^6.7.5",
