@@ -2,13 +2,6 @@ const Promise = require('bluebird');
 const db = require('../../database');
 const dummyData = require('./dummyData');
 
-// Save day_parts. Probably won't need it after initialization
-let saveDayParts = (dayParts) => {
-	return Promise.each(dayParts, (dayPart) => {
-		db.Day_Part.create({ name: dayPart });
-	});
-};
-
 // Saves the week start date and the corresponding schedule id
 let saveSchedule = (weekStart) => {
 	return db.Schedule.create({ monday_dates: weekStart.monday_dates });
@@ -60,9 +53,6 @@ let saveEmployeeAvailability = (avail) => {
 // initializes the database with dummy data
 let initialize = () => {
 	return saveSchedule(dummyData.weekStart)
-		.then(() => {
-			return saveDayParts(dummyData.dayParts);
-		})
 		.then(() => {
 			return Promise.each(dummyData.users, (user) => {
 				saveUser(user);
