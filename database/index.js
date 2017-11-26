@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const config = require('./config.js');
 require('dotenv').config();
 
-const sequelize = new Sequelize(DATABASE_URL);
+const sequelize = new Sequelize(process.env.DATABASE_URL);
 
 const db = config(sequelize);
 
