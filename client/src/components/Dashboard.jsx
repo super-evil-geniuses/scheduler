@@ -58,11 +58,12 @@ function mapStateToProps(state) {
   let scheduleId = null;
   let weekHasActualSchedule = false;
   let weekHasAtLeastOneNeededEmployee = false;
-
-  const selectedWeekObj = state.scheduleDates.find((el) => {
-    return el.monday_dates.toString().substr(0, 10) === state.selectedWeek;
-  });
-  scheduleId = selectedWeekObj ? selectedWeekObj.id : null;
+  if (state.scheduleDates) {
+    const selectedWeekObj = state.scheduleDates.find((el) => {
+        return el.monday_dates.toString().substr(0, 10) === state.selectedWeek;
+      });
+      scheduleId = selectedWeekObj ? selectedWeekObj.id : null;
+  }
 
   if (scheduleId) {
     const scheduleFound = state.scheduleActual.find((el) => {
