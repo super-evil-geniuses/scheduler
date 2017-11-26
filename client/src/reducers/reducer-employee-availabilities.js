@@ -10,6 +10,8 @@ const employeeAvailabilities = (state = null, action) => {
       return action.payload.data.employeeAvailabilities;
     case 'GET_ALL':
       return action.payload.data.employeeAvailabilities || state;
+    case 'REMOVE_LOGGED_IN_DETAILS':
+      return null;
     default:
       return state;
   }

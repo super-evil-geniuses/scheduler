@@ -135,10 +135,10 @@ const signUp = (creds) => {
 const logout = () => {
 const response = axios.post('/logout');
 
-return {
-  type: 'GET_ALL',
-  payload: response,
-}
+  return {
+    type: 'REMOVE_LOGGED_IN_DETAILS',
+    payload: response,
+  }
 };
 
 const checkedIfLoggedIn = () => {

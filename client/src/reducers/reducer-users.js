@@ -6,6 +6,8 @@ const users = (state = null, action) => {
       return state.concat(action.payload.data.user);
     case 'GET_ALL':
       return action.payload.data.users || state;
+    case 'REMOVE_LOGGED_IN_DETAILS':
+      return null;
     default:
       return state;
   }

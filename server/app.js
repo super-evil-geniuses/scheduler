@@ -128,16 +128,17 @@ app.post('/signup', utils.createUser, utils.getAllDayParts, (req, res) => {
 })
 
 app.post('/logout', utils.destroySession, (req, res) => {
-  console.log('LOGGING CURRENT USER OUT');
-  let obj = {};
-  obj.dayParts = null
-  obj.view = 'login';
-  obj.users = null;
-  obj.scheduleActual = null;
-  obj.neededEmployees = null;
-  obj.employeeAvailabilities = null;
-  obj.scheduleDates = null;
-  res.json(obj);
+  // console.log('LOGGING CURRENT USER OUT');
+  // let obj = {};
+  // obj.dayParts = null
+  // obj.view = 'login';
+  // obj.users = null;
+  // obj.scheduleActual = null;
+  // obj.neededEmployees = null;
+  // obj.employeeAvailabilities = null;
+  // obj.scheduleDates = null;
+  //res.json(obj);
+  res.end(200);
 })
 
 module.exports = app;
