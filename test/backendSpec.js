@@ -34,14 +34,6 @@ describe('Shiftly Backend Test Spec', () => {
     db.Day_Part.hasMany(db.Actual_Schedule, { as: 'actual_schedule' });
     db.Day_Part.hasMany(db.Needed_Employee, { as: 'needed_employee' });
 
-<<<<<<< HEAD
-    setTimeout(() => {
-      dummyData.dayParts.forEach(dayPart => {
-        db.Day_Part.create({
-          name: dayPart,
-        });
-      });
-=======
     const dayParts = [
       'monA', 'monP', 
       'tuesA', 'tuesP', 
@@ -63,7 +55,6 @@ describe('Shiftly Backend Test Spec', () => {
 
     setTimeout(() => {
       saveDayParts(dayParts);
->>>>>>> addemployee
     }, 500);
 
     setTimeout(done, 1000);
