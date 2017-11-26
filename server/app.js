@@ -140,7 +140,7 @@ app.post('/logout', utils.destroySession, (req, res) => {
   // obj.employeeAvailabilities = null;
   // obj.scheduleDates = null;
   //res.json(obj);
-  res.end(200);
+  res.status(200).end();
 })
 
 module.exports = app;
