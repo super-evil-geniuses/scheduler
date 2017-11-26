@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { selectWeek } from '../actions/index';
+import moment from 'moment';
 
 import ScheduleTemplate from './ScheduleTemplate.jsx';
 
@@ -11,16 +14,46 @@ class ScheduleEditor extends Component {
     }
   }
 
-  selectSchedule = (id) => {
-    if (id) {
+  componentDidUpdate() {
+    if (this.state.selectedSchedule.monDate) {
+      this.props.selectWeek(this.state.selectedSchedule.monDate.substr(0, 10));
+    }
+  }
+
+  selectSchedule = (val) => {
+    if (!val.includes('-')) {
       this.setState({
-        selectedSchedule: this.props.scheduleNeeds[id]
+        selectedSchedule: this.props.scheduleNeeds[val]
       })
     } else {
       this.setState({
-        selectedSchedule: {id: null, monDate: null, neededEmployees: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0}}
+        selectedSchedule: {id: null, monDate: val, neededEmployees: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0}}
       })
     }
+  }
+
+  getNextMondayDates () {
+    let monday = [];
+    for (let i = 0; i < 6; i++) {
+      let mondayDates = moment().day(1 + i*7).format("YYYY-MM-DD");
+      // if schedule doesn't already exist
+      if (!this.dateExists(mondayDates)) {
+        monday.push(mondayDates.substr(0,10));
+      }
+    }
+    return monday;
+  }
+
+  dateExists(date) {
+    let dateExists = false;
+    let date1 = date.substr(0,10).split('-');
+    Object.keys(this.props.scheduleNeeds).forEach(id => {
+      let date2 = this.props.scheduleNeeds[id].monDate.substr(0,10).split('-');
+      if (date2[0] === date1[0] && parseInt(date2[1]) === parseInt(date1[1]) && parseInt(date2[2]) === parseInt(date1[2])) {
+        dateExists = true;
+      }
+    });
+    return dateExists;
   }
 
   render() {
@@ -33,7 +66,10 @@ class ScheduleEditor extends Component {
             {Object.keys(this.props.scheduleNeeds).map(id => {
               return <option value={id}>{this.props.scheduleNeeds[id].monDate.substr(0, 10)}</option>
             })}
-            <option value=''>Create a new template</option>
+
+            {this.getNextMondayDates().map(monDate => {
+              return <option value={monDate}>{monDate}</option>
+            })}
           </select>}
         <ScheduleTemplate schedule={this.state.selectedSchedule} dayPartsMap={this.props.dayPartsMap} scheduleNeeds={this.props.scheduleNeeds}/>
       </div>
@@ -72,4 +108,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(ScheduleEditor);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    selectWeek: selectWeek
+  }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ScheduleEditor);

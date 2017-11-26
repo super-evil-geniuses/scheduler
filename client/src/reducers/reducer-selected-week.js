@@ -1,5 +1,7 @@
-const monday = new Date();
-monday.setDate(monday.getDate() + (1 + 7 - monday.getDay()) % 7);
+import moment from 'moment';
+
+let monday = moment(moment().day(1)).isAfter(moment()) ? moment().day(-6) : moment().day(1);
+monday = monday.format('YYYY-MM-DD');
 
 const selectedWeek = (state = monday, action) => {
 	switch(action.type) {

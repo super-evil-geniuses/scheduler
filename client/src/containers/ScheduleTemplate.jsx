@@ -12,7 +12,7 @@ class ScheduleTemplate extends React.Component {
     super(props);
     this.state = {
       newSchedule: {},
-      newDate: null
+      newDate: null,
     }
   }
 
@@ -21,6 +21,11 @@ class ScheduleTemplate extends React.Component {
       const newSchedule = _.clone(nextProps.schedule.neededEmployees);
       this.setState({
         newSchedule: newSchedule,
+      })
+    }
+    if (nextProps.selectedWeek != this.props.selectedWeek) {
+      this.setState({
+        newDate: nextProps.selectedWeek,
       })
     }
   }
@@ -40,36 +45,6 @@ class ScheduleTemplate extends React.Component {
         <input onChange={(e) => this.alterDay(e, dayPart)} name={dayPart} className="schedule-input-box" type="text" value={this.state.newSchedule[dayPart]}/>
       </td>
     );
-  }
-
-  getNextMondayDates () {
-    let monday = [];
-    for (let i = 1; i < 6; i++) {
-      let mondayDates = moment().day(1 + i*7).format("M/D/YY");
-      // if schedule doesn't already exist
-      if (!this.dateExists(mondayDates)) {
-        monday.push(mondayDates.substr(0,10));
-      }
-    }
-    return monday;
-  }
-
-  selectDate(date) {
-    this.setState({
-      newDate: date
-    });
-  }
-
-  dateExists(date) {
-    let dateExists = false;
-    let date1 = date.split('/');
-    Object.keys(this.props.scheduleNeeds).forEach(id => {
-      let date2 = this.props.scheduleNeeds[id].monDate.substr(0,10).split('-');
-      if (date2[0].substr(2,2) === date1[2] && parseInt(date2[1]) === parseInt(date1[0]) && parseInt(date2[2]) === parseInt(date1[1])) {
-        dateExists = true;
-      }
-    });
-    return dateExists;
   }
 
   render() {
@@ -129,12 +104,6 @@ class ScheduleTemplate extends React.Component {
         renderBody = (
           <div>
             <h4>Create schedule</h4>
-            <select onChange={(e) => { this.selectDate(e.target.value) }}>
-              <option defaultValue='' disabled selected>Select a date...</option>
-                {this.getNextMondayDates().map(monDate => {
-                  return <option value={monDate}>{monDate}</option>
-                })}
-            </select>
             <p>How many employees do you need for each shift?</p>
             <table className="select-days-table">
               <tbody>
@@ -178,6 +147,12 @@ class ScheduleTemplate extends React.Component {
   }
 };
 
+const mapStateToProps = (state) => {
+  return {
+    selectedWeek: state.selectedWeek,
+  };
+}
+
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     updateNeededEmployees: updateNeededEmployees,
@@ -186,4 +161,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(ScheduleTemplate);
+export default connect(mapStateToProps, mapDispatchToProps)(ScheduleTemplate);

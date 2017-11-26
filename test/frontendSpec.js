@@ -93,7 +93,7 @@ describe('Shiftly Frontend Test Spec', () => {
     })
 
     it('should change the state with the action create schedule template', () => {
-      expect(users(stateWithOneScheduleTemp, {
+      expect(scheduleDates(stateWithOneScheduleTemp, {
         type: 'CREATE_SCHEDULE_TEMPLATE',
         payload: {data: {monday_date: {
           id: 2,
