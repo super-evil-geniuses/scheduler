@@ -57,7 +57,11 @@ const scheduleGenerator = (allEmployeeAvail, temp) => {
         allEmployeeAvail[dayPart].push('house');
       }
     }
-    allCombinations[dayPart] = Combinatorics.combination(allEmployeeAvail[dayPart], temp[dayPart]).toArray();
+    if (temp[dayPart] === 0) {
+      allCombinations[dayPart] = [];
+    } else {
+      allCombinations[dayPart] = Combinatorics.combination(allEmployeeAvail[dayPart], temp[dayPart]).toArray();
+    }
   }
 
   let schedule = {};
