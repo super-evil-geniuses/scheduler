@@ -1,3 +1,4 @@
+const moment = require('moment');
 const db = require('../database');
 const Promise = require('bluebird');
 const crypto = require('crypto');
@@ -138,7 +139,7 @@ const updateNeededEmployees = (req, res, next) => {
 
 const createScheduleDate = (req, res, next) => {
   db.Schedule.create({
-    monday_dates: new Date(req.body.scheduleTemplate[0].monday_dates)
+    monday_dates: moment(req.body.scheduleTemplate[0].monday_dates)
   }).then((scheduleDate)=> {
     req.scheduleTemplate = {};
     req.scheduleTemplate.monday_date = scheduleDate;
@@ -221,6 +222,7 @@ const authenticate = (req, res, next) => {
     }
     user = user[0].dataValues;
     if (passHash(req.body.creds.password) === user.password) {
+      req.session = newSession(req, res);
       req.session.user = user.name;
       req.session.role = user.role;
       db.Sessions.create({session: req.session.session, user_id: user.id})
@@ -239,6 +241,7 @@ const createUser = (req, res, next) => {
     role: 'manager',
     password: passHash(req.body.creds.password)
   }).then((data) => {
+    req.session = newSession(req, res);
     req.session.user = req.body.creds.username;
     req.session.role =data.dataValues.role;
     db.Sessions.create({session: req.session.session, user_id: data.dataValues.id})

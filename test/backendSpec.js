@@ -9,12 +9,10 @@ Mock 'http' objects for testing Express routing functions, but could be used for
 */
 const httpMocks = require('node-mocks-http');
 const request = require('supertest'); //used for testing http
-//require the necessary files
 const app = require('../server/app.js');
 const schema = require('../database/config.js');
 const algo = require('../helpers/algo.js');
 const utils = require('../helpers/index.js');
-const dummyData = require('../database/example-data/dummyData.js');
 const port = process.env.PORT || 8080;
 
 describe('Shiftly Backend Test Spec', () => {
@@ -27,40 +25,63 @@ describe('Shiftly Backend Test Spec', () => {
     sequelize = new Sequelize(process.env.DB_NAME || 'shiftly', process.env.DB_USER || 'postgres', process.env.DB_PASS || null, { host: process.env.DB_HOST || 'localhost', dialect: 'postgres' });
     // debugger
     db = schema(sequelize);
-    db.User.hasMany(db.Actual_Schedule, { as: 'actual_schedule'});
+    db.User.hasMany(db.Actual_Schedule, { as: 'actual_schedule' });
     db.User.hasMany(db.Employee_Availability, { as: 'employee_availability' });
     db.Employee_Availability.belongsTo(db.User);
-    db.Schedule.hasMany(db.Actual_Schedule, { as: 'actual_schedule'});
+    db.Schedule.hasMany(db.Actual_Schedule, { as: 'actual_schedule' });
     db.Schedule.hasMany(db.Needed_Employee, { as: 'needed_employee' });
-
     db.Day_Part.hasMany(db.Employee_Availability, { as: 'employee_availability' });
     db.Day_Part.hasMany(db.Actual_Schedule, { as: 'actual_schedule' });
     db.Day_Part.hasMany(db.Needed_Employee, { as: 'needed_employee' });
 
+<<<<<<< HEAD
     setTimeout(() => {
       dummyData.dayParts.forEach(dayPart => {
         db.Day_Part.create({
           name: dayPart,
         });
       });
+=======
+    const dayParts = [
+      'monA', 'monP', 
+      'tuesA', 'tuesP', 
+      'wedsA', 'wedsP', 
+      'thursA', 'thursP', 
+      'friA', 'friP', 
+      'satA', 'satP', 
+      'sunA', 'sunP'
+    ];
+
+    let saveDayParts = (dayParts) => {
+      return Promise.each(dayParts, (dayPart) => {
+        db.Day_Part.create({ name: dayPart })
+          .catch((err) => {
+            console.log('day parts saved');
+          });
+      });
+    };
+
+    setTimeout(() => {
+      saveDayParts(dayParts);
+>>>>>>> addemployee
     }, 500);
 
     setTimeout(done, 1000);
-  })
+  });
 
   beforeEach((done) => {
 
     /* Empty the db table before each test so that multiple tests
      * (or repeated runs of the tests) won't screw each other up: */
-    
+   
     const tables = ['User', 'Schedule', 'Needed_Employee', 'Employee_Availability', 'Actual_Schedule'];
-    Promise.each(tables, table => {
+    Promise.each(tables, (table) => {
       return db[table].destroy({ where: {} });
     })
-    .then(() => {
-      server = app.listen(port, done);
-    });
-    
+      .then(() => {
+        server = app.listen(port, done);
+      });
+
     afterEach(() => {
       server.close();
     });
@@ -93,7 +114,7 @@ describe('Shiftly Backend Test Spec', () => {
         });
     });
 
-    it('should get a 200 response for getAllUsers request', function(done) {
+    it('should get a 200 response for getAllUsers request', (done) => {
       request(app)
         .get('/users')
         .expect(200, done);
@@ -107,7 +128,7 @@ describe('Shiftly Backend Test Spec', () => {
           scheduleAvailabilities: [{
             employees_needed: 1,
             day_part_id: 1,
-            schedule_id: 1
+            schedule_id: 1,
           }],
         })
         .expect(200, done);
@@ -121,7 +142,7 @@ describe('Shiftly Backend Test Spec', () => {
           scheduleTemplate: [{
             employees_needed: 1,
             day_part_id: 1,
-            monday_dates: '11/27/17'
+            monday_dates: '11/27/17',
           }],
         })
         .expect(200, done);
@@ -135,7 +156,7 @@ describe('Shiftly Backend Test Spec', () => {
           scheduleTemplate: [{
             employees_needed: 1,
             day_part_id: 1,
-            monday_dates: '11/27/17'
+            monday_dates: '11/27/17',
           }],
         })
         .end((err, res) => {
@@ -166,7 +187,6 @@ describe('Shiftly Backend Test Spec', () => {
             }],
           })
             .then((results) => {
-              console.log(`results ${JSON.stringify(results)}`)
               expect(results).to.not.be.empty;
               done();
             })
@@ -183,7 +203,7 @@ describe('Shiftly Backend Test Spec', () => {
           scheduleTemplate: [{
             employees_needed: 1,
             day_part_id: 1,
-            monday_dates: '11/27/17'
+            monday_dates: '11/27/17',
           }],
         })
         .end((err, res) => {
@@ -192,11 +212,11 @@ describe('Shiftly Backend Test Spec', () => {
           }
           return db.Schedule.find()
             .then((results) => {
-              let monDate = JSON.stringify(results.dataValues.monday_dates);
-              expect(monDate.substr(1,10)).to.equal('2017-11-27');
+              const monDate = JSON.stringify(results.dataValues.monday_dates);
+              expect(monDate.substr(1, 10)).to.equal('2017-11-27');
               done();
             })
-            .catch(error => 
+            .catch(error =>
               done(error));
         });
     });
@@ -209,7 +229,7 @@ describe('Shiftly Backend Test Spec', () => {
           scheduleTemplate: [{
             employees_needed: 1,
             day_part_id: 1,
-            monday_dates: '11/27/17'
+            monday_dates: '11/27/17',
           }],
         })
         .end((err, res) => {
@@ -221,7 +241,7 @@ describe('Shiftly Backend Test Spec', () => {
               expect(results).to.not.be.empty;
               done();
             })
-            .catch(error => 
+            .catch(error =>
               done(error));
         });
     });
@@ -229,24 +249,24 @@ describe('Shiftly Backend Test Spec', () => {
 
   describe('Algo', () => {
 
-    let allEmployeeAvail = {
-      '1': [ 1, 2, 5, 6, 7, 8, 9, 10 ],
-      '2': [ 1, 2, 5, 6, 7, 8, 10 ],
-      '3': [ 1, 2, 5, 6, 7, 8, 9, 10 ],
-      '4': [ 2, 5, 6, 7 ],
-      '5': [ 1, 3, 4, 5, 6, 7, 8, 9, 10 ],
-      '6': [ 1, 4, 6, 7, 8, 10 ],
-      '7': [ 1, 3, 5, 6, 7, 8, 9, 10 ],
-      '8': [ 5, 6, 10 ],
-      '9': [ 1, 3, 4, 5, 6, 7, 8, 9, 10 ],
-      '10': [ 1, 3, 4, 5, 6, 7, 8, 10 ],
-      '11': [ 1, 3, 4, 5, 6, 7, 8, 9, 10 ],
-      '12': [ 1, 3, 4, 5, 6, 8, 9, 10 ],
-      '13': [ 2, 4, 6, 7, 9 ],
-      '14': [ 2, 4, 5, 6, 7 ], 
+    const allEmployeeAvail = {
+      1: [ 1, 2, 5, 6, 7, 8, 9, 10 ],
+      2: [ 1, 2, 5, 6, 7, 8, 10 ],
+      3: [ 1, 2, 5, 6, 7, 8, 9, 10 ],
+      4: [ 2, 5, 6, 7 ],
+      5: [ 1, 3, 4, 5, 6, 7, 8, 9, 10 ],
+      6: [ 1, 4, 6, 7, 8, 10 ],
+      7: [ 1, 3, 5, 6, 7, 8, 9, 10 ],
+      8: [ 5, 6, 10 ],
+      9: [ 1, 3, 4, 5, 6, 7, 8, 9, 10 ],
+      10: [ 1, 3, 4, 5, 6, 7, 8, 10 ],
+      11: [ 1, 3, 4, 5, 6, 7, 8, 9, 10 ],
+      12: [ 1, 3, 4, 5, 6, 8, 9, 10 ],
+      13: [ 2, 4, 6, 7, 9 ],
+      14: [ 2, 4, 5, 6, 7 ],
     };
 
-    let temp = {
+    const temp = {
       '1': 1,
       '2': 2,
       '3': 2,
@@ -263,13 +283,13 @@ describe('Shiftly Backend Test Spec', () => {
       '14': 2 
     };
 
-    let result = algo.scheduleGenerator(allEmployeeAvail, temp);
+    const result = algo.scheduleGenerator(allEmployeeAvail, temp);
 
-    it('algo should return an array', function(){
+    it('algo should return an array', () => {
       expect(result).to.be.a('object');
     });
 
-    it('algo should schedule exactly as many servers as specified', function(){
+    it('algo should schedule exactly as many servers as specified', () => {
       expect(result['1']).to.have.lengthOf(temp['1']);
       expect(result['2']).to.have.lengthOf(temp['2']);
       expect(result['3']).to.have.lengthOf(temp['3']);
@@ -286,7 +306,7 @@ describe('Shiftly Backend Test Spec', () => {
       expect(result['14']).to.have.lengthOf(temp['14']);
     });
 
-    it('algo should not schedule employees on days they aren\'t available', function () {
+    it('algo should not schedule employees on days they aren\'t available', () => {
       expect(result['4'].indexOf(1)).to.equal(-1);
       expect(result['8'].indexOf(1)).to.equal(-1);
       expect(result['13'].indexOf(1)).to.equal(-1);
@@ -322,7 +342,7 @@ describe('Shiftly Backend Test Spec', () => {
 
       expect(result['8'].indexOf(7)).to.equal(-1);
       expect(result['12'].indexOf(7)).to.equal(-1);
-      
+     
       expect(result['4'].indexOf(8)).to.equal(-1);
       expect(result['8'].indexOf(8)).to.equal(-1);
       expect(result['13'].indexOf(8)).to.equal(-1);
@@ -340,8 +360,8 @@ describe('Shiftly Backend Test Spec', () => {
       expect(result['14'].indexOf(10)).to.equal(-1);
     });
 
-    it('algo should autofill house shift if not enough employees are available', function(){
+    it('algo should autofill house shift if not enough employees are available', () => {
       expect(result['8'].indexOf('house')).to.not.equal(-1);
-    })
+    });
   });
 });

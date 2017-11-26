@@ -58,12 +58,12 @@ const scheduleGenerator = (allEmployeeAvail, temp) => {
       }
     }
     if (temp[dayPart] === 0) {
-      allCombinations[dayPart] = [];
+      allCombinations[dayPart] = [[]];
     } else {
       allCombinations[dayPart] = Combinatorics.combination(allEmployeeAvail[dayPart], temp[dayPart]).toArray();
     }
   }
-
+  
   let schedule = {};
   let cheapSolution = [];
   let completedSchedules = [];
@@ -107,6 +107,7 @@ const scheduleGenerator = (allEmployeeAvail, temp) => {
   findCheapSolution(allCombinations);
   schedule = {};
   findSolution(allCombinations, {}, 1);
+  console.log("THIISISIS", completedSchedules[0]);
   return completedSchedules.length ? completedSchedules[Math.floor(Math.random()*10)] : cheapSolution[0];
 }
 
