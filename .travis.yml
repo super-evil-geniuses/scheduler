@@ -9,7 +9,7 @@ services:
   - postgresql
 
 before_script:
-  - psql -c 'create database shiftly;' -U postgres &&
+  - psql -c 'create database shiftly;' -U postgres
   - npm run db:setup
 #npm install will still run on every build and will update/install any new packages added to your package.json file
 cache:
