@@ -4,7 +4,7 @@ let monday = moment(moment().day(1)).isAfter(moment()) ? moment().day(-6) : mome
 monday = monday.format('YYYY-MM-DD');
 
 const selectedWeek = (state = monday, action) => {
-	switch(action.type) {
+  switch (action.type) {
     case 'SELECT_WEEK':
       return action.payload;
     case 'REMOVE_LOGGED_IN_DETAILS':
