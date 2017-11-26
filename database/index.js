@@ -1,6 +1,8 @@
 const Sequelize = require('sequelize');
 const config = require('./config.js');
+const Promise = require('bluebird');
 require('dotenv').config();
+
 
 const sequelize = process.env.DATABASE_URL ? 
 new Sequelize(process.env.DATABASE_URL) : 
@@ -41,7 +43,29 @@ db.User.sync()
 	})
 	.then(() => {
 		return db.Session.sync();
-	});
+	})
+	.then(() => {
+		return saveDayParts(dayParts);
+	})
+
+const dayParts = [
+  'monA', 'monP', 
+  'tuesA', 'tuesP', 
+  'wedsA', 'wedsP', 
+  'thursA', 'thursP', 
+  'friA', 'friP', 
+  'satA', 'satP', 
+  'sunA', 'sunP'
+];
+
+let saveDayParts = (dayParts) => {
+	return Promise.each(dayParts, (dayPart) => {
+		db.Day_Part.create({ name: dayPart })
+			.catch((err) => {
+				console.log('day parts saved');
+			});
+	})
+};
 
 module.exports = {
   User: db.User,

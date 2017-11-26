@@ -32,13 +32,13 @@ class ScheduleGenerator extends React.Component {
     if (this.props.weekHasActualSchedule) {
       return (
         <div className='schedule-generator-button'>
-          <button className="btn-primary clickable" type="button" onClick={() => { this.props.generateSchedule(this.props.selectedWeek); }}>Regenerate</button>
+          <button className="btn-primary clickable" type="button" onClick={() => { this.props.generateSchedule(moment(this.props.selectedWeek)); }}>Regenerate</button>
         </div>
       );
     } else if (this.props.weekHasAtLeastOneNeededEmployee) {
       return (
         <div className='schedule-generator-button'>
-          <button className="btn-primary" type="button" onClick={() => { this.props.generateSchedule(this.props.selectedWeek); }}>Generate</button>
+          <button className="btn-primary" type="button" onClick={() => { this.props.generateSchedule(moment(this.props.selectedWeek)); }}>Generate</button>
         </div>
       );
     }

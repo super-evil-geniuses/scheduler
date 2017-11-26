@@ -1,3 +1,4 @@
+const moment = require('moment');
 const db = require('../database');
 const Promise = require('bluebird');
 const crypto = require('crypto');
@@ -138,7 +139,7 @@ const updateNeededEmployees = (req, res, next) => {
 
 const createScheduleDate = (req, res, next) => {
   db.Schedule.create({
-    monday_dates: new Date(req.body.scheduleTemplate[0].monday_dates)
+    monday_dates: moment(req.body.scheduleTemplate[0].monday_dates)
   }).then((scheduleDate)=> {
     req.scheduleTemplate = {};
     req.scheduleTemplate.monday_date = scheduleDate;
