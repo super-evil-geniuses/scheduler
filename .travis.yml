@@ -5,8 +5,12 @@ node_js:
   #latest stable Node.js release
   - "node"
 
+services:
+  - postgresql
+
 before_script:
   - psql -c 'create database shiftly;' -U postgres
+  
 #npm install will still run on every build and will update/install any new packages added to your package.json file
 cache:
   directories:
