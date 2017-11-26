@@ -47,6 +47,26 @@ class App extends Component {
     return <div />;
   }
 
+  renderNav() {
+    if(!this.props.users) {
+      return (
+        <div>
+          <div className="nav-item nav-login" onClick={() => { this.props.changeView('login')}}>
+            Log in
+          </div>
+          <div className="nav-item nav-signup" onClick={() => { this.props.changeView('signup')}}>
+            Sign up
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div className="nav-item nav-logout" onClick={() => { this.props.logout()}}>
+        Log out
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className="app-container clear-fix">
@@ -57,15 +77,7 @@ class App extends Component {
             </div>
           </div>
           <div className="nav-right">
-            <div className="nav-item nav-login" onClick={() => { this.props.changeView('login')}}>
-              Log in
-            </div>
-            <div className="nav-item nav-signup" onClick={() => { this.props.changeView('signup')}}>
-              Sign up
-            </div>
-            <div className="nav-item nav-logout" onClick={() => { this.props.logout()}}>
-              Log out
-            </div>
+          {this.renderNav()}
           </div>
         </div>
          {this.renderFlashMessage()}
@@ -76,7 +88,7 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-  return { view: state.view, flashMessage: state.flashMessage};
+  return { view: state.view, flashMessage: state.flashMessage, users: state.users};
 }
 
 function mapDispatchToProps(dispatch) {

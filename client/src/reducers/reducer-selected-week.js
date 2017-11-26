@@ -5,6 +5,8 @@ const selectedWeek = (state = monday, action) => {
 	switch(action.type) {
     case 'SELECT_WEEK':
       return action.payload;
+    case 'REMOVE_LOGGED_IN_DETAILS':
+      return monday;
     default:
       return state;
   }
