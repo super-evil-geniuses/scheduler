@@ -13,6 +13,7 @@ const app = require('../server/app.js');
 const schema = require('../database/config.js');
 const algo = require('../helpers/algo.js');
 const utils = require('../helpers/index.js');
+// const dummyData = require('../database/example-data/dummyData.js');
 const port = process.env.PORT || 8080;
 
 describe('Shiftly Backend Test Spec', () => {

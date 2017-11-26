@@ -1,15 +1,26 @@
 import React from 'react';
 import _ from 'underscore';
-import { connect } from 'react-redux';
 import EmployeeSchedule from './EmployeeSchedule.jsx';
 
 
 const ScheduleActual = (props) => {
 
+  let calendarBody;
+
   let morningEvenings = [<div key={'block'} className="ratio-col-8 schedule-block schedule-hours"></div>];
 
   for (let i = 0; i < 14; i++) {
     morningEvenings.push(<div key={`${i}shift`} className="ratio-col-16 schedule-block  schedule-hours">{i % 2 === 0 ? 'AM' : 'PM'}</div>)
+  }
+
+  if(props.selectedWeekActualSchedule.length > 0) {
+    calendarBody = props.selectedWeekActualSchedule.map((sched,idx) => {
+      return <EmployeeSchedule key={`${sched.name}${idx}`} schedule={sched} />;
+    });
+  } else if (props.weekHasAtLeastOneNeededEmployee) {
+    calendarBody = <div className='schedule-prompt'>Generate a schedule for this week when you have finalized your shifts.</div>;
+  } else {
+    calendarBody = <div className='schedule-prompt'>You have not saved any shifts for this week.</div>;
   }
 
   return (
@@ -25,70 +36,9 @@ const ScheduleActual = (props) => {
         <div className="ratio-col-8 schedule-block ">Sun</div>
         {morningEvenings}
       </div>
-        {props.schedules.map((sched,idx) => {
-          return <EmployeeSchedule key={`${sched.name}${idx}`} schedule={sched} />;
-        })}
+        {calendarBody}
     </div>
-  )
-  
+  );
 }
 
-const mapStateToProps = (state) => {
-	let schedules = {};
-  let scheduleArr = [];
-  //let dayPartsMap = {};
-  if (state.scheduleActual) {
-    state.scheduleActual.forEach( (e) => {
-      if(e.user_id === null) {
-        schedules['HOUSE'] = schedules['HOUSE'] || [];
-        schedules['HOUSE'].push(e.day_part_id);
-      } else {
-        schedules[e.user_id] = schedules[e.user_id] || [];
-        schedules[e.user_id].push(e.day_part_id);
-      }
-    });
-    
-    for (const sched in schedules) {
-      let schedObj = {}
-      if (sched === 'HOUSE') {
-        schedObj.name = 'HOUSE';
-        schedObj.schedule = schedules[sched];
-      } else {
-        schedObj.name = state.users.filter( (user) => {
-          return user.id == sched;
-        })[0].name
-
-        schedObj.schedule = schedules[sched];
-      }
-
-      scheduleArr.push(schedObj);
-    }
-  }
-  
-  // if(state.dayParts) {
-  //   let forwardFacingDayParts = [
-  //     null,
-  //     'Monday AM',
-  //     'Monday PM',
-  //     'Tuesday AM',
-  //     'Tuesday PM',
-  //     'Wednesday AM',
-  //     'Wednesday PM',
-  //     'Thursday AM',
-  //     'Thursday PM',
-  //     'Friday AM',
-  //     'Friday PM',
-  //     'Saturday AM',
-  //     'Saturday PM',
-  //     'Sunday AM',
-  //     'Sunday PM',
-  //   ];
-  //   state.dayParts.forEach((dayPart) => {
-  //     dayPartsMap[dayPart.id] = forwardFacingDayParts[dayPart.id];
-  //   })
-  // }
-
-  return { schedules: scheduleArr };
-}
-
-export default connect(mapStateToProps)(ScheduleActual);
+export default ScheduleActual;

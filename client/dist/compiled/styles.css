@@ -330,3 +330,8 @@ h4 {
     margin: 0;
   }
 }
+
+.schedule-prompt {
+  padding: 100px 0 20px 0;
+  text-align: center;
+}

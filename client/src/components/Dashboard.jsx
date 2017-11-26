@@ -46,7 +46,8 @@ class Dashboard extends Component {
             <ScheduleActual
             selectedWeek={this.props.selectedWeek}
             weekHasActualSchedule={this.props.weekHasActualSchedule}
-            weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}/>
+            weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}
+            selectedWeekActualSchedule={this.props.selectedWeekActualSchedule}/>
           </div>
         </div>
       </div>
@@ -58,6 +59,8 @@ function mapStateToProps(state) {
   let scheduleId = null;
   let weekHasActualSchedule = false;
   let weekHasAtLeastOneNeededEmployee = false;
+  let actualSchedule = null;
+  
   if (state.scheduleDates) {
     const selectedWeekObj = state.scheduleDates.find((el) => {
         return el.monday_dates.toString().substr(0, 10) === state.selectedWeek;
@@ -71,6 +74,9 @@ function mapStateToProps(state) {
     });
     if (scheduleFound) {
       weekHasActualSchedule = true;
+      actualSchedule = state.scheduleActual.filter((el) => {
+        return el.schedule_id === scheduleId;
+      });
     }
     const countOfNeededEmployees = state.neededEmployees.filter((el)=> {
       return el.schedule_id === scheduleId;
@@ -82,11 +88,44 @@ function mapStateToProps(state) {
     }
   }
 
+
+  let schedules = {};
+  let scheduleArr = [];
+  //let dayPartsMap = {};
+  if (actualSchedule) {
+    actualSchedule.forEach((e) => {
+        if(e.user_id === null) {
+          schedules['HOUSE'] = schedules['HOUSE'] || [];
+          schedules['HOUSE'].push(e.day_part_id);
+        } else {
+          schedules[e.user_id] = schedules[e.user_id] || [];
+          schedules[e.user_id].push(e.day_part_id);
+        }
+    });
+    
+    for (const sched in schedules) {
+      let schedObj = {}
+      if (sched === 'HOUSE') {
+        schedObj.name = 'HOUSE';
+        schedObj.schedule = schedules[sched];
+      } else {
+        schedObj.name = state.users.filter( (user) => {
+          return user.id == sched;
+        })[0].name
+
+        schedObj.schedule = schedules[sched];
+      }
+
+      scheduleArr.push(schedObj);
+    }
+  }
+
   return {
     selectedWeek: state.selectedWeek,
-    // scheduleId: scheduleId,
+    selectedWeekScheduleId: scheduleId,
     weekHasActualSchedule: weekHasActualSchedule,
-    weekHasAtLeastOneNeededEmployee: weekHasAtLeastOneNeededEmployee
+    weekHasAtLeastOneNeededEmployee: weekHasAtLeastOneNeededEmployee,
+    selectedWeekActualSchedule: scheduleArr,
   }
 }
 
