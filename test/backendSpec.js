@@ -123,12 +123,12 @@ describe('Shiftly Backend Test Spec', () => {
             schedule_id: 1,
           }],
         })
-        // .expect(200, done);
-      .expect(200)
-      .end(function(err, res) {
-        if (err) return done(err);
-        done();
-      });
+        .expect(200, done);
+      // .expect(200)
+      // .end(function(err, res) {
+      //   if (err) return done(err);
+      //   done();
+      // });
     });
 
     it('should get 200 response for post request with /needed_employee endpoint', (done) => {
