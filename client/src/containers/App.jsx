@@ -78,7 +78,8 @@ class App extends Component {
         <div className="navbar clear-fix">
           <div className="nav-left">
             <div className="nav-item nav-logo">
-              Shiftly
+            <i class="material-icons shiftly-icon">recent_actors</i>
+               Shiftly
             </div>
           </div>
           <div className="nav-right">
