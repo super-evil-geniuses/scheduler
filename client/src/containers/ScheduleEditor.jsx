@@ -89,12 +89,11 @@ class ScheduleEditor extends Component {
           {this.props.scheduleNeeds && 
           <select className='date-dropdown' onChange={(e) => this.selectSchedule(e.target.value)}>
             <option defaultValue='' disabled selected>Select a template...</option>
-            {Object.keys(this.props.scheduleNeeds).map(id => {
-              return <option value={id}>{this.props.scheduleNeeds[id].monDate.substr(0, 10)}</option>
+            {Object.keys(this.props.scheduleNeeds).map((id, idx) => {
+              return <option key={id} value={id}>{this.props.scheduleNeeds[id].monDate.substr(0, 10)}</option>
             })}
-
             {this.getNextMondayDates().map(monDate => {
-              return <option value={monDate}>{monDate}</option>
+              return <option key={monDate} value={monDate}>{monDate}</option>
             })}
           </select>}
           <p className='shift-prompt'>How many employees do you need for each shift?</p>

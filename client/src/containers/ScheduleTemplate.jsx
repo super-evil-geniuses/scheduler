@@ -164,16 +164,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScheduleTemplate);
-
-
-/*
-selectedWeek has schedule saved
-selectedWeek does not have schedule saved
-
-
-Edit shifts for the week of:
-DROPDOWN: Mon November 25th 2017
-
-
-
-*/
