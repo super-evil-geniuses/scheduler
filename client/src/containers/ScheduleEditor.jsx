@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { selectWeek } from '../actions/index';
 import moment from 'moment';
-
+import PropTypes from 'prop-types';
 import ScheduleTemplate from './ScheduleTemplate.jsx';
 
 class ScheduleEditor extends Component {
@@ -156,5 +156,12 @@ function mapDispatchToProps(dispatch) {
     selectWeek: selectWeek
   }, dispatch);
 }
+
+ScheduleEditor.propTypes = {
+  selectWeek: PropTypes.func.isRequired, //from actions
+  dayPartsMap: PropTypes.object.isRequired,
+  scheduleNeeds: PropTypes.object.isRequired,
+  selectedWeek: PropTypes.string.isRequired, //state
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScheduleEditor);

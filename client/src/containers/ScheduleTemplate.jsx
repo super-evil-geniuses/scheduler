@@ -6,6 +6,7 @@ import { createScheduleTemplate } from '../actions/index';
 import { createScheduleDate } from '../actions/index';
 import _ from 'underscore';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 
 class ScheduleTemplate extends React.Component {
   constructor(props) {
@@ -176,5 +177,14 @@ function mapDispatchToProps(dispatch) {
     createScheduleTemplate: createScheduleTemplate,
   }, dispatch);
 }
+
+ScheduleTemplate.propTypes = {
+  updateNeededEmployees: PropTypes.func.isRequired,
+  createScheduleDate: PropTypes.func,
+  createScheduleTemplate: PropTypes.func.isRequired,
+  selectedWeek: PropTypes.string.isRequired,
+  schedule: PropTypes.object,
+  monDate: PropTypes.string,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScheduleTemplate);

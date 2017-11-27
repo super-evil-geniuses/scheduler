@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { selectEmployee } from '../actions/index';
+import PropTypes from 'prop-types';
 
 const EmployeeRosterItem = (props) => {
   return (
@@ -9,7 +10,7 @@ const EmployeeRosterItem = (props) => {
       <div className="ratio-col-4-3" >
         <div>
           <i className="material-icons employee-edit-profile">account_circle</i>
-          <span>{props.employee.name}</span> 
+          <span>{ props.employee.name }</span>
         </div>
       </div>
       <div className="ratio-col-4" >
@@ -22,7 +23,11 @@ const EmployeeRosterItem = (props) => {
 };
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({selectEmployee: selectEmployee}, dispatch);
+  return bindActionCreators({ selectEmployee: selectEmployee }, dispatch);
 }
+
+EmployeeRosterItem.propTypes = {
+  selectEmployee: PropTypes.func.isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(EmployeeRosterItem);

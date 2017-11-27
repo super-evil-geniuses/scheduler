@@ -9,7 +9,7 @@ import { getAllScheduleDates } from '../actions/index';
 import { changeView } from '../actions/index';
 import { checkedIfLoggedIn } from '../actions/index';
 import { logout } from '../actions/index';
-
+import PropTypes from 'prop-types';
 import Dashboard from '../components/Dashboard.jsx';
 import FlashMessage from '../components/FlashMessage.jsx';
 import Login from './Login.jsx';
@@ -114,5 +114,15 @@ function mapDispatchToProps(dispatch) {
     logout: logout,
   }, dispatch);
 }
+
+App.propTypes = {
+  checkedIfLoggedIn: PropTypes.func.isRequired,
+  changeView: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
+  view: PropTypes.string.isRequired,
+  flashMessage: PropTypes.string,
+  users: PropTypes.arrayOf(PropTypes.object),
+  selectedWeek: PropTypes.string.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

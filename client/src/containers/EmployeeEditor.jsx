@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import EmployeeAvailability from './EmployeeAvailability.jsx';
 import EmployeeRoster from '../components/EmployeeRoster.jsx';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class EmployeeEditor extends Component {
   constructor(props) {
@@ -61,6 +62,11 @@ const mapStateToProps = (state) => {
     employees: employees,
   };
   
+};
+
+EmployeeEditor.propTypes = {
+  dayPartsMap: PropTypes.arrayOf(PropTypes.object).isRequired,
+  employees: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps)(EmployeeEditor);

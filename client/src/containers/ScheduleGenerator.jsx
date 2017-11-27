@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { generateSchedule } from '../actions/index';
 import _ from 'underscore';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 
 class ScheduleGenerator extends React.Component {
   constructor(props) {
@@ -49,4 +50,13 @@ class ScheduleGenerator extends React.Component {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ generateSchedule: generateSchedule }, dispatch)
 }
+
+ScheduleGenerator.propTypes = {
+  generateSchedule: PropTypes.func.isRequired,
+  
+  weekHasActualSchedule: PropTypes.bool.isRequired,
+  selectedWeek: PropTypes.string.isRequired,
+  weekHasAtLeastOneNeededEmployee: PropTypes.bool.isRequired,
+};
+
 export default connect(null, mapDispatchToProps)(ScheduleGenerator);

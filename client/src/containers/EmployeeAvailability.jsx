@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { updateEmployeeAvailability } from '../actions/index';
 import _ from 'underscore';
-
+import PropTypes from 'prop-types';
 import AddEmployee from './AddEmployee.jsx';
 
 class EmployeeAvailability extends React.Component {
@@ -116,4 +116,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({updateEmployeeAvailability: updateEmployeeAvailability}, dispatch);
 }
 
+EmployeeAvailability.propTypes = {
+  updateEmployeeAvailability: PropTypes.func.isRequired,
+  newAvailabilities: PropTypes.object.isRequired,
+};
 export default connect(null, mapDispatchToProps)(EmployeeAvailability);
