@@ -113,7 +113,7 @@ class EmployeeAvailability extends React.Component {
 };
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({updateEmployeeAvailability: updateEmployeeAvailability}, dispatch);
+  return bindActionCreators({ updateEmployeeAvailability }, dispatch);
 }
 
 EmployeeAvailability.propTypes = {
