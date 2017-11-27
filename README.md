@@ -17,7 +17,6 @@
     1. [Installing Dependencies](#installing-dependencies)
     1. [Tasks](#tasks)
 1. [Roadmap](#roadmap)
-1. [Contributing](#contributing)
 
 ## Usage
 ### Dependencies
@@ -56,33 +55,6 @@ npm run server-dev
 npm run db:setup (one time to seed the database with example data)
 ```
 
-
-## Requirements
-
-- Node 6.4.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
-
-## Development
-
-### Installing Dependencies
-
-From within the root directory:
-
-```
-npm install -g bower
-npm install
-
-bower install (Do we use bower?!)
-```
-
 ### Roadmap
 
 View the project roadmap [here](LINK_TO_DOC)
-
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
