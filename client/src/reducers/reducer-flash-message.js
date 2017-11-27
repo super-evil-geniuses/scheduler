@@ -4,6 +4,10 @@ const flashMessage = (state = null, action) => {
   	  return action.payload.data.flashMessage || null;
   	case 'REMOVE_LOGGED_IN_DETAILS':
   	  return 'You have logged out';
+    case 'ADD_EMPLOYEE':
+      return action.payload.data.flashMessage || null;  
+    case 'LEAVE_ADD_EMPLOYEE':
+      return '';  
   	default:
   	  return state;
   }

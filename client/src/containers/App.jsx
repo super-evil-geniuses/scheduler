@@ -26,6 +26,13 @@ class App extends Component {
   //   this.props.getAllScheduleDates();
   }
 
+  // componentWillReceiveProps() {
+  //   // debugger
+  //   if (this.props.view !== 'employeeEditor') {
+  //     debugger
+  //   }
+  // }
+
   renderFlashMessage() {
     if (this.props.flashMessage) {
       return <FlashMessage message={this.props.flashMessage} />
