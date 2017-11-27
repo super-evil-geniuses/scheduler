@@ -9,7 +9,7 @@ const flashMessage = (state = null, action) => {
     case 'LEAVE_ADD_EMPLOYEE':
       return '';  
   	default:
-  	  return state;
+  	  return null;
   }
 }; 
 
