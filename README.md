@@ -31,7 +31,7 @@ Then install postgres db:
 ```
 brew install postgres
 ```
-If ypu are prompted, run this to start pg: `brew services start postgresql`
+If you are prompted, run this to start pg: `brew services start postgresql`
 Run pg in your command line:
 ```
 psql postgres
