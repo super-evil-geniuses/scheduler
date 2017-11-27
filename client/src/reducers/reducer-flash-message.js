@@ -5,7 +5,7 @@ const flashMessage = (state = null, action) => {
   	case 'REMOVE_LOGGED_IN_DETAILS':
   	  return { message: 'You have logged out', type: 'green' };
     case 'ADD_EMPLOYEE':
-      return action.payload.data.flashMessage || { message: 'Employee added', type: 'green' };  
+      return action.payload.data.flashMessage || { message: 'Employee added', type: 'green' };
     case 'LEAVE_ADD_EMPLOYEE':
       return null;
     case 'CREATE_SCHEDULE_TEMPLATE':
