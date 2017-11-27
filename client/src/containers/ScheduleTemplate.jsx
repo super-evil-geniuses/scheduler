@@ -90,7 +90,7 @@ class ScheduleTemplate extends React.Component {
             </table>
             <div className="employee-editor-save-btn">
               <button 
-              className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent "
+              className="btn-main clickable"
               onClick={() => this.props.updateNeededEmployees(this.props.schedule, this.state.newSchedule)}
               >
                 Save
@@ -125,7 +125,7 @@ class ScheduleTemplate extends React.Component {
             </table>
             <div className="employee-editor-save-btn">
               <button 
-              className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent "
+              className="btn-main clickable"
               onClick={() => {this.props.createScheduleTemplate(this.state.newDate, this.state.newSchedule)} }
               >
                 Save

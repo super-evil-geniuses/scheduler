@@ -348,3 +348,8 @@ h4 {
 .shift-prompt {
   padding: 20px 0 0 0;
 }
+
+.selected-tab {
+  border-bottom: 5px solid rgb(234, 183, 105);
+  background-color: #0ca496;
+}

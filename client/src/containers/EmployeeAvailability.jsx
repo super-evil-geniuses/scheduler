@@ -70,6 +70,7 @@ class EmployeeAvailability extends React.Component {
       renderBody = (
         <div>
           <h4>{this.props.employee.name}</h4>
+          <p>Update {this.props.employee.name}'s weekly availability.</p>
           <table className="select-days-table">
             <tbody>
               <tr>
