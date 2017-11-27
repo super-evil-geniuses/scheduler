@@ -22,23 +22,27 @@ class AddEmployee extends React.Component {
 
   render() {
     return (
-      <div className="list-item clear-fix clickable">
-        Username:
+      <div>
+        <h4>Create a new employee</h4>
+        <p>Please create a username and a temporary password for your employee's account.</p>
+        <label className="credentials-label">Username:</label>
         <input
-          className="Username"
+          className="credentials-input"
           type="text"
           value={this.state.newEmployeeName}
           onChange={e => this.setState({ newEmployeeName: e.target.value })}
         />
         <br></br>
-        Password:
+        <label className="credentials-label">Password:</label>
         <input
-          className="Password"
+          className="credentials-input"
           type="text"
           value={this.state.newEmployeePassword}
           onChange={e => this.setState({ newEmployeePassword: e.target.value })}
         />
-        <button onClick={() => this.props.addEmployee(this.state.newEmployeeName, this.state.newEmployeePassword)}>Add</button>
+        <div className="btn-credentials">
+          <button className='btn-main clickable' onClick={() => this.props.addEmployee(this.state.newEmployeeName, this.state.newEmployeePassword)}>Add</button>
+        </div>
       </div>
     );
   }

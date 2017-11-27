@@ -10,7 +10,17 @@ class ScheduleEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedSchedule: null, 
+      selectedSchedule: null,
+      view: 'edit'
+    }
+  }
+
+  componentDidMount() {
+    //console.log(moment(this.props.selectedWeek).format('MMMM Do YYYY'));
+    for(let item in this.props.scheduleNeeds) {
+      if(this.props.scheduleNeeds[item].monDate.substr(0,10) === this.props.selectedWeek) {
+        this.selectSchedule(item);
+      }
     }
   }
 
@@ -56,12 +66,24 @@ class ScheduleEditor extends Component {
     return dateExists;
   }
 
+  renderEditCreate() {
+    if(this.state.selectedSchedule.id === null) {
+      return (
+        <div>
+          <h4>Create schedule</h4>
+          <p>How many employees do you need for each shift?</p>
+        </div>
+      )
+    }
+  }
+
   render() {
     return (
       <div className='ratio-col-1'>
-        Week of:
-        {this.props.scheduleNeeds && 
-          <select onChange={(e) => this.selectSchedule(e.target.value)}>
+        <div className="employee-availability clear-fix">
+          <h4>Edit shifts for:</h4>
+          {this.props.scheduleNeeds && 
+          <select className='date-dropdown' onChange={(e) => this.selectSchedule(e.target.value)}>
             <option defaultValue='' disabled selected>Select a template...</option>
             {Object.keys(this.props.scheduleNeeds).map(id => {
               return <option value={id}>{this.props.scheduleNeeds[id].monDate.substr(0, 10)}</option>
@@ -71,7 +93,9 @@ class ScheduleEditor extends Component {
               return <option value={monDate}>{monDate}</option>
             })}
           </select>}
+          <p className='shift-prompt'>How many employees do you need for each shift?</p>
         <ScheduleTemplate schedule={this.state.selectedSchedule} dayPartsMap={this.props.dayPartsMap} scheduleNeeds={this.props.scheduleNeeds}/>
+        </div>
       </div>
     );
   }

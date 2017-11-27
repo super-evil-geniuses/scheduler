@@ -66,8 +66,6 @@ class ScheduleTemplate extends React.Component {
       if (this.props.schedule.id) {
         renderBody = (
           <div>
-            <h4>Edit schedule</h4>
-            <p>How many employees do you need for each shift?</p>
             <table className="select-days-table">
               <tbody>
                 <tr>
@@ -92,7 +90,7 @@ class ScheduleTemplate extends React.Component {
             </table>
             <div className="employee-editor-save-btn">
               <button 
-              className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent "
+              className="btn-main clickable"
               onClick={() => this.props.updateNeededEmployees(this.props.schedule, this.state.newSchedule)}
               >
                 Save
@@ -103,8 +101,6 @@ class ScheduleTemplate extends React.Component {
       } else {
         renderBody = (
           <div>
-            <h4>Create schedule</h4>
-            <p>How many employees do you need for each shift?</p>
             <table className="select-days-table">
               <tbody>
                 <tr>
@@ -129,7 +125,7 @@ class ScheduleTemplate extends React.Component {
             </table>
             <div className="employee-editor-save-btn">
               <button 
-              className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent "
+              className="btn-main clickable"
               onClick={() => {this.props.createScheduleTemplate(this.state.newDate, this.state.newSchedule)} }
               >
                 Save
@@ -140,7 +136,7 @@ class ScheduleTemplate extends React.Component {
       }
     }
     return (
-      <div className="employee-availability clear-fix">
+      <div>
         {renderBody}
       </div>
     )
@@ -162,3 +158,16 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScheduleTemplate);
+
+
+/*
+selectedWeek has schedule saved
+selectedWeek does not have schedule saved
+
+
+Edit shifts for the week of:
+DROPDOWN: Mon November 25th 2017
+
+
+
+*/

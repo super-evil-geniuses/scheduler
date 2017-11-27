@@ -319,6 +319,15 @@ h4 {
   color: rgb(207, 98, 84);
 }
 
+.date-dropdown {
+  border-radius: 2px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: 100;
+  font-family: Helvetica;
+  width: 100%;
+}
+
 @media (max-width: 900px) {
   .dashboard-container {
     min-width: 100%;
@@ -334,4 +343,13 @@ h4 {
 .schedule-prompt {
   padding: 100px 0 20px 0;
   text-align: center;
+}
+
+.shift-prompt {
+  padding: 20px 0 0 0;
+}
+
+.selected-tab {
+  border-bottom: 5px solid rgb(234, 183, 105);
+  background-color: #0ca496;
 }
