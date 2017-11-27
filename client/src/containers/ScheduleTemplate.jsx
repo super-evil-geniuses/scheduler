@@ -16,6 +16,12 @@ class ScheduleTemplate extends React.Component {
     }
   }
 
+  componentWillMount() {
+    this.setState({
+      newDate: this.props.selectedWeek,
+    })
+  }
+
   componentWillUpdate(nextProps, nextState) {
     if (nextProps.schedule != this.props.schedule) {
       const newSchedule = _.clone(nextProps.schedule.neededEmployees);
