@@ -35,7 +35,7 @@ class App extends Component {
 
   renderFlashMessage() {
     if (this.props.flashMessage) {
-      return <FlashMessage message={this.props.flashMessage} />
+      return <FlashMessage message={this.props.flashMessage.message} type={this.props.flashMessage.type} />
     } else {
       return;
     }
