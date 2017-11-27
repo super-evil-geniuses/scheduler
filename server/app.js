@@ -14,33 +14,27 @@ app.use(utils.checkSession);
 app.use(express.static(__dirname + '/../client/dist/compiled'));
 
 app.get('/users', utils.getAllUsers, (req, res) => {
-  res.write(JSON.stringify(req.users));
-  res.end();
+  res.json(req.users);
 });
 
 app.get('/employee_availabilities', utils.getAllEmployeeAvailabilities, (req, res) => {
-  res.write(JSON.stringify(req.employeeAvailabilities));
-  res.end();
+  res.json(req.employeeAvailabilities);
 });
 
 app.get('/day_parts', utils.getAllDayParts, (req, res) => {
-  res.write(JSON.stringify(req.dayParts));
-  res.end();
+  res.json(req.dayParts);
 });
 
 app.get('/needed_employees', utils.getAllNeededEmployees, (req, res) => {
-  res.write(JSON.stringify(req.neededEmployees));
-  res.end();
+  res.json(req.neededEmployees);
 });
 
 app.get('/schedule_dates', utils.getAllScheduleDates, (req, res) => {
-  res.write(JSON.stringify(req.scheduleDates));
-  res.end();
+  res.json(req.scheduleDates);
 });
 
 app.patch('/employee_availability', utils.updateEmployeeAvailability, (req, res) => {
-  res.write(JSON.stringify(req.empoloyeeAvailabilities));
-  res.end();
+  res.json(req.empoloyeeAvailabilities);
 });
 
 app.post('/add_employee', utils.addUser, utils.getAllDayParts, utils.addEmployeeAvailability, utils.getAllEmployeeAvailabilities, (req, res) => {
@@ -51,22 +45,32 @@ app.post('/add_employee', utils.addUser, utils.getAllDayParts, utils.addEmployee
 });
 
 app.patch('/needed_employees', utils.updateNeededEmployees, (req, res) => {
-  res.write(JSON.stringify(req.scheduleTemplate));
+  res.json(req.scheduleTemplate);
   res.end();
 });
 
 app.post('/needed_employees', utils.createScheduleDate, utils.createScheduleTemplate, (req, res) => {
-  res.write(JSON.stringify(req.scheduleTemplate));
-  res.end();
+  res.json(req.scheduleTemplate);
 });
 
 app.post('/generate_schedule', (req, res) => { 
   generateSchedule(new Date(req.body.mondayDate))
     .then((schedule) => {
-      res.write(JSON.stringify(schedule));
-      res.end();
-    })
-})
+      res.json(schedule);
+    });
+});
+
+app.post('/login', utils.authenticate, (req, res) => {
+  res.redirect('/welcome_back');
+});
+
+app.post('/signup', utils.createUser, (req, res) => {
+  res.redirect('/welcome_back');
+});
+
+app.post('/logout', utils.destroySession, (req, res) => {
+  res.status(200).end();
+});
 
 app.get('/welcome_back',
   utils.redirectIfLoggedIn,
@@ -88,20 +92,5 @@ app.get('/welcome_back',
     obj.scheduleDates = req.scheduleDates;
     res.json(obj);
 });
-
-app.post('/login', 
-  utils.authenticate, 
-  (req, res) => {
-    res.redirect('/welcome_back');
-})
-app.post('/signup', 
-  utils.createUser, 
-  (req, res) => {
-    res.redirect('/welcome_back');
-})
-
-app.post('/logout', utils.destroySession, (req, res) => {
-  res.status(200).end();
-})
 
 module.exports = app;

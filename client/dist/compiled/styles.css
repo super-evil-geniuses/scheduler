@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
+
 body {
   margin: 0;
   font-family: "Helvetica","Arial",sans-serif;
@@ -279,6 +281,20 @@ h4 {
   padding: 10px;
 }
 
+.nav-logo {
+  font-family: "Pacifico", "Helvetica","Arial",sans-serif;
+  font-size: 20px;
+  color: #eab768;
+  padding: 5px 10px 0 10px;
+}
+
+.shiftly-icon {
+  font-size: 30px;
+  vertical-align: middle;
+  position: relative;
+  top: -3px;
+}
+
 .dashboard-container {
   margin: 10px;
   min-width: 1400px;
@@ -336,18 +352,6 @@ h4 {
   width: 100%;
 }
 
-@media (max-width: 900px) {
-  .dashboard-container {
-    min-width: 100%;
-    margin: 0;
-  }
-
-  .major-component {
-    width: 100%;
-    margin: 0;
-  }
-}
-
 .schedule-prompt {
   padding: 100px 0 20px 0;
   text-align: center;
@@ -360,4 +364,16 @@ h4 {
 .selected-tab {
   border-bottom: 5px solid rgb(234, 183, 105);
   background-color: #0ca496;
+}
+
+@media screen (max-width: 900px) {
+  .dashboard-container {
+    min-width: 100%;
+    margin: 0;
+  }
+
+  .major-component {
+    width: 100%;
+    margin: 0;
+  }
 }

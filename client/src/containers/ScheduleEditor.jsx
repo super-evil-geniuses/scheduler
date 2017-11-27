@@ -88,7 +88,7 @@ class ScheduleEditor extends Component {
           <h4>Edit shifts for:</h4>
           {this.props.scheduleNeeds && 
           <select className='date-dropdown' onChange={(e) => this.selectSchedule(e.target.value)}>
-            <option defaultValue='' disabled selected>Select a template...</option>
+            <option defaultValue='' disabled selected>Select a date...</option>
             {Object.keys(this.props.scheduleNeeds).map((id, idx) => {
               return <option key={id} value={id}>{this.props.scheduleNeeds[id].monDate.substr(0, 10)}</option>
             })}
