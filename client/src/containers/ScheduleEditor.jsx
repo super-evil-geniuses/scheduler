@@ -16,11 +16,15 @@ class ScheduleEditor extends Component {
   }
 
   componentDidMount() {
-    //console.log(moment(this.props.selectedWeek).format('MMMM Do YYYY'));
+    let scheduleFound = false;
     for(let item in this.props.scheduleNeeds) {
       if(this.props.scheduleNeeds[item].monDate.substr(0,10) === this.props.selectedWeek) {
         this.selectSchedule(item);
+        scheduleFound = true;
       }
+    }
+    if(!scheduleFound) {
+      this.selectSchedule(this.props.selectedWeek);
     }
   }
 

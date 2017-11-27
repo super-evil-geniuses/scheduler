@@ -60,7 +60,6 @@ class Dashboard extends Component {
 }
 
 function mapStateToProps(state) {
-  debugger;
   let scheduleId = null;
   let weekHasActualSchedule = false;
   let weekHasAtLeastOneNeededEmployee = false;
