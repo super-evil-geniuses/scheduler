@@ -9,7 +9,7 @@ const getAllUsers = (req, res, next) => {
       req.users = allUsers;
       next();
     }).catch((err) => {
-      res.end(500, 'Error getting users');
+      res.status(500).send('Error getting users');
     });
 };
 
@@ -19,7 +19,7 @@ const getAllScheduleDates = (req, res, next) => {
       req.scheduleDates = allScheduleDates;
       next();
     }).catch((err) => {
-      res.end(500, 'Error getting users');
+      res.status(500).send('Error getting users');
     });
 };
 
@@ -29,7 +29,7 @@ const getAllNeededEmployees = (req, res, next) => {
       req.neededEmployees = allNeededEmployees;
       next();
     }).catch((err) => {
-      res.end(500, 'Error getting neededEmployees');
+      res.status(500).send('Error getting neededEmployees');
     });
 };
 
@@ -39,7 +39,7 @@ const getAllEmployeeAvailabilities = (req, res, next) => {
       req.employeeAvailabilities = allEmployeeAvailabilities;
       next();
     }).catch((err) => {
-      res.end(500, 'Error getting users');
+      res.status(500).send('Error getting users');
     });
 };
 
@@ -49,7 +49,7 @@ const getAllDayParts = (req, res, next) => {
       req.dayParts = allDayParts;
       next();
     }).catch((err) => {
-      res.end(500, 'Error getting users');
+      res.status(500).send('Error getting users');
     });
 };
 
@@ -59,7 +59,7 @@ const getAllActualSchedules = (req, res, next) => {
     req.actual_schedules = schedules;
     next();
   }).catch((err) => {
-    res.end(500, 'Error getting schedules');
+    res.status(500).send('Error getting schedules');
   })
 };
 
@@ -73,7 +73,7 @@ const addUser = (req, res, next) => {
       req.user = user;
       next();
     }).catch((err) => {
-      res.end(500, `Error adding new user: ${err}`);
+      res.status(500).send(`Error adding new user: ${err}`);
     });
 };
 
@@ -133,7 +133,7 @@ const updateNeededEmployees = (req, res, next) => {
     req.scheduleTemplate = updatedTemplate;
     next();
   }).catch((err) => {
-    res.end(500, 'Error updating needed employees');
+    res.status(500).send('Error updating needed employees');
   });
 };
 
@@ -145,7 +145,7 @@ const createScheduleDate = (req, res, next) => {
     req.scheduleTemplate.monday_date = scheduleDate;
     next();
   }).catch((err) => {
-    res.end(500, 'Error creating new schedule date');
+    res.status(500).send('Error creating new schedule date');
   });
 };
 
