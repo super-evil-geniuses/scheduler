@@ -99,7 +99,7 @@ App.propTypes = {
   changeView: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
   view: PropTypes.string.isRequired,
-  flashMessage: PropTypes.string,
+  flashMessage: PropTypes.objectOf(PropTypes.string),
   users: PropTypes.arrayOf(PropTypes.object),
   selectedWeek: PropTypes.string.isRequired,
 };
