@@ -15,16 +15,16 @@ class Dashboard extends Component {
       currentView: 'scheduleEditor',
     };
   }
-  
+
   render() {
     let editorView;
     let employeeStyle = 'ratio-col-2 editor-tab clickable';
     let scheduleStyle ='ratio-col-2 editor-tab clickable';
     if(this.state.currentView === 'employeeEditor') {
-      editorView = <EmployeeEditor />
+      editorView = <EmployeeEditor />;
       employeeStyle = 'ratio-col-2 editor-tab selected-tab';
     } else {
-      editorView = <ScheduleEditor />
+      editorView = <ScheduleEditor />;
       scheduleStyle = 'ratio-col-2 editor-tab selected-tab';
     }
 
@@ -44,14 +44,16 @@ class Dashboard extends Component {
         <div className="ratio-col-4-3 major-component">
           <div className="component-block">
             <ScheduleGenerator
-            selectedWeek={this.props.selectedWeek}
-            weekHasActualSchedule={this.props.weekHasActualSchedule}
-            weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}/>
+              selectedWeek={this.props.selectedWeek}
+              weekHasActualSchedule={this.props.weekHasActualSchedule}
+              weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}
+            />
             <ScheduleActual
-            selectedWeek={this.props.selectedWeek}
-            weekHasActualSchedule={this.props.weekHasActualSchedule}
-            weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}
-            selectedWeekActualSchedule={this.props.selectedWeekActualSchedule}/>
+              selectedWeek={this.props.selectedWeek}
+              weekHasActualSchedule={this.props.weekHasActualSchedule}
+              weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}
+              selectedWeekActualSchedule={this.props.selectedWeekActualSchedule}
+            />
           </div>
         </div>
       </div>
@@ -95,28 +97,28 @@ function mapStateToProps(state) {
   }
 
 
-  let schedules = {};
-  let scheduleArr = [];
+  const schedules = {};
+  const scheduleArr = [];
   if (actualSchedule) {
     actualSchedule.forEach((e) => {
-        if(e.user_id === null) {
-          schedules['HOUSE'] = schedules['HOUSE'] || [];
-          schedules['HOUSE'].push(e.day_part_id);
-        } else {
-          schedules[e.user_id] = schedules[e.user_id] || [];
-          schedules[e.user_id].push(e.day_part_id);
-        }
+      if (e.user_id === null) {
+        schedules['HOUSE'] = schedules['HOUSE'] || [];
+        schedules['HOUSE'].push(e.day_part_id);
+      } else {
+        schedules[e.user_id] = schedules[e.user_id] || [];
+        schedules[e.user_id].push(e.day_part_id);
+      }
     });
-    
-    for (const sched in schedules) {
-      let schedObj = {}
+       
+    for (const sched of schedules) {
+      const schedObj = {};
       if (sched === 'HOUSE') {
         schedObj.name = 'HOUSE';
         schedObj.schedule = schedules[sched];
       } else {
         schedObj.name = state.users.filter( (user) => {
           return user.id == sched;
-        })[0].name
+        })[0].name;
 
         schedObj.schedule = schedules[sched];
       }
