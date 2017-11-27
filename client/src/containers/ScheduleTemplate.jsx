@@ -13,6 +13,7 @@ class ScheduleTemplate extends React.Component {
     this.state = {
       newSchedule: {},
       newDate: null,
+      scheduleTempExist: false,
     }
   }
 
@@ -32,6 +33,7 @@ class ScheduleTemplate extends React.Component {
     if (nextProps.selectedWeek != this.props.selectedWeek) {
       this.setState({
         newDate: nextProps.selectedWeek,
+        scheduleTempExist: this.props.schedule !== null && this.props.schedule.id !== null,
       })
     }
   }
@@ -53,6 +55,19 @@ class ScheduleTemplate extends React.Component {
     );
   }
 
+  handleSaveClick(mode) {
+    if (mode === 'create') {
+      this.props.createScheduleTemplate(this.state.newDate, this.state.newSchedule)
+        .then(() => {
+          this.setState({
+            scheduleTempExist: true,
+          })
+        });
+    } else {
+      this.props.updateNeededEmployees(this.props.schedule, this.state.newSchedule);
+    }
+  }
+
   render() {
     let renderBody;
     if(!this.props.schedule) {
@@ -69,7 +84,7 @@ class ScheduleTemplate extends React.Component {
         return dayPart % 2 === 0;
       }).map(this.mapDayPartsAsInputs);
 
-      if (this.props.schedule.id) {
+      if (this.state.scheduleTempExist) {
         renderBody = (
           <div>
             <table className="select-days-table">
@@ -97,7 +112,6 @@ class ScheduleTemplate extends React.Component {
             <div className="employee-editor-save-btn">
               <button 
               className="btn-main clickable"
-              onClick={() => this.props.updateNeededEmployees(this.props.schedule, this.state.newSchedule)}
               >
                 Save
               </button>
@@ -132,7 +146,7 @@ class ScheduleTemplate extends React.Component {
             <div className="employee-editor-save-btn">
               <button 
               className="btn-main clickable"
-              onClick={() => {this.props.createScheduleTemplate(this.state.newDate, this.state.newSchedule)} }
+              onClick={() => this.handleSaveClick('create') }
               >
                 Save
               </button>
