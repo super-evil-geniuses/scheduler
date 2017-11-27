@@ -13,6 +13,7 @@ class ScheduleTemplate extends React.Component {
     this.state = {
       newSchedule: {},
       newDate: null,
+      scheduleTempExist: false,
     }
   }
 
@@ -51,6 +52,19 @@ class ScheduleTemplate extends React.Component {
         <input onChange={(e) => this.alterDay(e, dayPart)} name={dayPart} className="schedule-input-box" type="text" value={this.state.newSchedule[dayPart]}/>
       </td>
     );
+  }
+
+  handleSaveClick(mode) {
+    if (mode === 'create') {
+      this.props.createScheduleTemplate(this.state.newDate, this.state.newSchedule)
+        .then(() => {
+          this.setState({
+            scheduleTempExist: true,
+          })
+        });
+    } else {
+      this.props.updateNeededEmployees(this.props.schedule, this.state.newSchedule);
+    }
   }
 
   render() {
@@ -97,7 +111,7 @@ class ScheduleTemplate extends React.Component {
             <div className="employee-editor-save-btn">
               <button 
               className="btn-main clickable"
-              onClick={() => this.props.updateNeededEmployees(this.props.schedule, this.state.newSchedule)}
+              onClick={() => this.handleSaveClick('update')}
               >
                 Save
               </button>
@@ -132,7 +146,7 @@ class ScheduleTemplate extends React.Component {
             <div className="employee-editor-save-btn">
               <button 
               className="btn-main clickable"
-              onClick={() => {this.props.createScheduleTemplate(this.state.newDate, this.state.newSchedule)} }
+              onClick={() => this.handleSaveClick('create')}
               >
                 Save
               </button>

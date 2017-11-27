@@ -19,12 +19,24 @@ class ScheduleEditor extends Component {
     let scheduleFound = false;
     for(let item in this.props.scheduleNeeds) {
       if(this.props.scheduleNeeds[item].monDate.substr(0,10) === this.props.selectedWeek) {
-        this.selectSchedule(item);
+        this.selectSchedule(JSON.stringify([item, null]));
         scheduleFound = true;
       }
     }
     if(!scheduleFound) {
-      this.selectSchedule(this.props.selectedWeek);
+      this.selectSchedule(JSON.stringify([null, this.props.selectedWeek]));
+    }
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.scheduleNeeds != this.props.scheduleNeeds) {
+      for (let i in nextProps.scheduleNeeds) {
+        if (!this.props.scheduleNeeds[i]) {
+          this.setState({
+            selectedSchedule: nextProps.scheduleNeeds[i],
+          })
+        }
+      }
     }
   }
 
@@ -35,13 +47,15 @@ class ScheduleEditor extends Component {
   }
 
   selectSchedule = (val) => {
-    if (!val.includes('-')) {
+    const id = JSON.parse(val)[0];
+    const monDate = JSON.parse(val)[1];
+    if (id) {
       this.setState({
-        selectedSchedule: this.props.scheduleNeeds[val]
+        selectedSchedule: this.props.scheduleNeeds[id]
       })
     } else {
       this.setState({
-        selectedSchedule: {id: null, monDate: val, neededEmployees: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0}}
+        selectedSchedule: {id: null, monDate: monDate, neededEmployees: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0}}
       })
     }
   }
@@ -88,12 +102,14 @@ class ScheduleEditor extends Component {
           <h4>Edit shifts for:</h4>
           {this.props.scheduleNeeds && 
           <select className='date-dropdown' onChange={(e) => this.selectSchedule(e.target.value)}>
-            <option defaultValue='' disabled selected>Select a date...</option>
             {Object.keys(this.props.scheduleNeeds).map((id, idx) => {
-              return <option key={id} value={id}>{this.props.scheduleNeeds[id].monDate.substr(0, 10)}</option>
+              const monDate = this.props.scheduleNeeds[id].monDate.substr(0, 10);
+              const optionVal = JSON.stringify([ id, monDate]);
+              return <option key={optionVal} value={optionVal} selected={optionVal.includes(this.props.selectedWeek)}>{monDate}</option>
             })}
             {this.getNextMondayDates().map(monDate => {
-              return <option key={monDate} value={monDate}>{monDate}</option>
+              const optionVal = JSON.stringify([ null, monDate]);
+              return <option key={optionVal} value={optionVal} selected={optionVal.includes(this.props.selectedWeek)}>{monDate}</option>
             })}
           </select>}
           <p className='shift-prompt'>How many employees do you need for each shift?</p>
