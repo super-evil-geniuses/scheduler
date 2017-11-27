@@ -2,6 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addEmployee } from '../actions/index';
+import { leaveAddEmployee } from '../actions/index';
+// import FlashMessage from '../components/FlashMessage.jsx';
+
 import PropTypes from 'prop-types';
 
 class AddEmployee extends React.Component {
@@ -11,6 +14,10 @@ class AddEmployee extends React.Component {
       newEmployeeName: '',
       newEmployeePassword: '',
     };
+  }
+
+  componentWillUnmount() {
+    this.props.leaveAddEmployee();
   }
 
   render() {
@@ -38,10 +45,14 @@ class AddEmployee extends React.Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ addEmployee }, dispatch);
+  return bindActionCreators({
+    addEmployee: addEmployee,
+    leaveAddEmployee: leaveAddEmployee,
+  }, dispatch);
 }
 
 AddEmployee.propTypes = {
   addEmployee: PropTypes.func.isRequired,
 };
+
 export default connect(null, mapDispatchToProps)(AddEmployee);

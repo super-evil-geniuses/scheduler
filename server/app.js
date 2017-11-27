@@ -46,7 +46,7 @@ app.patch('/employee_availability', utils.updateEmployeeAvailability, (req, res)
 app.post('/add_employee', utils.addUser, utils.getAllDayParts, utils.addEmployeeAvailability, utils.getAllEmployeeAvailabilities, (req, res) => {
   res.json({ 
     user: req.user,
-    employeeAvailabilities: req.employeeAvailabilities, 
+    employeeAvailabilities: req.employeeAvailabilities,
   });
 });
 
