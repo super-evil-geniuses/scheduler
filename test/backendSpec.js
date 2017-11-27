@@ -13,7 +13,11 @@ const app = require('../server/app.js');
 const schema = require('../database/config.js');
 const algo = require('../helpers/algo.js');
 const utils = require('../helpers/index.js');
+<<<<<<< HEAD
 // const dummyData = require('../database/example-data/dummyData.js');
+=======
+// const dummyData = require('../database/example-data/dummyData.js');\
+>>>>>>> login-data
 const port = process.env.PORT || 8080;
 
 describe('Shiftly Backend Test Spec', () => {
@@ -35,6 +39,10 @@ describe('Shiftly Backend Test Spec', () => {
     db.Day_Part.hasMany(db.Actual_Schedule, { as: 'actual_schedule' });
     db.Day_Part.hasMany(db.Needed_Employee, { as: 'needed_employee' });
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> login-data
     const dayParts = [
       'monA', 'monP', 
       'tuesA', 'tuesP', 

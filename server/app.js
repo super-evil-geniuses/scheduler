@@ -88,42 +88,26 @@ app.get('/welcome_back',
   utils.sendEmployeeInfo,
   utils.getAllNeededEmployees,
   (req, res) => {
-  let obj = {};
-  obj.dayParts = req.dayParts;
-  obj.view = 'employeeEditor';
-  obj.scheduleActual = req.actual_schedules;
-  obj.users = req.users;
-  obj.neededEmployees = req.neededEmployees;
-  obj.employeeAvailabilities = req.employeeAvailabilities;
-  obj.scheduleDates = req.scheduleDates;
-  res.json(obj);
+    let obj = {};
+    obj.dayParts = req.dayParts;
+    obj.view = 'employeeEditor';
+    obj.scheduleActual = req.actual_schedules;
+    obj.users = req.users;
+    obj.neededEmployees = req.neededEmployees;
+    obj.employeeAvailabilities = req.employeeAvailabilities;
+    obj.scheduleDates = req.scheduleDates;
+    res.json(obj);
 });
 
 app.post('/login', 
   utils.authenticate, 
-  utils.getAllDayParts, 
-  utils.getAllUsers,
-  utils.getAllActualSchedules,
-  utils.getAllEmployeeAvailabilities,
-  utils.getAllScheduleDates,
-  utils.sendEmployeeInfo,
-  utils.getAllNeededEmployees,
   (req, res) => {
-  let obj = {};
-  obj.dayParts = req.dayParts;
-  obj.view = 'employeeEditor';
-  obj.users = req.users;
-  obj.scheduleActual = req.actual_schedules;
-  obj.neededEmployees = req.neededEmployees;
-  obj.employeeAvailabilities = req.employeeAvailabilities;
-  obj.scheduleDates = req.scheduleDates;
-  res.json(obj);
+    res.redirect('/welcome_back');
 })
-app.post('/signup', utils.createUser, utils.getAllDayParts, (req, res) => {
-  let obj = {};
-  obj.dayParts = req.dayParts;
-  obj.view = 'employeeEditor';
-  res.json(obj);
+app.post('/signup', 
+  utils.createUser, 
+  (req, res) => {
+    res.redirect('/welcome_back');
 })
 
 app.post('/logout', utils.destroySession, (req, res) => {
