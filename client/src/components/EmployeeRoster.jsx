@@ -1,6 +1,7 @@
 import React from 'react';
 import EmployeeRosterItem from '../containers/EmployeeRosterItem.jsx';
 import _ from 'underscore';
+import PropTypes from 'prop-types';
 
 const EmployeeRoster = (props) => {
   return (
@@ -23,6 +24,10 @@ const EmployeeRoster = (props) => {
       })}
     </div>
   );
+};
+
+EmployeeRoster.propTypes = {
+  selectEmployee: PropTypes.func.isRequired,
 };
 
 export default EmployeeRoster;

@@ -118,6 +118,6 @@ function mapDispatchToProps(dispatch) {
 
 EmployeeAvailability.propTypes = {
   updateEmployeeAvailability: PropTypes.func.isRequired,
-  newAvailabilities: PropTypes.object.isRequired,
+  newAvailabilities: PropTypes.objectOf(PropTypes.number),
 };
 export default connect(null, mapDispatchToProps)(EmployeeAvailability);

@@ -65,8 +65,8 @@ const mapStateToProps = (state) => {
 };
 
 EmployeeEditor.propTypes = {
-  dayPartsMap: PropTypes.arrayOf(PropTypes.object).isRequired,
-  employees: PropTypes.arrayOf(PropTypes.object).isRequired,
+  dayPartsMap: PropTypes.objectOf(PropTypes.string).isRequired,
+  employees: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps)(EmployeeEditor);
