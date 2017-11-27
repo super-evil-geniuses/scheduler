@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { changeView, signUp } from '../actions/index';
+import { signUp } from '../actions/index';
+import PropTypes from 'prop-types';
 
 const SignUp = props => (
   <div className="credentials clear-fix">
@@ -32,7 +33,10 @@ const SignUp = props => (
 );
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ changeView, signUp }, dispatch);
+  return bindActionCreators({ signUp }, dispatch);
 }
 
+SignUp.propTypes = {
+  signUp: PropTypes.func.isRequired,
+};
 export default connect(null, mapDispatchToProps)(SignUp);

@@ -39,15 +39,15 @@ class AddEmployee extends React.Component {
           onChange={e => this.setState({ newEmployeePassword: e.target.value })}
         />
         <div className="btn-credentials">
-          <button 
-          className='btn-main clickable' 
+          <button
+            className='btn-main clickable'
             onClick={() => {
               this.props.addEmployee(this.state.newEmployeeName, this.state.newEmployeePassword);
               this.setState({ newEmployeeName: '',
                newEmployeePassword: '',
              });
             }}
-          >Add
+            >Add
           </button>
         </div>
       </div>
@@ -64,6 +64,7 @@ function mapDispatchToProps(dispatch) {
 
 AddEmployee.propTypes = {
   addEmployee: PropTypes.func.isRequired,
+  leaveAddEmployee: PropTypes.func,
 };
 
 export default connect(null, mapDispatchToProps)(AddEmployee);
