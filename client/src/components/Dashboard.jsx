@@ -18,10 +18,14 @@ class Dashboard extends Component {
   
   render() {
     let editorView;
+    let employeeStyle = 'ratio-col-2 editor-tab clickable';
+    let scheduleStyle ='ratio-col-2 editor-tab clickable';
     if(this.state.currentView === 'employeeEditor') {
       editorView = <EmployeeEditor />
+      employeeStyle = 'ratio-col-2 editor-tab selected-tab';
     } else {
       editorView = <ScheduleEditor />
+      scheduleStyle = 'ratio-col-2 editor-tab selected-tab';
     }
 
     return (
@@ -30,8 +34,8 @@ class Dashboard extends Component {
           <div className="component-block">
             <div className="editor-header">
               <div className="container clear-fix">
-                <div className="ratio-col-2 editor-tab clickable" onClick={() => { this.setState({currentView: 'employeeEditor' })}}>Employees</div>
-                <div className="ratio-col-2 editor-tab clickable" onClick={() => { this.setState({currentView: 'scheduleEditor' })}}>Schedule</div>
+                <div className={employeeStyle} onClick={() => { this.setState({currentView: 'employeeEditor' })}}>Employees</div>
+                <div className={scheduleStyle} onClick={() => { this.setState({currentView: 'scheduleEditor' })}}>Shifts</div>
               </div>
             </div>
           {editorView}
