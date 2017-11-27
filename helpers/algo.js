@@ -49,17 +49,22 @@ const templateParser = (weekStart) => {
 
 const scheduleGenerator = (allEmployeeAvail, temp) => {
   let allCombinations = {};
-  
   //fill allCombinations with all the possible combinations of employees for each day
-  for (let dayPart in allEmployeeAvail) {
-    if (allEmployeeAvail[dayPart].length < temp[dayPart]) {
-      for (let i = 0; i < temp[dayPart] - allEmployeeAvail[dayPart].length; i++) {
-        allEmployeeAvail[dayPart].push('house');
-      }
-    }
+  for (let dayPart in temp) {
+    // if no one is needed for the shift
     if (temp[dayPart] === 0) {
       allCombinations[dayPart] = [[]];
     } else {
+      // if employees needed but no one is available, add blank arr 
+      if (!allEmployeeAvail[dayPart]) {
+        allEmployeeAvail[dayPart] = [];
+      }
+      if (allEmployeeAvail[dayPart].length < temp[dayPart]) {
+        const numOfAvailEmployees = allEmployeeAvail[dayPart].length;
+        for (let i = 0; i < temp[dayPart] - numOfAvailEmployees; i++) {
+          allEmployeeAvail[dayPart].push('house');
+        }
+      }
       allCombinations[dayPart] = Combinatorics.combination(allEmployeeAvail[dayPart], temp[dayPart]).toArray();
     }
   }
@@ -78,7 +83,7 @@ const scheduleGenerator = (allEmployeeAvail, temp) => {
     cheapSolution.push(completed);
   };
   const findSolution = (possibilities, empShifts, dayPart) => {
-    //for every dayPart 
+    //for every dayPart
     let currentDayPossibilities = possibilities[dayPart];
     //iterate over all possibilites
     //for every possibility
@@ -108,7 +113,7 @@ const scheduleGenerator = (allEmployeeAvail, temp) => {
   schedule = {};
   findSolution(allCombinations, {}, 1);
   console.log("THIISISIS", completedSchedules[0]);
-  return completedSchedules.length ? completedSchedules[Math.floor(Math.random()*10)] : cheapSolution[0];
+  return completedSchedules.length ? completedSchedules[Math.floor(Math.random()*completedSchedules.length)] : cheapSolution[0];
 }
 
 const willAnyEmployeeBeInOvertime = (shiftCounts, proposedShift) => {
