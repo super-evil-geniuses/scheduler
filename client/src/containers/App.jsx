@@ -10,6 +10,7 @@ import Dashboard from '../components/Dashboard.jsx';
 import FlashMessage from '../components/FlashMessage.jsx';
 import Login from './Login.jsx';
 import SignUp from './SignUp.jsx';
+import PropTypes from 'prop-types';
 
 class App extends Component {
 
