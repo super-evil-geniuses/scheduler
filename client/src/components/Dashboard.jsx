@@ -83,7 +83,7 @@ function mapStateToProps(state) {
       });
     }
     if(state.neededEmployees) {
-      const countOfNeededEmployees = state.neededEmployees.filter((el)=> {
+      const countOfNeededEmployees = state.neededEmployees.filter((el) => {
         return el.schedule_id === scheduleId;
       }).reduce((acc, el) => {
         return acc + el.employees_needed;
@@ -97,7 +97,6 @@ function mapStateToProps(state) {
 
   let schedules = {};
   let scheduleArr = [];
-  //let dayPartsMap = {};
   if (actualSchedule) {
     actualSchedule.forEach((e) => {
         if(e.user_id === null) {

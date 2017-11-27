@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getAllUsers } from '../actions/index';
-import { getAllEmployeeAvailabilities } from '../actions/index';
-import { getAllDayParts } from '../actions/index';
-import { getAllNeededEmployees } from '../actions/index';
-import { getAllScheduleDates } from '../actions/index';
-import { changeView } from '../actions/index';
-import { checkedIfLoggedIn } from '../actions/index';
-import { logout } from '../actions/index';
-import PropTypes from 'prop-types';
+import { 
+  changeView,
+  checkedIfLoggedIn,
+  logout } from '../actions/index';
+
 import Dashboard from '../components/Dashboard.jsx';
 import FlashMessage from '../components/FlashMessage.jsx';
 import Login from './Login.jsx';
@@ -19,19 +15,7 @@ class App extends Component {
 
   componentWillMount() {
     this.props.checkedIfLoggedIn();
-  //   this.props.getAllUsers();
-  //   this.props.getAllEmployeeAvailabilities();
-  //   this.props.getAllDayParts();
-  //   this.props.getAllNeededEmployees();
-  //   this.props.getAllScheduleDates();
   }
-
-  // componentWillReceiveProps() {
-  //   // debugger
-  //   if (this.props.view !== 'employeeEditor') {
-  //     debugger
-  //   }
-  // }
 
   renderFlashMessage() {
     if (this.props.flashMessage) {
@@ -104,14 +88,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    // getAllUsers: getAllUsers,
-    // getAllEmployeeAvailabilities: getAllEmployeeAvailabilities,
-    // getAllDayParts: getAllDayParts,
-    // getAllNeededEmployees: getAllNeededEmployees,
-    // getAllScheduleDates: getAllScheduleDates,
-    checkedIfLoggedIn: checkedIfLoggedIn,
-    changeView: changeView,
-    logout: logout,
+    checkedIfLoggedIn,
+    changeView,
+    logout,
   }, dispatch);
 }
 

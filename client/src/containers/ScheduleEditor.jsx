@@ -64,7 +64,6 @@ class ScheduleEditor extends Component {
     let monday = [];
     for (let i = 0; i < 6; i++) {
       let mondayDates = moment().day(1 + i*7).format("YYYY-MM-DD");
-      // if schedule doesn't already exist
       if (!this.dateExists(mondayDates)) {
         monday.push(mondayDates.substr(0,10));
       }
@@ -145,16 +144,14 @@ const mapStateToProps = (state) => {
   }
 
   return {
-    dayPartsMap: dayPartsMap,
-    scheduleNeeds: scheduleNeeds,
+    dayPartsMap,
+    scheduleNeeds,
     selectedWeek: state.selectedWeek
   };
 };
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    selectWeek: selectWeek
-  }, dispatch);
+  return bindActionCreators({ selectWeek }, dispatch);
 }
 
 ScheduleEditor.propTypes = {
