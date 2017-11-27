@@ -68,16 +68,6 @@ app.post('/generate_schedule', (req, res) => {
     })
 })
 
-
-// //should be a post
-// app.get('/generate-schedule', function(req, res) {
-//   generateSchedule(new Date('11/13/17'))
-//     .then((schedule) => {
-//       // store actual schedule
-//       res.send(schedule);
-//     })
-// })
-
 app.get('/welcome_back',
   utils.redirectIfLoggedIn,
   utils.getAllDayParts, 
@@ -111,16 +101,6 @@ app.post('/signup',
 })
 
 app.post('/logout', utils.destroySession, (req, res) => {
-  // console.log('LOGGING CURRENT USER OUT');
-  // let obj = {};
-  // obj.dayParts = null
-  // obj.view = 'login';
-  // obj.users = null;
-  // obj.scheduleActual = null;
-  // obj.neededEmployees = null;
-  // obj.employeeAvailabilities = null;
-  // obj.scheduleDates = null;
-  //res.json(obj);
   res.status(200).end();
 })
 
