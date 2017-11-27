@@ -135,10 +135,10 @@ function mapStateToProps(state) {
 }
 
   Dashboard.propTypes = {
-  selectedWeekScheduleId: PropTypes.number.isRequired,
+  selectedWeekScheduleId: PropTypes.number,
   weekHasActualSchedule: PropTypes.bool.isRequired,
   weekHasAtLeastOneNeededEmployee: PropTypes.bool.isRequired,
-  selectedWeekActualSchedule: PropTypes.object.isRequired,
+  selectedWeekActualSchedule: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedWeek: PropTypes.string.isRequired,
 };
 

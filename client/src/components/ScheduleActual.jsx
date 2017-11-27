@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'underscore';
 import EmployeeSchedule from './EmployeeSchedule.jsx';
-
+import PropTypes from 'prop-types';
 
 const ScheduleActual = (props) => {
 
@@ -41,4 +41,8 @@ const ScheduleActual = (props) => {
   );
 }
 
+ScheduleActual.propTypes = {
+  weekHasAtLeastOneNeededEmployee: PropTypes.bool,
+  selectedWeekActualSchedule: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 export default ScheduleActual;
