@@ -7,7 +7,7 @@ const flashMessage = (state = null, action) => {
     case 'ADD_EMPLOYEE':
       return action.payload.data.flashMessage || null;  
     case 'LEAVE_ADD_EMPLOYEE':
-      return '';  
+      return null;  
   	default:
   	  return null;
   }

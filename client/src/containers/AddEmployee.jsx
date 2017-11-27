@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addEmployee } from '../actions/index';
 import { leaveAddEmployee } from '../actions/index';
-// import FlashMessage from '../components/FlashMessage.jsx';
-
 import PropTypes from 'prop-types';
 
 class AddEmployee extends React.Component {
@@ -41,7 +39,16 @@ class AddEmployee extends React.Component {
           onChange={e => this.setState({ newEmployeePassword: e.target.value })}
         />
         <div className="btn-credentials">
-          <button className='btn-main clickable' onClick={() => this.props.addEmployee(this.state.newEmployeeName, this.state.newEmployeePassword)}>Add</button>
+          <button 
+          className='btn-main clickable' 
+            onClick={() => {
+              this.props.addEmployee(this.state.newEmployeeName, this.state.newEmployeePassword);
+              this.setState({ newEmployeeName: '',
+               newEmployeePassword: '',
+             });
+            }}
+          >Add
+          </button>
         </div>
       </div>
     );
