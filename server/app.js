@@ -17,6 +17,8 @@ app.get('/users', utils.getAllUsers, (req, res) => {
   res.json(req.users);
 });
 
+app.get(express.static(__dirname + '/../client/dist/compiled/favicon.ico'));
+
 app.get('/employee_availabilities', utils.getAllEmployeeAvailabilities, (req, res) => {
   res.json(req.employeeAvailabilities);
 });
