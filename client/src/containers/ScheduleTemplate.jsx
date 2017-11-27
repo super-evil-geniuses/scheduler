@@ -33,7 +33,6 @@ class ScheduleTemplate extends React.Component {
     if (nextProps.selectedWeek != this.props.selectedWeek) {
       this.setState({
         newDate: nextProps.selectedWeek,
-        scheduleTempExist: this.props.schedule !== null && this.props.schedule.id !== null,
       })
     }
   }
@@ -84,7 +83,7 @@ class ScheduleTemplate extends React.Component {
         return dayPart % 2 === 0;
       }).map(this.mapDayPartsAsInputs);
 
-      if (this.state.scheduleTempExist) {
+      if (this.props.schedule.id) {
         renderBody = (
           <div>
             <table className="select-days-table">
@@ -112,6 +111,7 @@ class ScheduleTemplate extends React.Component {
             <div className="employee-editor-save-btn">
               <button 
               className="btn-main clickable"
+              onClick={() => this.handleSaveClick('update')}
               >
                 Save
               </button>
@@ -146,7 +146,7 @@ class ScheduleTemplate extends React.Component {
             <div className="employee-editor-save-btn">
               <button 
               className="btn-main clickable"
-              onClick={() => this.handleSaveClick('create') }
+              onClick={() => this.handleSaveClick('create')}
               >
                 Save
               </button>
