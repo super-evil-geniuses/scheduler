@@ -5,7 +5,7 @@ import {
   changeView,
   checkedIfLoggedIn,
   logout } from '../actions/index';
-
+import PropTypes from 'prop-types';
 import Dashboard from '../components/Dashboard.jsx';
 import FlashMessage from '../components/FlashMessage.jsx';
 import Login from './Login.jsx';
