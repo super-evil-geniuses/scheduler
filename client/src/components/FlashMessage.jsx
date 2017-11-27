@@ -1,7 +1,7 @@
 import React from 'react';
 
 const FlashMessage = (props) => (
-  <div className="container flash-message">
+  <div className={`container ${props.type}-flash-message`}>
   {props.message.toUpperCase()}
   </div>
 	)
