@@ -72,7 +72,11 @@ const leaveAddEmployee = () => {
 
 const updateEmployeeAvailability = (employee, newAvailabilities) => {
   const requestBody = Object.keys(newAvailabilities).map((dayPartId) => {
-    return { user_id: employee.id, day_part_id: dayPartId, is_available: newAvailabilities[dayPartId] };
+    return { 
+      user_id: employee.id, 
+      day_part_id: dayPartId, 
+      is_available: newAvailabilities[dayPartId] 
+    };
   });
 
   const response = axios.patch('/employee_availability', {
@@ -102,7 +106,9 @@ const updateNeededEmployees = (schedule, newAvailabilities) => {
 
 const createScheduleTemplate = (monDate, scheduleTemplate) => {
   const requestBody = Object.keys(scheduleTemplate).map((dayPartId) => {
-    return { monday_dates: monDate, day_part_id: dayPartId, employees_needed: scheduleTemplate[dayPartId] };
+    return { 
+      monday_dates: monDate, day_part_id: dayPartId, 
+      employees_needed: scheduleTemplate[dayPartId] };
   });
 
   const response = axios.post('/needed_employees', {
@@ -164,21 +170,21 @@ const selectWeek = (monDate) => {
 };
 
 module.exports = {
-  logout: logout,
-  checkedIfLoggedIn: checkedIfLoggedIn,
-  generateSchedule: generateSchedule,
-  updateEmployeeAvailability: updateEmployeeAvailability,
-  getAllUsers: getAllUsers,
-  getAllEmployeeAvailabilities: getAllEmployeeAvailabilities,
-  getAllDayParts: getAllDayParts,
-  getAllNeededEmployees: getAllNeededEmployees,
-  updateNeededEmployees: updateNeededEmployees,
-  getAllScheduleDates: getAllScheduleDates,
-  createScheduleTemplate: createScheduleTemplate,
-  addEmployee: addEmployee,
-  leaveAddEmployee: leaveAddEmployee,
-  changeView: changeView,
-  login: login,
-  signUp: signUp,
-  selectWeek: selectWeek,
+  logout,
+  checkedIfLoggedIn,
+  generateSchedule,
+  updateEmployeeAvailability,
+  getAllUsers,
+  getAllEmployeeAvailabilities,
+  getAllDayParts,
+  getAllNeededEmployees,
+  updateNeededEmployees,
+  getAllScheduleDates,
+  createScheduleTemplate,
+  addEmployee,
+  leaveAddEmployee,
+  changeView,
+  login,
+  signUp,
+  selectWeek,
 };
