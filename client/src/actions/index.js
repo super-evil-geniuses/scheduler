@@ -64,6 +64,12 @@ const addEmployee = (username, password) => {
   };
 };
 
+const leaveAddEmployee = () => {
+  return {
+    type: 'LEAVE_ADD_EMPLOYEE',
+  };
+};
+
 const updateEmployeeAvailability = (employee, newAvailabilities) => {
   const requestBody = Object.keys(newAvailabilities).map((dayPartId) => {
     return { user_id: employee.id, day_part_id: dayPartId, is_available: newAvailabilities[dayPartId] };
@@ -170,6 +176,7 @@ module.exports = {
   getAllScheduleDates: getAllScheduleDates,
   createScheduleTemplate: createScheduleTemplate,
   addEmployee: addEmployee,
+  leaveAddEmployee: leaveAddEmployee,
   changeView: changeView,
   login: login,
   signUp: signUp,

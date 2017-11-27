@@ -73,7 +73,7 @@ const addUser = (req, res, next) => {
       req.user = user;
       next();
     }).catch((err) => {
-      res.status(500).send(`Error adding new user: ${err}`);
+      res.json({ flashMessage: 'username already exists' });
     });
 };
 
