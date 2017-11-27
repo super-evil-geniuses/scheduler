@@ -60,6 +60,7 @@ class Dashboard extends Component {
 }
 
 function mapStateToProps(state) {
+  debugger;
   let scheduleId = null;
   let weekHasActualSchedule = false;
   let weekHasAtLeastOneNeededEmployee = false;
@@ -82,13 +83,15 @@ function mapStateToProps(state) {
         return el.schedule_id === scheduleId;
       });
     }
-    const countOfNeededEmployees = state.neededEmployees.filter((el)=> {
-      return el.schedule_id === scheduleId;
-    }).reduce((acc, el) => {
-      return acc + el.employees_needed;
-    }, 0);
-    if (countOfNeededEmployees > 0) {
-      weekHasAtLeastOneNeededEmployee = true;
+    if(state.neededEmployees) {
+      const countOfNeededEmployees = state.neededEmployees.filter((el)=> {
+        return el.schedule_id === scheduleId;
+      }).reduce((acc, el) => {
+        return acc + el.employees_needed;
+      }, 0);
+      if (countOfNeededEmployees > 0) {
+        weekHasAtLeastOneNeededEmployee = true;
+      }
     }
   }
 
