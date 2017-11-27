@@ -146,14 +146,12 @@ const mapStateToProps = (state) => {
   return {
     dayPartsMap,
     scheduleNeeds,
-    state.selectedWeek
+    selectedWeek: state.selectedWeek
   };
 };
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    selectWeek
-  }, dispatch);
+  return bindActionCreators({ selectWeek }, dispatch);
 }
 
 ScheduleEditor.propTypes = {
