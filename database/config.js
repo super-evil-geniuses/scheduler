@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
 	}, {underscored: true, timestamps: false});
 
 	const Schedule = sequelize.define('schedule', {
-		monday_dates: { type: Sequelize.DATE, unique: true },
+		monday_dates: { type: Sequelize.DATEONLY, unique: true },
 	}, {underscored: true, timestamps: false});
 
 	const Employee_Availability = sequelize.define('employee_availability', {
