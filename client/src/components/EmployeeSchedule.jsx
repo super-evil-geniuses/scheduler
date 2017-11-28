@@ -28,7 +28,7 @@ const EmployeeSchedule = (props) => {
 };
 
 EmployeeSchedule.propTypes = {
-  schedule: PropTypes.object.isRequired,
+  schedule: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default EmployeeSchedule;
