@@ -60,13 +60,13 @@ db.User.sync()
   });
 
 const dayParts = [
-  'monA', 'monP', 
-  'tuesA', 'tuesP', 
-  'wedsA', 'wedsP', 
-  'thursA', 'thursP', 
-  'friA', 'friP', 
-  'satA', 'satP', 
-  'sunA', 'sunP'
+  'monA', 'monP',
+  'tuesA', 'tuesP',
+  'wedsA', 'wedsP',
+  'thursA', 'thursP',
+  'friA', 'friP',
+  'satA', 'satP',
+  'sunA', 'sunP',
 ];
 
 let saveDayParts = (dayParts) => {
