@@ -1,18 +1,18 @@
 language: node_js
-
-#lists the versions of node that needs to be tested. Can specify one or more of the latest releases
 node_js:
-  #latest stable Node.js release
-  - "node"
-
+- node
 services:
-  - postgresql
-
+- postgresql
 before_script:
-  - psql -c 'create database shiftly;' -U postgres
-
-#npm install will still run on every build and will update/install any new packages added to your package.json file
+- psql -c 'create database shiftly;' -U postgres
 cache:
   directories:
-    - "node_modules"
- 
+  - node_modules
+deploy:
+  provider: heroku
+  api_key:
+    secure: lMIflhnEpA+EtUwA6KxK0hBk6dBKgOtOG7g0/s4E6cXXH5HoR4NHQiauPCgAwXULrZ4EfPoqIpcmF9lMO0Yj62eH8DmGncPBUi0VlPExA691OqI0NOVijDLgYcSGEfmTsOUhwZTUQ30okz4Vpdim9YzdgavCwfCm4RvVA4ejRVEgLKWp4P3EgmLOYlYvf3kI1u2kcbuXhuneb1fCpjKfra32+M7sgfEADXOR0/tFwnVbSW9Mehg7tZAHHJohSAtaDBhaf8nmpl6BhZggV38rcfgIHXUlU/ULoo35qF4n70Is2tY0H7v5Io3X3+k/rT5o2E66FLjc5KuW4Vu/Hqdx8Ix+9b8/75QdamxllE7dTZwmilvLttQaVh3ZOfO95onJlrWVZukokvtWDUEiP6aIhRscJxjl97QULZ5aQ6zUueSI7TeNT9VcReTnop8ne9VphUATw/z693QVJR+j4d6v0KoElrVgOyb7Bwn6vddgfP6wO9VjR+dQpi5SAZHIgnrCjxT0rYo1WI7+uVuV2boCLOfX2uI/vMZI74EJpAp95rchdsAHTsyA+RvIrtnq61f1OnAvQg3Mrlq/iwoQKuLg+/Nkf3oWQv7ZrCpOJs1Gbwm7XmbB/bsEBGAoPSifdBw0Lck39kKv24SkeyPH6Anl30247ayJhi3+iUS7FBYYtGU=
+  app: 
+    master: shiftly-hr-staging
+  on:
+    repo: news-stand/scheduler
