@@ -38,7 +38,7 @@ db.Day_Part.hasMany(db.Needed_Employee, { as: 'needed_employee' });
 
 db.User.sync()
   .then(() => {
-    return db.Schedule.sync();	
+    return db.Schedule.sync();
   })
   .then(() => {
     return db.Day_Part.sync();
