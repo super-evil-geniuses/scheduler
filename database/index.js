@@ -5,7 +5,7 @@ require('dotenv').config();
 
 console.log('database url', process.env.DATABASE_URL);
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
+const sequelize = new Sequelize('postgres://uizpiefw:Le-BGdBSsUKodU66n06bx7SE41x-FGv0@baasu.db.elephantsql.com:5432/uizpiefw', {
   dialect: 'postgres',
 });
 
