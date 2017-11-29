@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const expect = require('chai').expect;
 const pg = require('pg');
 const Sequelize = require('sequelize');
@@ -359,3 +361,5 @@ describe('Shiftly Backend Test Spec', () => {
     });
   });
 });
+
+/* eslint-enable */

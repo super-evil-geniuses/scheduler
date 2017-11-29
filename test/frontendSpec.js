@@ -1,3 +1,4 @@
+/* eslint-disable */
 import users from '../client/src/reducers/reducer-users';
 import employeeAvailabilities from '../client/src/reducers/reducer-employee-availabilities';
 import scheduleDates from '../client/src/reducers/reducer-schedule-dates';
@@ -123,3 +124,4 @@ describe('Shiftly Frontend Test Spec', () => {
   });
 });
 
+/* eslint-enable */
