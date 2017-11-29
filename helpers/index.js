@@ -55,12 +55,12 @@ const getAllDayParts = (req, res, next) => {
 
 const getAllActualSchedules = (req, res, next) => {
   db.Actual_Schedule.findAll({})
-  .then((schedules) => {
-    req.actual_schedules = schedules;
-    next();
-  }).catch((err) => {
-    res.status(500).send('Error getting schedules');
-  })
+    .then((schedules) => {
+      req.actual_schedules = schedules;
+      next();
+    }).catch((err) => {
+      res.status(500).send('Error getting schedules');
+    });
 };
 
 const addUser = (req, res, next) => {
@@ -178,28 +178,28 @@ const newSession = (req, res) => {
 const checkSession = (req, res, next) => {
   return new Promise((resolve, reject) => {
     if (req.cookies['shiftly']) {
-      resolve(db.Sessions.findAll( {where: { session: req.cookies['shiftly'] } }));
+      resolve(db.Sessions.findAll({ where: { session: req.cookies['shiftly'] } }));
     } else {
       resolve([]);
     }
   })
-  .then((session) => {
-    if (session.length > 0) {
-      db.User.findAll({ where: { id: session[0].dataValues.user_id}})
-      .then((user) => {
-        let obj =  { session: session[0].dataValues.session }; 
-        if (user.length) {
-          obj.user = user[0].dataValues.name;
-          obj.role = user[0].dataValues.role;
-        }
-        req.session = obj;
+    .then((session) => {
+      if (session.length > 0) {
+        db.User.findAll({ where: { id: session[0].dataValues.user_id}})
+          .then((user) => {
+            let obj =  { session: session[0].dataValues.session }; 
+            if (user.length) {
+              obj.user = user[0].dataValues.name;
+              obj.role = user[0].dataValues.role;
+            }
+            req.session = obj;
+            next();
+          })
+      } else {
+        req.session = newSession(req, res);
         next();
-      })
-    } else {
-      req.session = newSession(req, res);
-      next();
-    }
-  })
+      }
+    });
 };
 
 const passHash = (password) => {
@@ -214,25 +214,25 @@ const authenticate = (req, res, next) => {
     next();
     return;
   }
-  db.User.findAll({ where: {name: req.body.creds.username} })
-  .then((user) => {
-    if (user.length === 0) {
-      res.status(201).send({ flashMessage: { message: 'incorrect username or password', type: 'red'}});
-      return;
-    }
-    user = user[0].dataValues;
-    if (passHash(req.body.creds.password) === user.password) {
-      req.session = newSession(req, res);
-      req.session.user = user.name;
-      req.session.role = user.role;
-      db.Sessions.create({session: req.session.session, user_id: user.id})
-      .then(() => {
-        next();
-      })
-    } else {
-      res.status(201).send({ flashMessage: { message: 'incorrect username or password', type: 'red'}});
-    }
-  })
+  db.User.findAll({ where: { name: req.body.creds.username } })
+    .then((user) => {
+      if (user.length === 0) {
+        res.status(201).send({ flashMessage: { message: 'incorrect username or password', type: 'red'}});
+        return;
+      }
+      user = user[0].dataValues;
+      if (passHash(req.body.creds.password) === user.password) {
+        req.session = newSession(req, res);
+        req.session.user = user.name;
+        req.session.role = user.role;
+        db.Sessions.create({session: req.session.session, user_id: user.id})
+          .then(() => {
+            next();
+          });
+      } else {
+        res.status(201).send({ flashMessage: { message: 'incorrect username or password', type: 'red'}});
+      }
+    });
 };
 
 const createUser = (req, res, next) => {
@@ -245,12 +245,12 @@ const createUser = (req, res, next) => {
     req.session.user = req.body.creds.username;
     req.session.role =data.dataValues.role;
     db.Sessions.create({session: req.session.session, user_id: data.dataValues.id})
-    .then(() => {
-      next();
-    })
+      .then(() => {
+        next();
+      });
   }).catch((err) => {
     res.status(201).send({ flashMessage: {message: `username "${req.body.creds.username}" already exists`, type: 'red'}})
-  })
+  });
 };
 
 const redirectIfLoggedIn = (req, res, next) => {
@@ -269,15 +269,15 @@ const sendEmployeeInfo = (req, res, next) => {
     obj.users = req.users.filter((user) => {
       return user.dataValues.name === req.session.user;
     })
-    .map((e) => e.dataValues);
+      .map(e => e.dataValues);
     obj.scheduleActual = req.actual_schedules.filter((sched) => {
       return sched.user_id === obj.users[0].id;
     })
-    .map((e) => e.dataValues);
+      .map(e => e.dataValues);
     obj.employeeAvailabilities = req.employeeAvailabilities.filter((avail) => {
       return avail.dataValues.user_id === obj.users[0].id;
     })
-    .map((e) => e.dataValues);
+      .map(e => e.dataValues);
     obj.scheduleDates = req.scheduleDates;
     obj.view = 'employeeEditor';
     res.json(obj);
@@ -288,32 +288,32 @@ const sendEmployeeInfo = (req, res, next) => {
 
 const destroySession = (req, res, next) => {
   console.log('destroying session');
-  db.Sessions.destroy({ where:{session: req.session.session} })
-  .then(() => {
-    console.log('creating new session');
-    req.session = newSession(req, res);
-    next();
-  })
+  db.Sessions.destroy({ where: { session: req.session.session } })
+    .then(() => {
+      console.log('creating new session');
+      req.session = newSession(req, res);
+      next();
+    });
 };
 
 
 module.exports = {
-  destroySession: destroySession,
-  sendEmployeeInfo: sendEmployeeInfo,
-  getAllActualSchedules: getAllActualSchedules,
-  redirectIfLoggedIn: redirectIfLoggedIn,
-  createUser: createUser,
-  authenticate: authenticate,
-  getAllUsers: getAllUsers,
-  updateEmployeeAvailability: updateEmployeeAvailability,
-  getAllEmployeeAvailabilities: getAllEmployeeAvailabilities,
-  getAllDayParts: getAllDayParts,
-  getAllNeededEmployees: getAllNeededEmployees,
-  getAllScheduleDates: getAllScheduleDates,
-  addUser: addUser,
-  addEmployeeAvailability: addEmployeeAvailability,
-  checkSession: checkSession,
-  updateNeededEmployees: updateNeededEmployees,
-  createScheduleDate:createScheduleDate,
-  createScheduleTemplate: createScheduleTemplate,
+  destroySession,
+  sendEmployeeInfo,
+  getAllActualSchedules,
+  redirectIfLoggedIn,
+  createUser,
+  authenticate,
+  getAllUsers,
+  updateEmployeeAvailability,
+  getAllEmployeeAvailabilities,
+  getAllDayParts,
+  getAllNeededEmployees,
+  getAllScheduleDates,
+  addUser,
+  addEmployeeAvailability,
+  checkSession,
+  updateNeededEmployees,
+  createScheduleDate,
+  createScheduleTemplate,
 };
