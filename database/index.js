@@ -3,6 +3,7 @@ const config = require('./config.js');
 const Promise = require('bluebird');
 require('dotenv').config();
 
+console.log('database url', process.env.DATABASE_URL);
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: 'postgres',
