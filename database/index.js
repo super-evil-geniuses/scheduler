@@ -36,28 +36,7 @@ db.Day_Part.hasMany(db.Needed_Employee, { as: 'needed_employee' });
 // drops all table, just put it in so that it doesn't give an error
 // for creating the same table everytime during dev
 
-db.User.sync()
-  .then(() => {
-    return db.Schedule.sync();
-  })
-  .then(() => {
-    return db.Day_Part.sync();
-  })
-  .then(() => {
-    return db.Employee_Availability.sync();
-  })
-  .then(() => {
-    return db.Actual_Schedule.sync();
-  })
-  .then(() => {
-    return db.Needed_Employee.sync();
-  })
-  .then(() => {
-    return db.Session.sync();
-  })
-  .then(() => {
-    return saveDayParts(dayParts);
-  });
+sequelize.sync();
 
 const dayParts = [
   'monA', 'monP',
