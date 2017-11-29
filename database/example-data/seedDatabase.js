@@ -9,7 +9,7 @@ const saveSchedule = (weekStart) => {
 
 // Saves one user
 const saveUser = (user) => {
-  return db.User.create({ name: user.name, role: user.role, password: user.password});
+  return db.User.create({ name: user.name, role: user.role, password: user.password });
 };
 
 // Saves the schedule template
