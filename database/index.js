@@ -42,6 +42,8 @@ db.User.sync()
     return saveDayParts(dayParts);
   });
 
+// may need to sync Business up here ^
+
 const dayParts = [
   'monA', 'monP',
   'tuesA', 'tuesP',
