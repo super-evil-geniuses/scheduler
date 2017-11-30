@@ -6,6 +6,10 @@ module.exports = (sequelize) => {
     name: { type: Sequelize.STRING, unique: true },
     role: Sequelize.STRING,
     password: Sequelize.STRING,
+    emergencyContact: Sequelize.STRING,
+    email: Sequelize.STRING,
+    address: Sequelize.STRING,
+    phoneNumber: Sequelize.STRING,
   }, { underscored: true, timestamps: false });
 
   const Schedule = sequelize.define('schedule', {
