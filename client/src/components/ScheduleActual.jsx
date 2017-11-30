@@ -43,5 +43,6 @@ const ScheduleActual = (props) => {
 ScheduleActual.propTypes = {
   weekHasAtLeastOneNeededEmployee: PropTypes.bool,
   selectedWeekActualSchedule: PropTypes.arrayOf(PropTypes.object).isRequired,
+  userRole: PropTypes.string.isRequired,
 };
 export default ScheduleActual;

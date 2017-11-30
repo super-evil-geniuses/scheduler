@@ -50,12 +50,13 @@ class Dashboard extends Component {
   }
 
   renderScheduleActual() {
-    return (            
+    return (
       <ScheduleActual
         selectedWeek={this.props.selectedWeek}
         weekHasActualSchedule={this.props.weekHasActualSchedule}
         weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}
         selectedWeekActualSchedule={this.props.selectedWeekActualSchedule}
+        userRole={this.props.userRole}
       />
     );
   }
