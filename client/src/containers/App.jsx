@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { 
   changeView,
@@ -52,8 +53,13 @@ class App extends Component {
       );
     }
     return (
-      <div className="nav-item nav-logout" onClick={() => { this.props.logout()}}>
-        Log out
+      <div>
+        <div className="nav-item nav-Dashboard" onClick={ () => {} }>
+          Dashboard
+        </div>
+        <div className="nav-item nav-logout" onClick={() => { this.props.logout()}}>
+          Log out
+        </div>
       </div>
     );
   }

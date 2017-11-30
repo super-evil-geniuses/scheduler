@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom';
 // between routes.
 const Header = () => (
   <header>
-    <nav>
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/schedule">Schedule</Link></li>
-      </ul>
-    </nav>
+    <button>
+      <Link to="/">Home</Link>
+    </button>
+    <button>
+      <Link to="/schedule">Schedule</Link>
+    </button>
   </header>
 );
 

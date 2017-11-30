@@ -1,7 +1,8 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Home from './Home.jsx';
 import Dashboard from './Dashboard.jsx';
+import Header from './Header.jsx';
 
 // The Main component renders one of the two provided
 // Routes (provided that one matches). The /schedule
@@ -11,10 +12,10 @@ import Dashboard from './Dashboard.jsx';
 const Main = () => (
   <main>
     <Switch>
-      <Route exact path="/" component={Home} />
-      <Route path="/schedule" component={Dashboard} />
+      <Route exact path="/schedule" component={Dashboard} />
     </Switch>
   </main>
 );
 
+  // <Route exact path="/" component={Home} />
 export default Main;
