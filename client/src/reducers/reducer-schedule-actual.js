@@ -2,8 +2,6 @@ const scheduleActual = (state = null, action) => {
 	switch(action.type) {
     case 'GET_ACTUAL_SCHEDULE':
       if(state) {
-        console.log('STATE: ', state);
-        console.log('ACTION: ', action);
         const filteredState = state.filter((el) => {
           return el.schedule_id !== action.payload.data[0].schedule_id;
         });
