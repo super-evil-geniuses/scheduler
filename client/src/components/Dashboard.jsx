@@ -82,7 +82,7 @@ class Dashboard extends Component {
   }
 
   renderEmployeeEditor() {
-    return <div>Employee's View</div>;
+    return <div>Employee's View - Component to be Added</div>;
   }
 
   renderManagerEditor() {
@@ -95,7 +95,6 @@ class Dashboard extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <div className="dashboard-container">
         <div className="ratio-col-4 major-component">
@@ -103,7 +102,7 @@ class Dashboard extends Component {
             <div className="editor-header">
               {this.props.userRole === 'manager' ? this.renderManagerHeader() : this.renderEmployeeHeader()}
             </div>
-            {this.props.userRole === 'manager' ? this.renderManagerEditor() : this.renderEmployeeHeader()}
+            {this.props.userRole === 'manager' ? this.renderManagerEditor() : this.renderEmployeeEditor()}
           </div>
         </div>
         <div className="ratio-col-4-3 major-component">
