@@ -7,6 +7,11 @@ let saveSchedule = (weekStart) => {
   return db.Schedule.create({ monday_dates: weekStart.monday_dates });
 };
 
+// Saves one business
+let saveBusiness = (business) => {
+  return db.Business.create({ name: business.name });
+}
+
 // Saves one user
 let saveUser = (user) => {
   return db.User.create({ name: user.name, role: user.role, password: user.password });
@@ -51,10 +56,20 @@ let saveEmployeeAvailability = (avail) => {
 };
 
 // initializes the database with dummy data
+// ERROR IN TRYING TO GET THIS TO POPULATE WITH DUMMY DATA!
 let initialize = () => {
+  console.log('WE IN HERE');
   return saveSchedule(dummyData.weekStart)
     .then(() => {
+      return Promise.each(dummyData.business, (business) => {
+        console.log('THIS IS BUSINESS: ', business);
+        console.log('THIS IS DUMMY DATA: ', dummyData);
+        saveBusiness(business);
+      });
+    })
+    .then(() => {
       return Promise.each(dummyData.users, (user) => {
+        console.log('THIS IS USER: ', user);
         saveUser(user);
       });
     })
