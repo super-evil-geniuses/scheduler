@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const config = require('./config.js');
 const Promise = require('bluebird');
 require('dotenv').config();
-
+debugger;
 
 const sequelize = process.env.DATABASE_URL ? 
 new Sequelize(process.env.DATABASE_URL) : 
@@ -62,7 +62,7 @@ let saveDayParts = (dayParts) => {
 	return Promise.each(dayParts, (dayPart) => {
 		db.Day_Part.create({ name: dayPart })
 			.catch((err) => {
-				console.log('day parts saved');
+				console.log('day parts already in database');
 			});
 	})
 };
