@@ -81,54 +81,33 @@ class Dashboard extends Component {
     );
   }
 
-  renderManagerView () {
+  renderEmployeeEditor() {
+    return <div>Employee's View</div>;
+  }
+
+  renderManagerEditor() {
     let editorView = <EmployeeEditor />;
 
     if (this.state.currentView === 'scheduleEditor') {
       editorView = <ScheduleEditor />;
     } 
-
-    return (
-      <div className="dashboard-container">
-        <div className="ratio-col-4 major-component">
-          <div className="component-block">
-            <div className="editor-header">
-              {this.renderManagerHeader()}
-            </div>
-          {editorView}
-          </div>
-        </div>
-        <div className="ratio-col-4-3 major-component">
-          {this.renderManagerMain()}
-        </div>
-      </div>
-    );
-  }
-
-  renderEmployeeView() {
-    let editorView = <div>Employee's View</div>
-
-    return (
-      <div className="dashboard-container">
-        <div className="ratio-col-4 major-component">
-          <div className="component-block">
-            <div className="editor-header">
-              {this.renderEmployeeHeader()}
-            </div>
-          {editorView}
-          </div>
-        </div>
-        <div className="ratio-col-4-3 major-component">
-          {this.renderEmployeeMain()}
-        </div>
-      </div>
-    );
+    return editorView;
   }
 
   render() {
     return (
       <div className="dashboard-container">
-        {this.props.userRole === 'manager' ? this.renderManagerView() : this.renderEmployeeView()}
+        <div className="ratio-col-4 major-component">
+          <div className="component-block">
+            <div className="editor-header">
+              {this.props.userRole === 'manager' ? this.renderManagerHeader() : this.renderEmployeeHeader()}
+            </div>
+            {this.props.userRole === 'manager' ? this.renderManagerEditor() : this.renderEmployeeHeader()}
+          </div>
+        </div>
+        <div className="ratio-col-4-3 major-component">
+          {this.props.userRole === 'manager' ? this.renderManagerMain() : this.renderEmployeeMain()}
+        </div>
       </div>
     );
   }
