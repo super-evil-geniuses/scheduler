@@ -110,7 +110,7 @@ function mapStateToProps(state) {
       }
     });
        
-    for (const sched of schedules) {
+    for (let sched in schedules) {
       const schedObj = {};
       if (sched === 'HOUSE') {
         schedObj.name = 'HOUSE';
