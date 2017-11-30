@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import { deleteShift } from '../actions/index';
 
 const EmployeeSchedule = (props) => {
-  console.log('EMPLOYEE SCHEDULE PROPS', props);
   const shifts = [
     <div key="shiftblock" className="ratio-col-8 schedule-name">{props.schedule.name}
       <br />

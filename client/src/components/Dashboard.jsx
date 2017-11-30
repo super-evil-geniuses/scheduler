@@ -7,7 +7,6 @@ import EmployeeEditor from '../containers/EmployeeEditor.jsx';
 import ScheduleEditor from '../containers/ScheduleEditor.jsx';
 import ScheduleGenerator from '../containers/ScheduleGenerator.jsx';
 import ScheduleActual from './ScheduleActual.jsx';
-import ManagerScheduleActual from './ManagerScheduleActual.jsx';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -16,6 +15,7 @@ class Dashboard extends Component {
       currentView: 'employeeEditor',
     };
   }
+
 
   renderTab(title, viewType) {
     const selectedStyle = 'ratio-col-2 editor-tab selected-tab';

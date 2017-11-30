@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import EmployeeSchedule from './EmployeeSchedule.jsx';
 
 const ScheduleActual = (props) => {
-  console.log('MANAGER ACTUAL SCHEDULE PROPS', props);
   let calendarBody;
 
   const morningEvenings = [<div key='block' className="ratio-col-8 schedule-block schedule-hours" />];
