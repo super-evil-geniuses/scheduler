@@ -2,7 +2,6 @@ const Sequelize = require('sequelize');
 const config = require('./config.js');
 const Promise = require('bluebird');
 require('dotenv').config();
-debugger;
 
 const sequelize = process.env.DATABASE_URL ? 
 new Sequelize(process.env.DATABASE_URL) : 
