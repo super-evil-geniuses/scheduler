@@ -7,7 +7,7 @@ let findAllEmployeeAvailability = () => {
   return db.Day_Part.findAll({ attributes: ['id'] })
     .then((day_parts) => {
       return Promise.each(day_parts, (day_part) => {
-        return db.Employee_Availability.findAll({ where: { day_part_id: day_part.dataValues.id, is_available: true }})
+        return db.Employee_Availability.findAll({ where: { day_part_id: day_part.dataValues.id, is_available: true } })
           .then((avail) => {
             availability.push(avail);
           });
@@ -159,7 +159,7 @@ const generateSchedule = (weekStart) => {
 
           let actual_schedule = scheduleGenerator(avail, template);
           let reformattedSchedule = reformatScheduleObj(actual_schedule, schedule_id);
-          return db.Actual_Schedule.destroy({ where: {schedule_id: schedule_id} })
+          return db.Actual_Schedule.destroy({ where: { schedule_id } })
             .then(() => {
               return Promise.each(reformattedSchedule, (scheduleObj) => {
                 return db.Actual_Schedule.create(scheduleObj);

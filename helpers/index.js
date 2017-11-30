@@ -185,9 +185,9 @@ const checkSession = (req, res, next) => {
   })
     .then((session) => {
       if (session.length > 0) {
-        db.User.findAll({ where: { id: session[0].dataValues.user_id}})
+        db.User.findAll({ where: { id: session[0].dataValues.user_id } })
           .then((user) => {
-            let obj =  { session: session[0].dataValues.session }; 
+            let obj = { session: session[0].dataValues.session };
             if (user.length) {
               obj.user = user[0].dataValues.name;
               obj.role = user[0].dataValues.role;
@@ -206,7 +206,7 @@ const passHash = (password) => {
   let shasum = crypto.createHash('sha256');
   shasum.update(password);
   return shasum.digest('hex');
-}
+};
 
 const authenticate = (req, res, next) => {
   //get user info from user db;
@@ -217,7 +217,7 @@ const authenticate = (req, res, next) => {
   db.User.findAll({ where: { name: req.body.creds.username } })
     .then((user) => {
       if (user.length === 0) {
-        res.status(201).send({ flashMessage: { message: 'incorrect username or password', type: 'red'}});
+        res.status(201).send({ flashMessage: { message: 'incorrect username or password', type: 'red' } });
         return;
       }
       user = user[0].dataValues;
@@ -225,12 +225,12 @@ const authenticate = (req, res, next) => {
         req.session = newSession(req, res);
         req.session.user = user.name;
         req.session.role = user.role;
-        db.Sessions.create({session: req.session.session, user_id: user.id})
+        db.Sessions.create({ session: req.session.session, user_id: user.id })
           .then(() => {
             next();
           });
       } else {
-        res.status(201).send({ flashMessage: { message: 'incorrect username or password', type: 'red'}});
+        res.status(201).send({ flashMessage: { message: 'incorrect username or password', type: 'red' } });
       }
     });
 };
@@ -239,17 +239,17 @@ const createUser = (req, res, next) => {
   db.User.create({
     name: req.body.creds.username,
     role: 'manager',
-    password: passHash(req.body.creds.password)
+    password: passHash(req.body.creds.password),
   }).then((data) => {
     req.session = newSession(req, res);
     req.session.user = req.body.creds.username;
     req.session.role =data.dataValues.role;
-    db.Sessions.create({session: req.session.session, user_id: data.dataValues.id})
+    db.Sessions.create({ session: req.session.session, user_id: data.dataValues.id })
       .then(() => {
         next();
       });
   }).catch((err) => {
-    res.status(201).send({ flashMessage: {message: `username "${req.body.creds.username}" already exists`, type: 'red'}})
+    res.status(201).send({ flashMessage: { message: `username "${req.body.creds.username}" already exists`, type: 'red' } });
   });
 };
 
@@ -257,7 +257,12 @@ const redirectIfLoggedIn = (req, res, next) => {
   if (!req.session.user) {
     res.send();
     return;
+<<<<<<< HEAD
   } 
+=======
+  }
+  console.log('redirecting');
+>>>>>>> fix linting errors
   next();
 };
 
