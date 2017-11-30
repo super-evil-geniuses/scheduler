@@ -12,8 +12,9 @@
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon ./server/index.js",
     "test": "npm run test:mocha && npm run test:jest",
-    "test:mocha": "mocha test/backendSpec.js --reporter nyan --exit",
+    "test:mocha": "npm run db:migrate && mocha test/backendSpec.js --reporter nyan --exit",
     "test:jest": "jest",
+    "db:setup": "npm run db:migrate && npm run db:seed",
     "db:seed": "node database/example-data/seedDatabase.js",
     "db:migrate": "node database/example-data/migrateDatabase.js"
   },

@@ -2,7 +2,7 @@ const Promise = require('bluebird');
 const db = require('../../database');
 const dummyData = require('./dummyData');
 
-Promise.all([
+module.exports = Promise.all([
   db.User.sync(),
   db.Day_Part.sync(),
   db.Schedule.sync(),
@@ -16,6 +16,5 @@ Promise.all([
   .then(() => db.Day_Part.bulkCreate(dummyData.Day_Part))
   .catch(() => {})
   .then(() => {
-    console.log('hi');
     db.sequelize.close();
   });
