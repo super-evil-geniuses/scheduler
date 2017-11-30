@@ -1,5 +1,5 @@
 const view = (state = 'login', action) => {
-	switch(action.type) {
+  switch (action.type) {
     case 'CHANGE_VIEW':
       return action.view;
     case 'GET_ALL':
