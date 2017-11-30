@@ -63,6 +63,7 @@ app.post('/generate_schedule', (req, res) => {
 });
 
 app.post('/login', utils.authenticate, (req, res) => {
+  console.log('ABOUT TO REDIRECT TO welcome_back');
   res.redirect('/welcome_back');
 });
 
@@ -86,7 +87,6 @@ app.get('/welcome_back',
   (req, res) => {
     const obj = {};
     obj.role = req.session.role;
-    console.log(req.session);
     obj.dayParts = req.dayParts;
     obj.view = 'employeeEditor';
     obj.scheduleActual = req.actual_schedules;

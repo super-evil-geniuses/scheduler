@@ -95,6 +95,7 @@ class Dashboard extends Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <div className="dashboard-container">
         <div className="ratio-col-4 major-component">

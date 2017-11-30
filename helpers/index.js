@@ -258,7 +258,6 @@ const redirectIfLoggedIn = (req, res, next) => {
     res.send();
     return;
   } 
-  console.log('redirecting');
   next();
 };
 
@@ -280,6 +279,7 @@ const sendEmployeeInfo = (req, res, next) => {
     .map((e) => e.dataValues);
     obj.scheduleDates = req.scheduleDates;
     obj.view = 'employeeEditor';
+    obj.role = req.session.role;
     res.json(obj);
     return;
   }

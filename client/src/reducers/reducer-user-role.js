@@ -1,4 +1,4 @@
-const userRole = (state = null, action) => {
+const userRole = (state = '', action) => {
   switch (action.type) {
     case 'GET_ALL':
       return action.payload.data.role || state;
