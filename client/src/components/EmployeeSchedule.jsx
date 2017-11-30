@@ -7,13 +7,19 @@ const EmployeeSchedule = (props) => {
       <br />
       <span className="schedule-hours">{props.schedule.schedule.length * 6} hrs</span>
     </div>];
+
+    // iterate over all possible days and make either an empty
+    // div or a shift div (class determines color)
   for (let i = 1; i < 15; i += 1) {
+    // check if the current shift is being worked
     if (props.schedule.schedule.indexOf(i) !== -1) {
+      // if it is, add a 'shift-on' div
       shifts.push(<div
         key={`shift${props.schedule.name}${i}`}
         className="ratio-col-16 schedule-block schedule-shift-on"
       />);
     } else {
+      // if it isn't, add a shift-off div
       shifts.push(<div
         key={`shift${props.schedule.name}${i}`}
         className="ratio-col-16 schedule-block schedule-shift-off" />);
