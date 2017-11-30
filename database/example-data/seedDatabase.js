@@ -17,7 +17,7 @@ let saveBusiness = (business) => {
 
 // Saves one user
 let saveUser = (user) => {
-  return db.User.create({ name: user.name, role: user.role, password: user.password });
+  return db.User.create({ name: user.name, role: user.role, password: user.password, business_id: user.business_id });
 };
 
 // Saves the schedule template
@@ -61,12 +61,9 @@ let saveEmployeeAvailability = (avail) => {
 // initializes the database with dummy data
 // ERROR IN TRYING TO GET THIS TO POPULATE WITH DUMMY DATA!
 let initialize = () => {
-  console.log('WE IN HERE');
   return saveSchedule(dummyData.weekStart)
     .then(() => {
       return Promise.each(dummyData.business, (business) => {
-        console.log('THIS IS BUSINESS: ', business);
-        console.log('THIS IS DUMMY DATA: ', dummyData);
         saveBusiness(business);
       });
     })
