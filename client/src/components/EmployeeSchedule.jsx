@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 const EmployeeSchedule = (props) => {
   const shifts = [
@@ -37,4 +39,11 @@ EmployeeSchedule.propTypes = {
   schedule: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-export default EmployeeSchedule;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    updateNeededEmployees: updateNeededEmployees,
+  }, dispatch);
+}
+
+
+export default connect(mapDispatchToProps)(EmployeeSchedule);
