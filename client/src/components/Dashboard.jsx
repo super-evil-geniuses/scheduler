@@ -202,6 +202,7 @@ function mapStateToProps(state) {
     }
   }
 
+  console.log(scheduleArr);
   return {
     userRole: state.userRole,
     selectedWeek: state.selectedWeek,
