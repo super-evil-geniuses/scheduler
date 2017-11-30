@@ -25,15 +25,22 @@ let saveScheduleTemplate = (temp) => {
   return Promise.each(temp, (day) => {
     return db.Schedule.find({ where: { monday_dates: day.monday_date } })
       .then((result) => {
+        // sets schedule_id to Schedule.id associated with the monday_date
         let schedule_id = result.id;
         return db.Day_Part.find({ where: { name: day.day_part } })
           .then((result) => {
+            // sets day_part_id to Day_Part.id associated with the shift
             let day_part_id = result.id;
-            return db.Needed_Employee.create({ 
-              employees_needed: day.employees_needed,
-              schedule_id: schedule_id,
-              day_part_id: day_part_id
-            });
+            return db.Business.find({ where: { id: day.business_id } })
+              .then((result) => {
+                let business_id = result.id;
+                return db.Needed_Employee.create({ 
+                  employees_needed: day.employees_needed,
+                  schedule_id: schedule_id,
+                  day_part_id: day_part_id,
+                  business_id: business_id,
+                });
+              });
           });
       });
   });

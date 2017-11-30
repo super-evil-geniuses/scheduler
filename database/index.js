@@ -36,6 +36,7 @@ db.Day_Part.hasMany(db.Needed_Employee, { as: 'needed_employee' });
 
 // Creates Business table connection to users
 db.Business.hasMany(db.User, { as: 'user' });
+db.Business.hasMany(db.Needed_Employee, { as: 'needed_employee' });
 
 // drops all table, just put it in so that it doesn't give an error for creating the same table everytime during dev
 db.Business.sync()
