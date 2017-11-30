@@ -115,7 +115,7 @@ class Dashboard extends Component {
               weekHasActualSchedule={this.props.weekHasActualSchedule}
               weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}
             />
-            <ManagerScheduleActual
+            <ScheduleActual
               selectedWeek={this.props.selectedWeek}
               weekHasActualSchedule={this.props.weekHasActualSchedule}
               weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}
