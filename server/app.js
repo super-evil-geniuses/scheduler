@@ -84,8 +84,9 @@ app.get('/welcome_back',
   utils.sendEmployeeInfo,
   utils.getAllNeededEmployees,
   (req, res) => {
-    let obj = {};
+    const obj = {};
     obj.role = req.session.role;
+    console.log(req.session);
     obj.dayParts = req.dayParts;
     obj.view = 'employeeEditor';
     obj.scheduleActual = req.actual_schedules;
