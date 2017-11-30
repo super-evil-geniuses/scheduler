@@ -298,6 +298,7 @@ const destroySession = (req, res, next) => {
 
 
 module.exports = {
+  passHash,
   destroySession: destroySession,
   sendEmployeeInfo: sendEmployeeInfo,
   getAllActualSchedules: getAllActualSchedules,
