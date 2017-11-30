@@ -16,25 +16,24 @@ class Dashboard extends Component {
     };
   }
 
-  renderEmployeeView() {
-    // 
-  }
+  // renderEmployeeView() {
+  //   // 
+  // }
 
-  renderManagerView() {
-    // 
-  }
+  // renderManagerView() {
+    
+  // }
 
   renderView (userRole) {
-    let editorView;
+    let editorView = <ScheduleEditor />;
     let employeeStyle = 'ratio-col-2 editor-tab clickable';
-    let scheduleStyle ='ratio-col-2 editor-tab clickable';
+    let scheduleStyle = 'ratio-col-2 editor-tab selected-tab'
+
     if(this.state.currentView === 'employeeEditor') {
       editorView = <EmployeeEditor />;
       employeeStyle = 'ratio-col-2 editor-tab selected-tab';
-    } else {
-      editorView = <ScheduleEditor />;
-      scheduleStyle = 'ratio-col-2 editor-tab selected-tab';
-    }
+      scheduleStyle ='ratio-col-2 editor-tab clickable';
+    } 
 
     return (
       <div className="dashboard-container">
@@ -69,7 +68,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    return this.renderView();
+    return this.renderView(this.props.userRole);
   }
 }
 
@@ -150,6 +149,7 @@ function mapStateToProps(state) {
 }
 
   Dashboard.propTypes = {
+  userRole: PropTypes.string.isRequired,
   selectedWeekScheduleId: PropTypes.number,
   weekHasActualSchedule: PropTypes.bool.isRequired,
   weekHasAtLeastOneNeededEmployee: PropTypes.bool.isRequired,
