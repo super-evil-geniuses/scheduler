@@ -14,4 +14,8 @@ Promise.all([
     db.Needed_Employee.sync(),
   ]))
   .then(() => db.Day_Part.bulkCreate(dummyData.Day_Part))
-  .catch(() => {});
+  .catch(() => {})
+  .then(() => {
+    console.log('hi');
+    db.sequelize.close();
+  });

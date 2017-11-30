@@ -10,4 +10,7 @@ const keys = [
 ];
 
 
-Promise.each(keys, key => db[key].bulkCreate(dummyData[key]));
+Promise.each(keys, key => db[key].bulkCreate(dummyData[key]))
+  .then(() => {
+    db.sequelize.close();
+  });
