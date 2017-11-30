@@ -7,6 +7,7 @@ import EmployeeEditor from '../containers/EmployeeEditor.jsx';
 import ScheduleEditor from '../containers/ScheduleEditor.jsx';
 import ScheduleGenerator from '../containers/ScheduleGenerator.jsx';
 import ScheduleActual from './ScheduleActual.jsx';
+import ManagerScheduleActual from './ManagerScheduleActual.jsx';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -108,6 +109,19 @@ class Dashboard extends Component {
         </div>
         <div className="ratio-col-4-3 major-component">
           {this.props.userRole === 'manager' ? this.renderManagerMain() : this.renderEmployeeMain()}
+          <div className="component-block">
+            <ScheduleGenerator
+              selectedWeek={this.props.selectedWeek}
+              weekHasActualSchedule={this.props.weekHasActualSchedule}
+              weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}
+            />
+            <ManagerScheduleActual
+              selectedWeek={this.props.selectedWeek}
+              weekHasActualSchedule={this.props.weekHasActualSchedule}
+              weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}
+              selectedWeekActualSchedule={this.props.selectedWeekActualSchedule}
+            />
+          </div>
         </div>
       </div>
     );

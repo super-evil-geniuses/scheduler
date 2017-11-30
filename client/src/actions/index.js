@@ -6,9 +6,10 @@ import axios from 'axios';
 |--------------------------------------------------
 */
 const deleteShift = (shift) => {
+  console.log('DELETE SHIFT ACTION', shift);
   return {
     type: 'DELETE_SHIFT',
-    payload: shift,
+    payload: 'temp',
   };
 };
 

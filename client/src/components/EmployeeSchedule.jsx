@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { deleteShift } from '../actions/index';
 
 const EmployeeSchedule = (props) => {
   const shifts = [
@@ -16,15 +17,18 @@ const EmployeeSchedule = (props) => {
     // check if the current shift is being worked
     if (props.schedule.schedule.indexOf(i) !== -1) {
       // if it is, add a 'shift-on' div
-      shifts.push(<div
+      shifts.push(<button
         key={`shift${props.schedule.name}${i}`}
         className="ratio-col-16 schedule-block schedule-shift-on"
+        onClick={() => { props.deleteShift(); }}
       />);
     } else {
       // if it isn't, add a shift-off div
-      shifts.push(<div
+      shifts.push(<button
         key={`shift${props.schedule.name}${i}`}
-        className="ratio-col-16 schedule-block schedule-shift-off" />);
+        className="ratio-col-16 schedule-block schedule-shift-off"
+        onClick={() => { props.deleteShift(); }}
+        />);
     }
   }
 
@@ -41,9 +45,8 @@ EmployeeSchedule.propTypes = {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    updateNeededEmployees: updateNeededEmployees,
+    deleteShift,
   }, dispatch);
 }
 
-
-export default connect(mapDispatchToProps)(EmployeeSchedule);
+export default connect(null, mapDispatchToProps)(EmployeeSchedule);
