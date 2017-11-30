@@ -30,15 +30,18 @@ db.Day_Part.hasMany(db.Employee_Availability, { as: 'employee_availability' });
 db.Day_Part.hasMany(db.Actual_Schedule, { as: 'actual_schedule' });
 db.Day_Part.hasMany(db.Needed_Employee, { as: 'needed_employee' });
 
+// EVERYTHING IS AWESOME
+db.Business.hasMany(db.User, { as: 'user' });
+
 // drops all table, just put it in so that it doesn't give an error for creating the same table everytime during dev
-db.User.sync()
+db.Business.sync()
+  .then(() => db.User.sync())
   .then(() => db.Schedule.sync())
   .then(() => db.Day_Part.sync())
   .then(() => db.Employee_Availability.sync())
   .then(() => db.Actual_Schedule.sync())
   .then(() => db.Needed_Employee.sync())
   .then(() => db.Session.sync())
-  .then(() => db.Business.sync())
   .then(() => {
     return saveDayParts(dayParts);
   });
