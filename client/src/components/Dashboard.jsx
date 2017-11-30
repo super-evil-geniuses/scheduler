@@ -16,15 +16,76 @@ class Dashboard extends Component {
     };
   }
 
-  renderView (userRole) {
+  renderTab(title, viewType) {
+    const selectedStyle = 'ratio-col-2 editor-tab selected-tab';
+    const clickableStyle = 'ratio-col-2 editor-tab clickable'
+
+    return (
+      <div
+        className={this.state.currentView === viewType ? selectedStyle : clickableStyle}
+        onClick={() => { 
+          this.setState({ currentView: viewType });
+        }}
+      >
+        {title}
+      </div>
+    );
+  }
+
+  renderManagerHeader() {
+    return (
+      <div className="container clear-fix">
+        {this.renderTab('Employees', 'employeeEditor')}
+        {this.renderTab('Schedules', 'scheduleEditor')}
+      </div>
+    );
+  }
+
+  renderEmployeeHeader() {
+    return (
+      <div className="container clear-fix">
+        {this.renderTab('Employees', 'employeeEditor')}
+      </div>
+    );
+  }
+
+  renderScheduleActual() {
+    return (            
+      <ScheduleActual
+        selectedWeek={this.props.selectedWeek}
+        weekHasActualSchedule={this.props.weekHasActualSchedule}
+        weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}
+        selectedWeekActualSchedule={this.props.selectedWeekActualSchedule}
+      />
+    );
+  }
+
+  renderManagerMain() {
+    return (
+      <div className="component-block">
+        <ScheduleGenerator
+          selectedWeek={this.props.selectedWeek}
+          weekHasActualSchedule={this.props.weekHasActualSchedule}
+          weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}
+        />
+        {this.renderScheduleActual()}
+      </div>
+    );
+  }
+
+  renderEmployeeMain() {
+    return (
+      <div className="component-block">
+        {this.renderScheduleActual()}
+      </div>
+    );
+  }
+
+  renderManagerView () {
     let editorView = <EmployeeEditor />;
-    let employeeStyle = 'ratio-col-2 editor-tab selected-tab';
-    let scheduleStyle ='ratio-col-2 editor-tab clickable';
 
     if (this.state.currentView === 'scheduleEditor') {
       editorView = <ScheduleEditor />;
-      employeeStyle = 'ratio-col-2 editor-tab clickable';
-      scheduleStyle = 'ratio-col-2 editor-tab selected-tab';
     } 
 
     return (
@@ -32,35 +93,44 @@ class Dashboard extends Component {
         <div className="ratio-col-4 major-component">
           <div className="component-block">
             <div className="editor-header">
-              <div className="container clear-fix">
-                <div className={employeeStyle} onClick={() => { this.setState({currentView: 'employeeEditor' })}}>Employees</div>
-                <div className={scheduleStyle} onClick={() => { this.setState({currentView: 'scheduleEditor' })}}>Shifts</div>
-              </div>
+              {this.renderManagerHeader()}
             </div>
           {editorView}
           </div>
         </div>
         <div className="ratio-col-4-3 major-component">
+          {this.renderManagerMain()}
+        </div>
+      </div>
+    );
+  }
+
+  renderEmployeeView() {
+    let editorView = <div>Employee's View</div>
+
+    return (
+      <div className="dashboard-container">
+        <div className="ratio-col-4 major-component">
           <div className="component-block">
-            <ScheduleGenerator
-              selectedWeek={this.props.selectedWeek}
-              weekHasActualSchedule={this.props.weekHasActualSchedule}
-              weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}
-            />
-            <ScheduleActual
-              selectedWeek={this.props.selectedWeek}
-              weekHasActualSchedule={this.props.weekHasActualSchedule}
-              weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}
-              selectedWeekActualSchedule={this.props.selectedWeekActualSchedule}
-            />
+            <div className="editor-header">
+              {this.renderEmployeeHeader()}
+            </div>
+          {editorView}
           </div>
+        </div>
+        <div className="ratio-col-4-3 major-component">
+          {this.renderEmployeeMain()}
         </div>
       </div>
     );
   }
 
   render() {
-    return this.renderView(this.props.userRole);
+    return (
+      <div className="dashboard-container">
+        {this.props.userRole === 'manager' ? this.renderManagerView() : this.renderEmployeeView()}
+      </div>
+    );
   }
 }
 
