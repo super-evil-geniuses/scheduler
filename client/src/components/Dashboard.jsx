@@ -12,27 +12,19 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentView: 'scheduleEditor',
+      currentView: 'employeeEditor',
     };
   }
 
-  // renderEmployeeView() {
-  //   // 
-  // }
-
-  // renderManagerView() {
-    
-  // }
-
   renderView (userRole) {
-    let editorView = <ScheduleEditor />;
-    let employeeStyle = 'ratio-col-2 editor-tab clickable';
-    let scheduleStyle = 'ratio-col-2 editor-tab selected-tab'
+    let editorView = <EmployeeEditor />;
+    let employeeStyle = 'ratio-col-2 editor-tab selected-tab';
+    let scheduleStyle ='ratio-col-2 editor-tab clickable';
 
-    if(this.state.currentView === 'employeeEditor') {
-      editorView = <EmployeeEditor />;
-      employeeStyle = 'ratio-col-2 editor-tab selected-tab';
-      scheduleStyle ='ratio-col-2 editor-tab clickable';
+    if (this.state.currentView === 'scheduleEditor') {
+      editorView = <ScheduleEditor />;
+      employeeStyle = 'ratio-col-2 editor-tab clickable';
+      scheduleStyle = 'ratio-col-2 editor-tab selected-tab';
     } 
 
     return (
