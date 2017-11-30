@@ -13,8 +13,8 @@ const ScheduleActual = (props) => {
   }
 
   if (props.selectedWeekActualSchedule.length > 0) {
-    calendarBody = props.selectedWeekActualSchedule.map((sched, idx) => {
-      return <EmployeeSchedule key={`${sched.name}${idx}`} schedule={sched} />;
+    calendarBody = props.selectedWeekActualSchedule.map((employeeSchedule, idx) => {
+      return <EmployeeSchedule key={`${employeeSchedule.name}${idx}`} employeeSchedule={employeeSchedule} />;
     });
   } else if (props.weekHasAtLeastOneNeededEmployee) {
     calendarBody = <div className='schedule-prompt'>Generate a schedule for this week when you have finalized your shifts.</div>;

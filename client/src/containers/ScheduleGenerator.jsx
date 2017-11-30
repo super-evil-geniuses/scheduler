@@ -11,7 +11,7 @@ class ScheduleGenerator extends React.Component {
     super(props);
     this.state = {
       mondayDate: null,
-    }
+    };
   }
 
   renderButton() {

@@ -62,7 +62,7 @@ let saveDayParts = (dayParts) => {
 	return Promise.each(dayParts, (dayPart) => {
 		db.Day_Part.create({ name: dayPart })
 			.catch((err) => {
-				console.log('day parts saved');
+				console.log('day parts already in database');
 			});
 	})
 };
