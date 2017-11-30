@@ -237,10 +237,13 @@ const authenticate = (req, res, next) => {
 };
 
 const createUser = (req, res, next) => {
+  // will need to add business to database here
   db.User.create({
     name: req.body.creds.username,
     role: 'manager',
     password: passHash(req.body.creds.password),
+    // add business ID
+    business_id: 1,
   }).then((data) => {
     req.session = newSession(req, res);
     req.session.user = req.body.creds.username;
