@@ -1,5 +1,8 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Dashboard from './Dashboard.jsx';
+import Header from './Header.jsx';
+import Main from './Main.jsx';
 
 class Home extends React.Component {
   constructor(props) {
@@ -20,13 +23,8 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        {
-          this.state.showsDashboard ? <Dashboard /> :
-          <div>
-            <button onClick={this.showDashboard}>Dashboard</button>
-            <button>Personal Information</button>
-          </div>
-        }
+        <Header />
+        <Main />
       </div>
     );
   }
