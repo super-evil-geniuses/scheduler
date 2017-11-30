@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import EmployeeSchedule from './EmployeeSchedule.jsx';
 
 const ScheduleActual = (props) => {
+ 
   let calendarBody;
 
   const morningEvenings = [<div key='block' className="ratio-col-8 schedule-block schedule-hours" />];
@@ -21,7 +22,7 @@ const ScheduleActual = (props) => {
   } else {
     calendarBody = <div className='schedule-prompt'>You have not saved any shifts for this week.</div>;
   }
-
+  console.log('PROPS', props);
   return (
     <div className="container clear-fix schedule-actual">
       <div className="schedule-date-header">

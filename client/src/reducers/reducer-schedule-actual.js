@@ -1,7 +1,7 @@
 const scheduleActual = (state = null, action) => {
   switch (action.type) {
     case 'DELETE_SHIFT':
-      console.log('DELETE SHIFT REDUCER', action);
+      console.log('DELETE SHIFT REDUCER', state);
       return (state);
 
     case 'GET_ACTUAL_SCHEDULE':

@@ -120,6 +120,7 @@ class Dashboard extends Component {
               weekHasActualSchedule={this.props.weekHasActualSchedule}
               weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}
               selectedWeekActualSchedule={this.props.selectedWeekActualSchedule}
+              selectedWeekScheduleId={this.props.selectedWeekScheduleId}
             />
           </div>
         </div>
@@ -133,6 +134,7 @@ function mapStateToProps(state) {
   let weekHasActualSchedule = false;
   let weekHasAtLeastOneNeededEmployee = false;
   let actualSchedule = null;
+  let userId = null;
   
   // check to see if any schedules have been generated
   if (state.scheduleDates) {
@@ -204,19 +206,17 @@ function mapStateToProps(state) {
         schedObj.name = 'HOUSE';
         schedObj.schedule = schedules[keys[i]];
       } else {
-        schedObj.name = state.users.filter((user) => {
-          // user.id is an integer and keys[i] is a string
-          return user.id == keys[i];
+        schedObj.name = state.users.filter( (user) => {
+          return user.id == sched;
         })[0].name;
-
-        schedObj.schedule = schedules[keys[i]];
+        schedObj.userId = sched;
+        schedObj.schedule = schedules[sched];
       }
 
       scheduleArr.push(schedObj);
     }
   }
 
-  console.log(scheduleArr);
   return {
     userRole: state.userRole,
     selectedWeek: state.selectedWeek,
