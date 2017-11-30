@@ -231,13 +231,13 @@
 // ];
 
 module.exports.dayParts = [
-  'monA', 'monP', 
-  'tuesA', 'tuesP', 
-  'wedsA', 'wedsP', 
-  'thursA', 'thursP', 
-  'friA', 'friP', 
-  'satA', 'satP', 
-  'sunA', 'sunP'
+  'monA', 'monP',
+  'tuesA', 'tuesP',
+  'wedsA', 'wedsP',
+  'thursA', 'thursP',
+  'friA', 'friP',
+  'satA', 'satP',
+  'sunA', 'sunP',
 ];
 
 module.exports.weekStart = { monday_dates: new Date('11/13/17') };
