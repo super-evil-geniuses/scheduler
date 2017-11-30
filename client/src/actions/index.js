@@ -1,5 +1,23 @@
 import axios from 'axios';
 
+/**
+|--------------------------------------------------
+| New Action Creators
+|--------------------------------------------------
+*/
+const deleteShift = (shift) => {
+  return {
+    type: 'DELETE_SHIFT',
+    payload: shift,
+  };
+};
+
+/**
+|--------------------------------------------------
+| 
+|--------------------------------------------------
+*/
+
 const getAllUsers = () => {
   const response = axios.get('/users');
 
@@ -166,10 +184,11 @@ const selectWeek = (monDate) => {
   return {
     type: 'SELECT_WEEK',
     payload: monDate,
-  }
+  };
 };
 
 module.exports = {
+  deleteShift,
   logout,
   checkedIfLoggedIn,
   generateSchedule,
