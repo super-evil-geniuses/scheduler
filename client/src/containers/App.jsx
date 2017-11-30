@@ -54,10 +54,10 @@ class App extends Component {
     }
     return (
       <div>
-        <div className="nav-item nav-Dashboard" onClick={ () => {} }>
+        <div className="nav-item nav-Dashboard" onClick={() => {this.props.changeView('employeeEditor'); this.renderView()}}>
           Dashboard
         </div>
-        <div className="nav-item nav-logout" onClick={() => { this.props.logout()}}>
+        <div className="nav-item nav-logout" onClick={() => { this.props.logout() }}>
           Log out
         </div>
       </div>

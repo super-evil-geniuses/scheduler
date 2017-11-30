@@ -1,8 +1,7 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Home from './Home.jsx';
+import { Switch, Route } from 'react-router-dom';
 import Dashboard from './Dashboard.jsx';
-import Header from './Header.jsx';
+import PersonalInformation from './PersonalInformation.jsx';
 
 // The Main component renders one of the two provided
 // Routes (provided that one matches). The /schedule
@@ -10,11 +9,12 @@ import Header from './Header.jsx';
 // with /schedule. The / route will only match
 // when the pathname is exactly the string "/"
 const Main = () => (
-  <main>
+  <div>
     <Switch>
       <Route exact path="/schedule" component={Dashboard} />
+      <Route exact path="/personal/information" component={PersonalInformation} />
     </Switch>
-  </main>
+  </div>
 );
 
   // <Route exact path="/" component={Home} />
