@@ -58,7 +58,7 @@ app.post('/needed_employees', utils.createScheduleDate, utils.createScheduleTemp
 app.post('/generate_schedule', (req, res) => { 
   generateSchedule(new Date(req.body.mondayDate))
     .then((schedule) => {
-      res.json(schedule[0]);
+      res.json(schedule);
     });
 });
 
