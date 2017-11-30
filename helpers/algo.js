@@ -3,47 +3,47 @@ const Promise = require('bluebird');
 const Combinatorics = require('js-combinatorics');
 
 let findAllEmployeeAvailability = () => {
-	let availability = [];
-	return db.Day_Part.findAll({ attributes: ['id'] })
-		.then((day_parts) => {
-			return Promise.each(day_parts, (day_part) => {
-				return db.Employee_Availability.findAll({ where: { day_part_id: day_part.dataValues.id, is_available: true }})
-					.then((avail) => {
-						availability.push(avail);
-					});
-			});
-		})
-		.then(() => {
-			return availabilityParser(availability);
-		});
+  let availability = [];
+  return db.Day_Part.findAll({ attributes: ['id'] })
+    .then((day_parts) => {
+      return Promise.each(day_parts, (day_part) => {
+        return db.Employee_Availability.findAll({ where: { day_part_id: day_part.dataValues.id, is_available: true }})
+          .then((avail) => {
+            availability.push(avail);
+          });
+      });
+    })
+    .then(() => {
+      return availabilityParser(availability);
+    });
 };
 
 const availabilityParser = (availability) => {
-	let availObj = {};
-	availability.forEach(availPerDayPart => {
-		availPerDayPart.forEach(availByEmp => {
-			if (!availObj[availByEmp.dataValues.day_part_id]) {
-				availObj[availByEmp.dataValues.day_part_id] = [availByEmp.dataValues.user_id];
-			} else {
-				availObj[availByEmp.dataValues.day_part_id].push(availByEmp.dataValues.user_id);
-			}
-		});
-	});
-	return availObj;
+  let availObj = {};
+  availability.forEach(availPerDayPart => {
+    availPerDayPart.forEach(availByEmp => {
+      if (!availObj[availByEmp.dataValues.day_part_id]) {
+        availObj[availByEmp.dataValues.day_part_id] = [availByEmp.dataValues.user_id];
+      } else {
+        availObj[availByEmp.dataValues.day_part_id].push(availByEmp.dataValues.user_id);
+      }
+    });
+  });
+  return availObj;
 }
 
 const templateParser = (weekStart) => {
-	let tempObj = {};
-	return db.Schedule.find({ where: {monday_dates: weekStart} })
-		.then((schedule) => {
+  let tempObj = {};
+  return db.Schedule.find({ where: {monday_dates: weekStart} })
+    .then((schedule) => {
       let schedule_id = schedule.dataValues.id;
-			return db.Needed_Employee.findAll({ where: {schedule_id: schedule_id, }})
-    		.then((template) => {
-    			template.forEach(dayPart => {
-    				tempObj[dayPart.dataValues.day_part_id] = dayPart.dataValues.employees_needed;
-    			});
-    			return [tempObj, schedule_id];
-    		});
+      return db.Needed_Employee.findAll({ where: {schedule_id: schedule_id, }})
+        .then((template) => {
+          template.forEach(dayPart => {
+            tempObj[dayPart.dataValues.day_part_id] = dayPart.dataValues.employees_needed;
+          });
+          return [tempObj, schedule_id];
+        });
     });
 }
 
