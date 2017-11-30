@@ -38,6 +38,7 @@ db.User.sync()
   .then(() => db.Actual_Schedule.sync())
   .then(() => db.Needed_Employee.sync())
   .then(() => db.Session.sync())
+  .then(() => db.Business.sync())
   .then(() => {
     return saveDayParts(dayParts);
   });
