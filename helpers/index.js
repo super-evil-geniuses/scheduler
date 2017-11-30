@@ -178,7 +178,7 @@ const newSession = (req, res) => {
 const checkSession = (req, res, next) => {
   return new Promise((resolve, reject) => {
     if (req.cookies['shiftly']) {
-      resolve(db.Sessions.findAll( {where: { session: req.cookies['shiftly'] } }));
+      resolve(db.Session.findAll( {where: { session: req.cookies['shiftly'] } }));
     } else {
       resolve([]);
     }
@@ -225,7 +225,7 @@ const authenticate = (req, res, next) => {
       req.session = newSession(req, res);
       req.session.user = user.name;
       req.session.role = user.role;
-      db.Sessions.create({session: req.session.session, user_id: user.id})
+      db.Session.create({session: req.session.session, user_id: user.id})
       .then(() => {
         next();
       })
@@ -244,7 +244,7 @@ const createUser = (req, res, next) => {
     req.session = newSession(req, res);
     req.session.user = req.body.creds.username;
     req.session.role =data.dataValues.role;
-    db.Sessions.create({session: req.session.session, user_id: data.dataValues.id})
+    db.Session.create({session: req.session.session, user_id: data.dataValues.id})
     .then(() => {
       next();
     })
@@ -288,7 +288,7 @@ const sendEmployeeInfo = (req, res, next) => {
 
 const destroySession = (req, res, next) => {
   console.log('destroying session');
-  db.Sessions.destroy({ where:{session: req.session.session} })
+  db.Session.destroy({ where:{session: req.session.session} })
   .then(() => {
     console.log('creating new session');
     req.session = newSession(req, res);
