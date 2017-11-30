@@ -206,11 +206,12 @@ function mapStateToProps(state) {
         schedObj.name = 'HOUSE';
         schedObj.schedule = schedules[keys[i]];
       } else {
-        schedObj.name = state.users.filter( (user) => {
-          return user.id == sched;
+        schedObj.name = state.users.filter((user) => {
+          // user.id is an integer and keys[i] is a string
+          return user.id == keys[i];
         })[0].name;
-        schedObj.userId = sched;
-        schedObj.schedule = schedules[sched];
+        schedObj.userId = keys[i];
+        schedObj.schedule = schedules[keys[i]];
       }
 
       scheduleArr.push(schedObj);

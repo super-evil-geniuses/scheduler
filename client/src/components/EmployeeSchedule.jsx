@@ -21,14 +21,14 @@ const EmployeeSchedule = (props) => {
       shifts.push(<button
         key={`shift${props.schedule.name}${i}`}
         className="ratio-col-16 schedule-block schedule-shift-on"
-        onClick={() => { props.deleteShift(); }}
+        onClick={() => { props.deleteShift(i, props.schedule.userId, props.scheduleId); }}
       />);
     } else {
       // if it isn't, add a shift-off div
       shifts.push(<button
         key={`shift${props.schedule.name}${i}`}
         className="ratio-col-16 schedule-block schedule-shift-off"
-        onClick={() => { props.deleteShift(); }}
+        onClick={() => {}}
         />);
     }
   }

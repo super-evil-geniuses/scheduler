@@ -5,11 +5,16 @@ import axios from 'axios';
 | New Action Creators
 |--------------------------------------------------
 */
-const deleteShift = (shift) => {
-  console.log('DELETE SHIFT ACTION', shift);
+const deleteShift = (shift, userId, scheduleId) => {
+  console.log(shift, userId, scheduleId);
+  const payload = {
+    userId,
+    shift,
+    scheduleId,
+  };
   return {
     type: 'DELETE_SHIFT',
-    payload: 'temp',
+    payload,
   };
 };
 
