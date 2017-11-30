@@ -10,6 +10,7 @@ import Dashboard from '../components/Dashboard.jsx';
 import FlashMessage from '../components/FlashMessage.jsx';
 import Login from './Login.jsx';
 import SignUp from './SignUp.jsx';
+import Home from '../components/Home.jsx';
 
 class App extends Component {
 
@@ -29,9 +30,10 @@ class App extends Component {
     if (this.props.view === 'login') {
       return <Login />;
     } else if (this.props.view === 'signup') {
-      return <SignUp />
+      return <SignUp />;
     } else if (this.props.view === 'employeeEditor' || this.props.view === 'scheduleEditor') {
-      return <Dashboard />;
+      return <Home />;
+      // return <Dashboard />;
     }
     return <div />;
   }
