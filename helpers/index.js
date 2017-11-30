@@ -236,20 +236,19 @@ const authenticate = (req, res, next) => {
 };
 
 const createUser = (req, res, next) => {
-  db.User.create({
-    name: req.body.creds.username,
-    role: 'manager',
-    password: passHash(req.body.creds.password)
-  }).then((data) => {
+  const user = req.body.creds;
+  user.name = user.username;
+  user.password = passHash(user.password);
+  db.User.create(user).then((data) => {
     req.session = newSession(req, res);
-    req.session.user = req.body.creds.username;
-    req.session.role =data.dataValues.role;
+    req.session.user = user.username;
+    req.session.role = data.dataValues.role;
     db.Session.create({session: req.session.session, user_id: data.dataValues.id})
     .then(() => {
       next();
     })
   }).catch((err) => {
-    res.status(201).send({ flashMessage: {message: `username "${req.body.creds.username}" already exists`, type: 'red'}})
+    res.status(201).send({ flashMessage: {message: `username "${user.username}" already exists`, type: 'red'}})
   })
 };
 
