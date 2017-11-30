@@ -16,7 +16,15 @@ class Dashboard extends Component {
     };
   }
 
-  render() {
+  renderEmployeeView() {
+    // 
+  }
+
+  renderManagerView() {
+    // 
+  }
+
+  renderView (userRole) {
     let editorView;
     let employeeStyle = 'ratio-col-2 editor-tab clickable';
     let scheduleStyle ='ratio-col-2 editor-tab clickable';
@@ -58,6 +66,10 @@ class Dashboard extends Component {
         </div>
       </div>
     );
+  }
+
+  render() {
+    return this.renderView();
   }
 }
 
@@ -128,12 +140,13 @@ function mapStateToProps(state) {
   }
 
   return {
+    userRole: state.userRole,
     selectedWeek: state.selectedWeek,
     selectedWeekScheduleId: scheduleId,
     weekHasActualSchedule: weekHasActualSchedule,
     weekHasAtLeastOneNeededEmployee: weekHasAtLeastOneNeededEmployee,
     selectedWeekActualSchedule: scheduleArr,
-  }
+  };
 }
 
   Dashboard.propTypes = {
