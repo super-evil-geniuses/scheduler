@@ -68,7 +68,7 @@ const scheduleGenerator = (allEmployeeAvail, temp) => {
       allCombinations[dayPart] = Combinatorics.combination(allEmployeeAvail[dayPart], temp[dayPart]).toArray();
     }
   }
-  
+
   let schedule = {};
   let cheapSolution = [];
   let completedSchedules = [];
@@ -97,7 +97,7 @@ const scheduleGenerator = (allEmployeeAvail, temp) => {
         })
         schedule[dayPart] = thisTry;
         if (dayPart < 14) {
-         findSolution(possibilities, empShifts, dayPart+1);
+          findSolution(possibilities, empShifts, dayPart+1);
         } else {
           let completed = Object.assign({}, schedule);
           completedSchedules.push(completed);
@@ -106,24 +106,25 @@ const scheduleGenerator = (allEmployeeAvail, temp) => {
         thisTry.forEach((e) => {
           empShifts[e]--;
         });
-      }  
+      }
     }
   };
+
   findCheapSolution(allCombinations);
   schedule = {};
   findSolution(allCombinations, {}, 1);
-  return completedSchedules.length ? completedSchedules[Math.floor(Math.random()*completedSchedules.length)] : cheapSolution[0];
-}
+  return completedSchedules.length ? completedSchedules[Math.floor(Math.random() * completedSchedules.length)] : cheapSolution[0];
+};
 
 const willAnyEmployeeBeInOvertime = (shiftCounts, proposedShift) => {
   let overtime = false;
   proposedShift.forEach((e) => {
-    if(shiftCounts[e] >= 6) {
+    if (shiftCounts[e] >= 6) {
       overtime = true;
     }
-  })
+  });
   return overtime;
-}
+};
 
 const willHaveDouble = (amShift = [], pmShift) => {
   for (let i = 0; i < amShift.length; i++) {
@@ -132,7 +133,7 @@ const willHaveDouble = (amShift = [], pmShift) => {
     }
   }
   return false;
-}
+};
 
 const reformatScheduleObj = (actual_schedule, schedule_id) => {
   let reformat = [];
@@ -145,7 +146,7 @@ const reformatScheduleObj = (actual_schedule, schedule_id) => {
     });
   }
   return reformat;
-}
+};
 
 const generateSchedule = (weekStart) => {
   return findAllEmployeeAvailability()
@@ -163,13 +164,14 @@ const generateSchedule = (weekStart) => {
               return Promise.each(reformattedSchedule, (scheduleObj) => {
                 return db.Actual_Schedule.create(scheduleObj);
               })
-              .then(() => {
-                return reformattedSchedule;
-              });
-            })
+                .then(() => {
+                  return reformattedSchedule;
+                });
+            });
         });
-      });
-}
+    });
+};
+
 module.exports.generateSchedule = generateSchedule;
 //scheduleGenerator is exported for testing puroposes only
 module.exports.scheduleGenerator = scheduleGenerator;
