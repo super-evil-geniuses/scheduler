@@ -1,14 +1,18 @@
+console.log('Step 4---------------------------------');
 const Sequelize = require('sequelize');
 const config = require('./config.js');
 const Promise = require('bluebird');
 require('dotenv').config();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const sequelize = process.env.DATABASE_URL ? 
 new Sequelize(process.env.DATABASE_URL) : 
 new Sequelize(process.env.DB_NAME || 'shiftly', process.env.DB_USER || 'postgres', process.env.DB_PASS || null, { host: process.env.DB_HOST || 'localhost', dialect: 'postgres' });
 =======
 
+=======
+>>>>>>> add business table, schema to database. foreign key not yet populating
 const sequelize = process.env.DATABASE_URL ?
   new Sequelize(process.env.DATABASE_URL) :
   new Sequelize(process.env.DB_NAME || 'shiftly', process.env.DB_USER || 'postgres', process.env.DB_PASS || null, { host: process.env.DB_HOST || 'localhost', dialect: 'postgres' });
@@ -30,7 +34,7 @@ db.Day_Part.hasMany(db.Employee_Availability, { as: 'employee_availability' });
 db.Day_Part.hasMany(db.Actual_Schedule, { as: 'actual_schedule' });
 db.Day_Part.hasMany(db.Needed_Employee, { as: 'needed_employee' });
 
-// EVERYTHING IS AWESOME
+// Creates Business table connection to users
 db.Business.hasMany(db.User, { as: 'user' });
 
 // drops all table, just put it in so that it doesn't give an error for creating the same table everytime during dev
@@ -85,4 +89,5 @@ module.exports = {
   Day_Part: db.Day_Part,
   sequelize: sequelize,
   Sessions: db.Session,
+  Business: db.Business,
 };

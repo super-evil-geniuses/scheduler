@@ -1,4 +1,13 @@
+console.log('Step 5 we in config ---------------------------------')
 const Sequelize = require('sequelize');
+
+// Sequelize.Model.dropAllSchemas()
+//   .then(() => {
+//     console.log('Schemas dropped successfully');
+//   })
+//   .catch(() => {
+//     console.log('Error dropping schemas');
+//   });
 
 // underscored = (snake_case foreign keys)
 module.exports = (sequelize) => {

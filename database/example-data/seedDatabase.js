@@ -3,6 +3,9 @@ const db = require('../../database');
 const dummyData = require('./dummyData');
 
 // Saves the week start date and the corresponding schedule id
+console.log('DB.SCHEDULE: ', db.Schedule);
+console.log('DB.BUSINESS: ', db.Business);
+
 let saveSchedule = (weekStart) => {
   return db.Schedule.create({ monday_dates: weekStart.monday_dates });
 };

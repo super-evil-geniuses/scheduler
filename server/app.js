@@ -1,3 +1,4 @@
+console.log('Step 2-------------------------------------');
 const express = require('express');
 const utils = require('../helpers/index.js');
 const bodyParser = require('body-parser');

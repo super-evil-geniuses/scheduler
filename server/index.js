@@ -1,3 +1,4 @@
+console.log('Step 1---------------------------------');
 const app = require('./app.js');
 require('dotenv').config();
 

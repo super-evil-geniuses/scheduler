@@ -1,3 +1,4 @@
+console.log('Step 3---------------------------------');
 const moment = require('moment');
 const db = require('../database');
 const Promise = require('bluebird');
