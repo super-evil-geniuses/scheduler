@@ -2,12 +2,10 @@ const express = require('express');
 const utils = require('../helpers/index.js');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-<<<<<<< HEAD
+
 const { generateSchedule } = require('../helpers/algo.js');
-=======
-const generateSchedule = require('../helpers/algo.js').generateSchedule;
 const updateSchedules = require('../helpers/updateSchedules.js');
->>>>>>> update database logic
+
 
 const app = express();
 
