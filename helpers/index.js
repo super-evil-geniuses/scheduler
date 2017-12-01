@@ -307,6 +307,10 @@ const findOrCreateBusiness = (req, res, next) => {
       req.businessId = array[0].dataValues.id;
       console.log('this is req.businessId-------------', req.businessId);
       next();
+    })
+    .catch((err) => {
+      console.log('There was an error in trying to findOrCreate with Travis');
+      console.log('Travis is being difficult: ', err);
     });
 };
 
