@@ -30,6 +30,7 @@ const addShift = (shift, userId, scheduleId) => {
 };
 
 const savePreferences = () => {
+  console.log('action triggered');
   const response = axios.post('/savePreferences');
   return {
     type: 'SAVE_PREFERENCES',
