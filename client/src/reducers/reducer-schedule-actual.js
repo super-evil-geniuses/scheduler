@@ -14,13 +14,11 @@ const scheduleActual = (state = null, action) => {
 
     case 'ADD_SHIFT':
       if (state) {
-        const filteredState = state.filter((shift) => {
-          return (
-            // user_id is an integer and userId is a string
-            !(shift.user_id == action.payload.userId && shift.schedule_id === action.payload.scheduleId && shift.day_part_id === action.payload.shift)
-          );
-        });
-        return filteredState;
+        return state.concat([{
+          user_id: action.payload.userId.toString(),
+          schedule_id: action.payload.scheduleId,
+          day_part_id: action.payload.shift,
+        }]);
       }
       return state;
 
