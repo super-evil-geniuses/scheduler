@@ -41,7 +41,7 @@ const ScheduleActual = (props) => {
         {morningEvenings}
       </div>
       {calendarBody}
-      <button className="btn-save clickable">Save Schedule</button>
+      {props.userRole === 'manager' ? <button className="btn-save clickable">Save Schedule</button> : '' }
     </div>
   );
 }
