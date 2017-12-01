@@ -12,50 +12,50 @@ class WeekSelector extends Component {
 
   handleSelectWeek(event) {
     event.preventDefault();
-    console.log(event.target.value);
-    // this.props.selectWeek(event.target.value);
+    this.props.selectWeek(event.target.value);
   }
 
   render() {
     return (
-      <div>
-        Week Selector
-        <select
-          className="date-dropdown"
-          onChange={event => this.handleSelectWeek(event)}
-        >
-          {Object.keys(this.props.scheduleNeeds).map((id) => {
-            const monDate = this.props.scheduleNeeds[id].monDate.substr(0, 10);
-            const optionVal = JSON.stringify([id, monDate]);
-            return (
-              <option
-                key={optionVal}
-                value={optionVal}
-                defaultValue={optionVal.includes(this.props.selectedWeek)}
-              >
-                {monDate}
-              </option>
-            );
-          })}
-          </select>
+      <div className='ratio-col-1'>
+        <div className="employee-availability clear-fix">
+          <h4>Select Week to View Your Schedule:</h4>
+          <select
+            className="date-dropdown"
+            onChange={event => this.handleSelectWeek(event)}
+          >
+            {this.props.scheduleNeeds && Object.keys(this.props.scheduleNeeds).map((id) => {
+              const monDate = this.props.scheduleNeeds[id].monDate.substr(0, 10);
+              const optionVal = monDate;
+              return (
+                <option
+                  key={optionVal}
+                  value={optionVal}
+                  selected={optionVal.includes(this.props.selectedWeek)}
+                >
+                  {monDate}
+                </option>
+              );
+            })}
+            </select>
+        </div>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => {
-  const scheduleNeeds = state.scheduleDates.reduce((acc, scheduleDate) => {
-    acc[scheduleDate.id] = {
-      id: scheduleDate.id,
-      monDate: scheduleDate.monday_dates,
-      neededEmployees: {},
-    };
-    return acc;
-  }, {});
-
-  state.neededEmployees.forEach((requirement) => {
-    scheduleNeeds[requirement.schedule_id].neededEmployees[requirement.day_part_id] = requirement.employees_needed;
-  });
+  let scheduleNeeds;
+  if (state.scheduleDates) {
+    scheduleNeeds = state.scheduleDates.reduce((acc, scheduleDate) => {
+      acc[scheduleDate.id] = {
+        id: scheduleDate.id,
+        monDate: scheduleDate.monday_dates,
+        neededEmployees: {},
+      };
+      return acc;
+    }, {});
+  }
 
   return {
     scheduleNeeds,
@@ -68,9 +68,8 @@ function mapDispatchToProps(dispatch) {
 }
 
 WeekSelector.propTypes = {
-  scheduleNeeds: PropTypes.string.isRequired,
-  selectSchedule: PropTypes.func.isRequired,
-  selectedWeek: PropTypes.PropTypes.string.isRequired,
+  scheduleNeeds: PropTypes.object,
+  selectWeek: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WeekSelector);
