@@ -13,6 +13,20 @@ app.use(utils.checkSession);
 
 app.use(express.static(`${__dirname}/../client/dist/compiled`));
 
+/**
+|--------------------------------------------------
+| NEW ROUTES
+|--------------------------------------------------
+*/
+app.post('/savePreferences', (req, res) => {
+  res.send('made it');
+});
+/**
+|--------------------------------------------------
+| END OF NEW ROUTES
+|--------------------------------------------------
+*/
+
 app.get('/users', utils.getAllUsers, (req, res) => {
   res.json(req.users);
 });

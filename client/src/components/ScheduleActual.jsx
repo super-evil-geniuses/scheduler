@@ -44,7 +44,7 @@ const ScheduleActual = (props) => {
         {morningEvenings}
       </div>
       {calendarBody}
-      {props.userRole === 'manager' ? <button className="btn-save clickable">Save Schedule</button> : '' }
+      {props.userRole === 'manager' ? <button className="btn-save clickable" onClick={props.savePreferences} >Save Schedule</button> : '' }
     </div>
   );
 }
@@ -53,11 +53,12 @@ ScheduleActual.propTypes = {
   weekHasAtLeastOneNeededEmployee: PropTypes.bool,
   selectedWeekActualSchedule: PropTypes.arrayOf(PropTypes.object).isRequired,
   userRole: PropTypes.string.isRequired,
+  savePreferences: PropTypes.func.isRequired,
 };
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    savePreferences
+    savePreferences,
   }, dispatch);
 }
 
