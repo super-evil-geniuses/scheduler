@@ -1,22 +1,12 @@
-console.log('Step 4---------------------------------');
 const Sequelize = require('sequelize');
 const config = require('./config.js');
 const Promise = require('bluebird');
 require('dotenv').config();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-const sequelize = process.env.DATABASE_URL ? 
-new Sequelize(process.env.DATABASE_URL) : 
-new Sequelize(process.env.DB_NAME || 'shiftly', process.env.DB_USER || 'postgres', process.env.DB_PASS || null, { host: process.env.DB_HOST || 'localhost', dialect: 'postgres' });
-=======
 
-=======
->>>>>>> add business table, schema to database. foreign key not yet populating
 const sequelize = process.env.DATABASE_URL ?
   new Sequelize(process.env.DATABASE_URL) :
   new Sequelize(process.env.DB_NAME || 'shiftly', process.env.DB_USER || 'postgres', process.env.DB_PASS || null, { host: process.env.DB_HOST || 'localhost', dialect: 'postgres' });
->>>>>>> fix lint
 
 
 const db = config(sequelize);
@@ -34,13 +24,8 @@ db.Day_Part.hasMany(db.Employee_Availability, { as: 'employee_availability' });
 db.Day_Part.hasMany(db.Actual_Schedule, { as: 'actual_schedule' });
 db.Day_Part.hasMany(db.Needed_Employee, { as: 'needed_employee' });
 
-// Creates Business table connection to users
-db.Business.hasMany(db.User, { as: 'user' });
-db.Business.hasMany(db.Needed_Employee, { as: 'needed_employee' });
-
 // drops all table, just put it in so that it doesn't give an error for creating the same table everytime during dev
-db.Business.sync()
-  .then(() => db.User.sync())
+db.User.sync()
   .then(() => db.Schedule.sync())
   .then(() => db.Day_Part.sync())
   .then(() => db.Employee_Availability.sync())
@@ -50,8 +35,6 @@ db.Business.sync()
   .then(() => {
     return saveDayParts(dayParts);
   });
-
-// may need to sync Business up here ^
 
 const dayParts = [
   'monA', 'monP',
@@ -64,21 +47,12 @@ const dayParts = [
 ];
 
 let saveDayParts = (dayParts) => {
-<<<<<<< HEAD
 	return Promise.each(dayParts, (dayPart) => {
 		db.Day_Part.create({ name: dayPart })
 			.catch((err) => {
 				console.log('day parts already in database');
 			});
 	})
-=======
-  return Promise.each(dayParts, (dayPart) => {
-    db.Day_Part.create({ name: dayPart })
-      .catch((err) => {
-        console.log('day parts already saved');
-      });
-  });
->>>>>>> fix lint
 };
 
 module.exports = {
@@ -90,5 +64,4 @@ module.exports = {
   Day_Part: db.Day_Part,
   sequelize: sequelize,
   Sessions: db.Session,
-  Business: db.Business,
 };
