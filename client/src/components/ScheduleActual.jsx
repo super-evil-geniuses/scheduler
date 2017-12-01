@@ -44,7 +44,7 @@ const ScheduleActual = (props) => {
         {morningEvenings}
       </div>
       {calendarBody}
-      {props.userRole === 'manager' ? <button className="btn-save clickable" onClick={props.savePreferences} >Save Schedule</button> : '' }
+      {props.userRole === 'manager' ? <button className="btn-save clickable" onClick={() => props.savePreferences(props.scheduleActual)} >Save Schedule</button> : '' }
     </div>
   );
 }
@@ -62,4 +62,8 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(ScheduleActual);
+const mapStateToProps = ({ scheduleActual }) => {
+  return { scheduleActual };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ScheduleActual);

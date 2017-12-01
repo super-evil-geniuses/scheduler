@@ -2,7 +2,12 @@ const express = require('express');
 const utils = require('../helpers/index.js');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+<<<<<<< HEAD
 const { generateSchedule } = require('../helpers/algo.js');
+=======
+const generateSchedule = require('../helpers/algo.js').generateSchedule;
+const updateSchedules = require('../helpers/updateSchedules.js');
+>>>>>>> update database logic
 
 const app = express();
 
@@ -18,9 +23,12 @@ app.use(express.static(`${__dirname}/../client/dist/compiled`));
 | NEW ROUTES
 |--------------------------------------------------
 */
-app.post('/savePreferences', (req, res) => {
-  res.send('made it');
+
+app.post('/savePreferences', updateSchedules, (req, res) => {
+  // update db table scheduleActual
+  res.json(req.schedules);
 });
+
 /**
 |--------------------------------------------------
 | END OF NEW ROUTES

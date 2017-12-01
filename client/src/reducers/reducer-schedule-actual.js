@@ -25,7 +25,7 @@ const scheduleActual = (state = null, action) => {
     case 'SAVE_PREFERENCES':
     console.log('REDUCER :', action);
       if (state) {
-        return action.payload;
+        return action.payload.data;
       }
       return state;
 
