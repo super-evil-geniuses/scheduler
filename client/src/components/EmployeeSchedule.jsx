@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { deleteShift } from '../actions/index';
+import { addShift } from '../actions/index';
 
 const EmployeeSchedule = (props) => {
   const shifts = [
@@ -27,7 +28,7 @@ const EmployeeSchedule = (props) => {
       shifts.push(<button
         key={`shift${props.schedule.name}${i}`}
         className="ratio-col-16 schedule-block schedule-shift-off"
-        onClick={() => {}}
+        onClick={() => { props.addShift(i, props.schedule.userId, props.scheduleId); }}
         />);
     }
   }
@@ -46,6 +47,7 @@ EmployeeSchedule.propTypes = {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     deleteShift,
+    addShift,
   }, dispatch);
 }
 

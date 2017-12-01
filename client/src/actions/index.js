@@ -18,9 +18,22 @@ const deleteShift = (shift, userId, scheduleId) => {
   };
 };
 
+const addShift = (shift, userId, scheduleId) => {
+  console.log(shift, userId, scheduleId);
+  const payload = {
+    userId,
+    shift,
+    scheduleId,
+  };
+  return {
+    type: 'ADD_SHIFT',
+    payload,
+  };
+};
+
 /**
 |--------------------------------------------------
-| 
+| End of new action creators
 |--------------------------------------------------
 */
 
@@ -195,6 +208,7 @@ const selectWeek = (monDate) => {
 
 module.exports = {
   deleteShift,
+  addShift,
   logout,
   checkedIfLoggedIn,
   generateSchedule,

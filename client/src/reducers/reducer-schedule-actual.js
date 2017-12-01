@@ -12,6 +12,18 @@ const scheduleActual = (state = null, action) => {
       }
       return state;
 
+    case 'ADD_SHIFT':
+      if (state) {
+        const filteredState = state.filter((shift) => {
+          return (
+            // user_id is an integer and userId is a string
+            !(shift.user_id == action.payload.userId && shift.schedule_id === action.payload.scheduleId && shift.day_part_id === action.payload.shift)
+          );
+        });
+        return filteredState;
+      }
+      return state;
+
     case 'GET_ACTUAL_SCHEDULE':
       if (state) {
         const filteredState = state.filter((el) => {
