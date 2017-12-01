@@ -299,6 +299,28 @@ const destroySession = (req, res, next) => {
     });
 };
 
+const findOrCreateBusiness = (req, res, next) => {
+  const { business } = req.body;
+  db.Business.findOrCreate({ where: { name: business } })
+    .then((array) => {
+      req.businessId = array[0].id;
+      console.log('this is req.businessId-------------', req.businessId);
+      next();
+    });
+};
+
+// db.User.create({
+//   name: req.body.username,
+//   role: 'employee',
+//   password: passHash(req.body.password),
+//   business_id: 1,
+// })
+//   .then((user) => {
+//     req.user = user;
+//     next();
+//   }).catch((err) => {
+//     res.json({ flashMessage: { message: 'username already exists', type: 'red'} });
+//   });
 
 module.exports = {
   destroySession,
@@ -319,4 +341,5 @@ module.exports = {
   updateNeededEmployees,
   createScheduleDate,
   createScheduleTemplate,
+  findOrCreateBusiness,
 };

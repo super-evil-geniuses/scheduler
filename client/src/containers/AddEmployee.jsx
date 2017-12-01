@@ -11,6 +11,7 @@ class AddEmployee extends React.Component {
     this.state = {
       newEmployeeName: '',
       newEmployeePassword: '',
+      newEmployeeBusiness: 'Hack Reactor',
     };
   }
 
@@ -42,7 +43,7 @@ class AddEmployee extends React.Component {
           <button
             className='btn-main clickable'
             onClick={() => {
-              this.props.addEmployee(this.state.newEmployeeName, this.state.newEmployeePassword);
+              this.props.addEmployee(this.state.newEmployeeName, this.state.newEmployeePassword, this.state.newEmployeeBusiness);
               this.setState({ newEmployeeName: '',
                newEmployeePassword: '',
              });

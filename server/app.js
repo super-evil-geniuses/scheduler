@@ -39,7 +39,7 @@ app.patch('/employee_availability', utils.updateEmployeeAvailability, (req, res)
   res.json(req.empoloyeeAvailabilities);
 });
 
-app.post('/add_employee', utils.addUser, utils.getAllDayParts, utils.addEmployeeAvailability, utils.getAllEmployeeAvailabilities, (req, res) => {
+app.post('/add_employee', utils.findOrCreateBusiness, utils.addUser, utils.getAllDayParts, utils.addEmployeeAvailability, utils.getAllEmployeeAvailabilities, (req, res) => {
   res.json({ 
     user: req.user,
     employeeAvailabilities: req.employeeAvailabilities,

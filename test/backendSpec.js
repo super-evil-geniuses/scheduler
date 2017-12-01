@@ -173,6 +173,7 @@ describe('Shiftly Backend Test Spec', () => {
         .send({
           username: 'Alice',
           password: 'alice',
+          business: 'Hack Reactor',
         })
         .end((err) => {
           if (err) { done(err); }
