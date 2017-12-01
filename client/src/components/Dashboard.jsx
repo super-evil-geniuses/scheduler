@@ -12,49 +12,102 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentView: 'scheduleEditor',
+      currentView: 'employeeEditor',
     };
   }
 
-  render() {
-    let editorView;
-    let employeeStyle = 'ratio-col-2 editor-tab clickable';
-    let scheduleStyle ='ratio-col-2 editor-tab clickable';
-    if(this.state.currentView === 'employeeEditor') {
-      editorView = <EmployeeEditor />;
-      employeeStyle = 'ratio-col-2 editor-tab selected-tab';
-    } else {
-      editorView = <ScheduleEditor />;
-      scheduleStyle = 'ratio-col-2 editor-tab selected-tab';
-    }
+  renderTab(title, viewType) {
+    const selectedStyle = 'ratio-col-2 editor-tab selected-tab';
+    const clickableStyle = 'ratio-col-2 editor-tab clickable'
 
+    return (
+      <div
+        className={this.state.currentView === viewType ? selectedStyle : clickableStyle}
+        onClick={() => { 
+          this.setState({ currentView: viewType });
+        }}
+      >
+        {title}
+      </div>
+    );
+  }
+
+  renderManagerHeader() {
+    return (
+      <div className="container clear-fix">
+        {this.renderTab('Employees', 'employeeEditor')}
+        {this.renderTab('Schedules', 'scheduleEditor')}
+      </div>
+    );
+  }
+
+  renderEmployeeHeader() {
+    return (
+      <div className="container clear-fix">
+        {this.renderTab('Employees', 'employeeEditor')}
+      </div>
+    );
+  }
+
+  renderScheduleActual() {
+    return (
+      <ScheduleActual
+        selectedWeek={this.props.selectedWeek}
+        weekHasActualSchedule={this.props.weekHasActualSchedule}
+        weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}
+        selectedWeekActualSchedule={this.props.selectedWeekActualSchedule}
+        userRole={this.props.userRole}
+      />
+    );
+  }
+
+  renderManagerMain() {
+    return (
+      <div className="component-block">
+        <ScheduleGenerator
+          selectedWeek={this.props.selectedWeek}
+          weekHasActualSchedule={this.props.weekHasActualSchedule}
+          weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}
+        />
+        {this.renderScheduleActual()}
+      </div>
+    );
+  }
+
+  renderEmployeeMain() {
+    return (
+      <div className="component-block">
+        {this.renderScheduleActual()}
+      </div>
+    );
+  }
+
+  renderEmployeeEditor() {
+    return <div>Employee's View - Component to be Added</div>;
+  }
+
+  renderManagerEditor() {
+    let editorView = <EmployeeEditor />;
+
+    if (this.state.currentView === 'scheduleEditor') {
+      editorView = <ScheduleEditor />;
+    } 
+    return editorView;
+  }
+
+  render() {
     return (
       <div className="dashboard-container">
         <div className="ratio-col-4 major-component">
           <div className="component-block">
             <div className="editor-header">
-              <div className="container clear-fix">
-                <div className={employeeStyle} onClick={() => { this.setState({currentView: 'employeeEditor' })}}>Employees</div>
-                <div className={scheduleStyle} onClick={() => { this.setState({currentView: 'scheduleEditor' })}}>Shifts</div>
-              </div>
+              {this.props.userRole === 'manager' ? this.renderManagerHeader() : this.renderEmployeeHeader()}
             </div>
-          {editorView}
+            {this.props.userRole === 'manager' ? this.renderManagerEditor() : this.renderEmployeeEditor()}
           </div>
         </div>
         <div className="ratio-col-4-3 major-component">
-          <div className="component-block">
-            <ScheduleGenerator
-              selectedWeek={this.props.selectedWeek}
-              weekHasActualSchedule={this.props.weekHasActualSchedule}
-              weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}
-            />
-            <ScheduleActual
-              selectedWeek={this.props.selectedWeek}
-              weekHasActualSchedule={this.props.weekHasActualSchedule}
-              weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}
-              selectedWeekActualSchedule={this.props.selectedWeekActualSchedule}
-            />
-          </div>
+          {this.props.userRole === 'manager' ? this.renderManagerMain() : this.renderEmployeeMain()}
         </div>
       </div>
     );
@@ -128,15 +181,17 @@ function mapStateToProps(state) {
   }
 
   return {
+    userRole: state.userRole,
     selectedWeek: state.selectedWeek,
     selectedWeekScheduleId: scheduleId,
     weekHasActualSchedule: weekHasActualSchedule,
     weekHasAtLeastOneNeededEmployee: weekHasAtLeastOneNeededEmployee,
     selectedWeekActualSchedule: scheduleArr,
-  }
+  };
 }
 
   Dashboard.propTypes = {
+  userRole: PropTypes.string.isRequired,
   selectedWeekScheduleId: PropTypes.number,
   weekHasActualSchedule: PropTypes.bool.isRequired,
   weekHasAtLeastOneNeededEmployee: PropTypes.bool.isRequired,
