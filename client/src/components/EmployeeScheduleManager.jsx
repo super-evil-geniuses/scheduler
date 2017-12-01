@@ -11,7 +11,6 @@ const EmployeeScheduleManager = (props) => {
       <br />
       <span className="schedule-hours">{props.schedule.schedule.length * 6} hrs</span>
     </div>];
-
     // iterate over all possible days and make either an empty
     // div or a shift div (class determines color)
   for (let i = 1; i < 15; i += 1) {

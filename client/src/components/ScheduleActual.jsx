@@ -29,7 +29,6 @@ const ScheduleActual = (props) => {
   } else {
     calendarBody = <div className='schedule-prompt'>You have not saved any shifts for this week.</div>;
   }
-
   return (
     <div className="container clear-fix schedule-actual">
       <div className="schedule-date-header">
@@ -44,7 +43,7 @@ const ScheduleActual = (props) => {
         {morningEvenings}
       </div>
       {calendarBody}
-      {props.userRole === 'manager' ? <button className="btn-save clickable" onClick={() => props.savePreferences(props.scheduleActual)} >Save Schedule</button> : '' }
+      {props.userRole === 'manager' ? <button className="btn-save clickable" onClick={() => props.savePreferences(props.scheduleActual)} >Save Schedule</button> : null }
     </div>
   );
 }
