@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import EmployeeEditor from '../containers/EmployeeEditor.jsx';
 import ScheduleEditor from '../containers/ScheduleEditor.jsx';
 import ScheduleGenerator from '../containers/ScheduleGenerator.jsx';
+import WeekSelector from '../containers/WeekSelector.jsx';
 import ScheduleActual from './ScheduleActual.jsx';
 
 class Dashboard extends Component {
@@ -79,13 +80,23 @@ class Dashboard extends Component {
   renderEmployeeMain() {
     return (
       <div className="component-block">
+        <div className="schedule-generator clear-fix overlay">
+          <div>
+            <div>Week of <span className="schedule-generator-date">{moment(this.props.selectedWeek).format('MMMM Do YYYY')}</span></div>
+          </div>
+        </div>
         {this.renderScheduleActual()}
       </div>
     );
   }
 
   renderEmployeeEditor() {
-    return <div>Employee's View - Component to be Added</div>;
+    return (
+      <div>
+        <WeekSelector />
+        <EmployeeEditor />
+      </div>
+    );
   }
 
   renderManagerEditor() {
@@ -121,7 +132,7 @@ function mapStateToProps(state) {
   let weekHasActualSchedule = false;
   let weekHasAtLeastOneNeededEmployee = false;
   let actualSchedule = null;
-  
+
   // check to see if any schedules have been generated
   if (state.scheduleDates) {
     // if any have been, iterate through them and attempt to return
