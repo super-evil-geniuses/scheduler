@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'underscore';
 import PropTypes from 'prop-types';
+import EmployeeScheduleManager from './EmployeeScheduleManager.jsx';
 import EmployeeSchedule from './EmployeeSchedule.jsx';
 
 const ScheduleActual = (props) => {
@@ -12,9 +13,13 @@ const ScheduleActual = (props) => {
     morningEvenings.push(<div key={`${i}shift`} className="ratio-col-16 schedule-block  schedule-hours">{i % 2 === 0 ? 'AM' : 'PM'}</div>);
   }
 
+  // check to see if anyone is assigned a shift
   if (props.selectedWeekActualSchedule.length > 0) {
+    // map over each employees schedule and return their row of shifts
     calendarBody = props.selectedWeekActualSchedule.map((sched, idx) => {
-      return <EmployeeSchedule key={`${sched.name}${idx}`} schedule={sched} />;
+      return props.userRole === 'manager' ?
+        <EmployeeScheduleManager key={`${sched.name}${idx}`} schedule={sched} scheduleId={props.selectedWeekScheduleId} /> :
+        <EmployeeSchedule key={`${sched.name}${idx}`} schedule={sched} />;
     });
   } else if (props.weekHasAtLeastOneNeededEmployee) {
     calendarBody = <div className='schedule-prompt'>Generate a schedule for this week when you have finalized your shifts.</div>;
@@ -35,7 +40,7 @@ const ScheduleActual = (props) => {
         <div className="ratio-col-8 schedule-block ">Sun</div>
         {morningEvenings}
       </div>
-        {calendarBody}
+      {calendarBody}
     </div>
   );
 }

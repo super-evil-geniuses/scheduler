@@ -1,5 +1,40 @@
 import axios from 'axios';
 
+/**
+|--------------------------------------------------
+|  START OF NEW ACTION CREATORS
+|--------------------------------------------------
+*/
+const deleteShift = (shift, userId, scheduleId) => {
+  const payload = {
+    userId,
+    shift,
+    scheduleId,
+  };
+  return {
+    type: 'DELETE_SHIFT',
+    payload,
+  };
+};
+
+const addShift = (shift, userId, scheduleId) => {
+  const payload = {
+    userId,
+    shift,
+    scheduleId,
+  };
+  return {
+    type: 'ADD_SHIFT',
+    payload,
+  };
+};
+
+/**
+|--------------------------------------------------
+| END OF NEW ACTION CREATORS
+|--------------------------------------------------
+*/
+
 const getAllUsers = () => {
   const response = axios.get('/users');
 
@@ -166,10 +201,12 @@ const selectWeek = (monDate) => {
   return {
     type: 'SELECT_WEEK',
     payload: monDate,
-  }
+  };
 };
 
 module.exports = {
+  deleteShift,
+  addShift,
   logout,
   checkedIfLoggedIn,
   generateSchedule,

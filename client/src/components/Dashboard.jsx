@@ -16,6 +16,7 @@ class Dashboard extends Component {
     };
   }
 
+
   renderTab(title, viewType) {
     const selectedStyle = 'ratio-col-2 editor-tab selected-tab';
     const clickableStyle = 'ratio-col-2 editor-tab clickable'
@@ -56,6 +57,7 @@ class Dashboard extends Component {
         weekHasActualSchedule={this.props.weekHasActualSchedule}
         weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}
         selectedWeekActualSchedule={this.props.selectedWeekActualSchedule}
+        selectedWeekScheduleId={this.props.selectedWeekScheduleId}
         userRole={this.props.userRole}
       />
     );
@@ -194,7 +196,7 @@ function mapStateToProps(state) {
           // user.id is an integer and keys[i] is a string
           return user.id == keys[i];
         })[0].name;
-
+        schedObj.userId = keys[i];
         schedObj.schedule = schedules[keys[i]];
       }
 
