@@ -2,7 +2,7 @@ import axios from 'axios';
 
 /**
 |--------------------------------------------------
-| New Action Creators
+|  START OF NEW ACTION CREATORS
 |--------------------------------------------------
 */
 const deleteShift = (shift, userId, scheduleId) => {
@@ -31,7 +31,7 @@ const addShift = (shift, userId, scheduleId) => {
 
 /**
 |--------------------------------------------------
-| End of new action creators
+| END OF NEW ACTION CREATORS
 |--------------------------------------------------
 */
 
