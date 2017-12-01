@@ -2,7 +2,7 @@ const express = require('express');
 const utils = require('../helpers/index.js');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const generateSchedule = require('../helpers/algo.js').generateSchedule;
+const { generateSchedule } = require('../helpers/algo.js');
 
 const app = express();
 
@@ -11,13 +11,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(utils.checkSession);
 
-app.use(express.static(__dirname + '/../client/dist/compiled'));
+app.use(express.static(`${__dirname}/../client/dist/compiled`));
 
 app.get('/users', utils.getAllUsers, (req, res) => {
   res.json(req.users);
 });
 
-app.get(express.static(__dirname + '/../client/dist/compiled/favicon.ico'));
+app.get(express.static(`${__dirname}/../client/dist/compiled/favicon.ico`));
 
 app.get('/employee_availabilities', utils.getAllEmployeeAvailabilities, (req, res) => {
   res.json(req.employeeAvailabilities);
@@ -39,7 +39,7 @@ app.patch('/employee_availability', utils.updateEmployeeAvailability, (req, res)
   res.json(req.empoloyeeAvailabilities);
 });
 
-app.post('/add_employee', utils.addUser, utils.getAllDayParts, utils.addEmployeeAvailability, utils.getAllEmployeeAvailabilities, (req, res) => {
+app.post('/add_employee', utils.findOrCreateBusiness, utils.addUser, utils.getAllDayParts, utils.addEmployeeAvailability, utils.getAllEmployeeAvailabilities, (req, res) => {
   res.json({ 
     user: req.user,
     employeeAvailabilities: req.employeeAvailabilities,
@@ -63,11 +63,10 @@ app.post('/generate_schedule', (req, res) => {
 });
 
 app.post('/login', utils.authenticate, (req, res) => {
-  console.log('ABOUT TO REDIRECT TO welcome_back');
   res.redirect('/welcome_back');
 });
 
-app.post('/signup', utils.createUser, (req, res) => {
+app.post('/signup', /* utils.createBusiness, */ utils.createUser, (req, res) => {
   res.redirect('/welcome_back');
 });
 
@@ -77,7 +76,7 @@ app.post('/logout', utils.destroySession, (req, res) => {
 
 app.get('/welcome_back',
   utils.redirectIfLoggedIn,
-  utils.getAllDayParts, 
+  utils.getAllDayParts,
   utils.getAllUsers,
   utils.getAllActualSchedules,
   utils.getAllEmployeeAvailabilities,
@@ -85,7 +84,7 @@ app.get('/welcome_back',
   utils.sendEmployeeInfo,
   utils.getAllNeededEmployees,
   (req, res) => {
-    const obj = {};
+    let obj = {};
     obj.role = req.session.role;
     obj.dayParts = req.dayParts;
     obj.view = 'employeeEditor';
@@ -95,6 +94,7 @@ app.get('/welcome_back',
     obj.employeeAvailabilities = req.employeeAvailabilities;
     obj.scheduleDates = req.scheduleDates;
     res.json(obj);
-});
+  },
+);
 
 module.exports = app;
