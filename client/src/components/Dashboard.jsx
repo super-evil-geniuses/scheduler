@@ -57,6 +57,7 @@ class Dashboard extends Component {
         weekHasActualSchedule={this.props.weekHasActualSchedule}
         weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}
         selectedWeekActualSchedule={this.props.selectedWeekActualSchedule}
+        selectedWeekScheduleId={this.props.selectedWeekScheduleId}
         userRole={this.props.userRole}
       />
     );
@@ -109,20 +110,6 @@ class Dashboard extends Component {
         </div>
         <div className="ratio-col-4-3 major-component">
           {this.props.userRole === 'manager' ? this.renderManagerMain() : this.renderEmployeeMain()}
-          <div className="component-block">
-            <ScheduleGenerator
-              selectedWeek={this.props.selectedWeek}
-              weekHasActualSchedule={this.props.weekHasActualSchedule}
-              weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}
-            />
-            <ScheduleActual
-              selectedWeek={this.props.selectedWeek}
-              weekHasActualSchedule={this.props.weekHasActualSchedule}
-              weekHasAtLeastOneNeededEmployee={this.props.weekHasAtLeastOneNeededEmployee}
-              selectedWeekActualSchedule={this.props.selectedWeekActualSchedule}
-              selectedWeekScheduleId={this.props.selectedWeekScheduleId}
-            />
-          </div>
         </div>
       </div>
     );
@@ -134,7 +121,6 @@ function mapStateToProps(state) {
   let weekHasActualSchedule = false;
   let weekHasAtLeastOneNeededEmployee = false;
   let actualSchedule = null;
-  let userId = null;
   
   // check to see if any schedules have been generated
   if (state.scheduleDates) {
