@@ -26,6 +26,7 @@ class EmployeeEditor extends Component {
         <EmployeeRoster 
           employees={this.props.employees}
           selectEmployee={this.selectEmployee}
+          userRole={this.props.userRole}
         />
       </div>
     );
@@ -33,6 +34,7 @@ class EmployeeEditor extends Component {
 };
 
 const mapStateToProps = (state) => {
+  const { userRole } = state;
   let employees;
   const dayPartsMap = {};
   if(state.users && state.employeeAvailabilities) {
@@ -60,6 +62,7 @@ const mapStateToProps = (state) => {
   return {
     dayPartsMap,
     employees,
+    userRole,
   };
   
 };
@@ -67,6 +70,7 @@ const mapStateToProps = (state) => {
 EmployeeEditor.propTypes = {
   dayPartsMap: PropTypes.objectOf(PropTypes.string).isRequired,
   employees: PropTypes.objectOf(PropTypes.object).isRequired,
+  userRole: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps)(EmployeeEditor);
