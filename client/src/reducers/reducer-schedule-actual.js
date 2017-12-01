@@ -14,10 +14,6 @@ const scheduleActual = (state = null, action) => {
 
     case 'ADD_SHIFT':
       if (state) {
-        console.log(action)
-        console.log('REDUCER USERID :', action.payload.userId)
-        console.log('REDUCER SCHEDULEID :', action.payload.scheduleId)
-        console.log('REDUCER SHIFT :', action.payload.shift)
         return state.concat([{
           user_id: action.payload.userId ? action.payload.userId.toString() : null,
           schedule_id: action.payload.scheduleId,
