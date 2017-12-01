@@ -86,8 +86,8 @@ class Dashboard extends Component {
   renderEmployeeEditor() {
     return (
       <div>
-        Employee's View - Component to be Added
         <WeekSelector />
+        <EmployeeEditor />
       </div>
     );
   }
