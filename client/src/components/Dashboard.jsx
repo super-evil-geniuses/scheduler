@@ -78,6 +78,11 @@ class Dashboard extends Component {
   renderEmployeeMain() {
     return (
       <div className="component-block">
+        <div className="schedule-generator clear-fix overlay">
+          <div>
+            <div>Week of <span className="schedule-generator-date">{moment(this.props.selectedWeek).format('MMMM Do YYYY')}</span></div>
+          </div>
+        </div>
         {this.renderScheduleActual()}
       </div>
     );
