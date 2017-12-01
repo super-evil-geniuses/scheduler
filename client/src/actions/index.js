@@ -6,7 +6,6 @@ import axios from 'axios';
 |--------------------------------------------------
 */
 const deleteShift = (shift, userId, scheduleId) => {
-  console.log(shift, userId, scheduleId);
   const payload = {
     userId,
     shift,
@@ -19,7 +18,6 @@ const deleteShift = (shift, userId, scheduleId) => {
 };
 
 const addShift = (shift, userId, scheduleId) => {
-  console.log(shift, userId, scheduleId);
   const payload = {
     userId,
     shift,
