@@ -29,6 +29,12 @@ const addShift = (shift, userId, scheduleId) => {
   };
 };
 
+const savePreferences = () => {
+  return {
+    type: 'SAVE_PREFERENCES',
+  };
+};
+
 /**
 |--------------------------------------------------
 | END OF NEW ACTION CREATORS
@@ -205,6 +211,7 @@ const selectWeek = (monDate) => {
 };
 
 module.exports = {
+  savePreferences,
   deleteShift,
   addShift,
   logout,

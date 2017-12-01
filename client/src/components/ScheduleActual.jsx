@@ -1,6 +1,9 @@
 import React from 'react';
 import _ from 'underscore';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { savePreferences } from '../actions/index';
 import EmployeeScheduleManager from './EmployeeScheduleManager.jsx';
 import EmployeeSchedule from './EmployeeSchedule.jsx';
 
@@ -51,4 +54,11 @@ ScheduleActual.propTypes = {
   selectedWeekActualSchedule: PropTypes.arrayOf(PropTypes.object).isRequired,
   userRole: PropTypes.string.isRequired,
 };
-export default ScheduleActual;
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    savePreferences
+  }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(ScheduleActual);
