@@ -11,6 +11,7 @@ class AddEmployee extends React.Component {
     this.state = {
       newEmployeeName: '',
       newEmployeePassword: '',
+      // TODO: will need to create input field for newEmployeeBusiness
       newEmployeeBusiness: 'Hack Reactor',
     };
   }
@@ -46,6 +47,7 @@ class AddEmployee extends React.Component {
               this.props.addEmployee(this.state.newEmployeeName, this.state.newEmployeePassword, this.state.newEmployeeBusiness);
               this.setState({ newEmployeeName: '',
                newEmployeePassword: '',
+               // TODO: reset newEmployeeBusiness input
              });
             }}
             >Add
