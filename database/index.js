@@ -24,8 +24,12 @@ db.Day_Part.hasMany(db.Employee_Availability, { as: 'employee_availability' });
 db.Day_Part.hasMany(db.Actual_Schedule, { as: 'actual_schedule' });
 db.Day_Part.hasMany(db.Needed_Employee, { as: 'needed_employee' });
 
+db.Business.hasMany(db.User, { as: 'user' });
+db.Business.hasMany(db.Needed_Employee, { as: 'needed_employee' });
+
 // drops all table, just put it in so that it doesn't give an error for creating the same table everytime during dev
-db.User.sync()
+db.Business.sync()
+  .then(() => db.User.sync())
   .then(() => db.Schedule.sync())
   .then(() => db.Day_Part.sync())
   .then(() => db.Employee_Availability.sync())
@@ -64,4 +68,5 @@ module.exports = {
   Day_Part: db.Day_Part,
   sequelize: sequelize,
   Sessions: db.Session,
+  Business: db.Business,
 };

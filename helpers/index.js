@@ -68,6 +68,7 @@ const addUser = (req, res, next) => {
     name: req.body.username,
     role: 'employee',
     password: passHash(req.body.password),
+    business_id: 1,
   })
     .then((user) => {
       req.user = user;
@@ -240,6 +241,8 @@ const createUser = (req, res, next) => {
     name: req.body.creds.username,
     role: 'manager',
     password: passHash(req.body.creds.password),
+    // add business ID (will later need to change for req.body.creds.business)
+    business_id: 1,
   }).then((data) => {
     req.session = newSession(req, res);
     req.session.user = req.body.creds.username;

@@ -49,10 +49,10 @@ const saveEmployeeAvailability = (avail) => {
   return Promise.each(avail, (employeeAvail) => {
     return db.User.find({ where: { name: employeeAvail.name } })
       .then((result) => {
-        const user_id = result.id;
+        let user_id = result.id;
         return db.Day_Part.find({ where: { name: employeeAvail.day_part } })
           .then((result) => {
-            const day_part_id = result.id;
+            let day_part_id = result.id;
             return db.Employee_Availability.create({
               is_available: employeeAvail.is_available,
               user_id: user_id,
