@@ -22,6 +22,12 @@ const scheduleActual = (state = null, action) => {
       }
       return state;
 
+    case 'SAVE_PREFERENCES':
+      if (state) {
+        return action.payload;
+      }
+      return state;
+
     case 'GET_ACTUAL_SCHEDULE':
       if (state) {
         const filteredState = state.filter((el) => {

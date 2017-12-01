@@ -30,8 +30,10 @@ const addShift = (shift, userId, scheduleId) => {
 };
 
 const savePreferences = () => {
+  const response = axios.post('/savePreferences');
   return {
     type: 'SAVE_PREFERENCES',
+    payload: response,
   };
 };
 
