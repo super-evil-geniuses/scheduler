@@ -1,4 +1,3 @@
-console.log('Step 2-------------------------------------');
 const express = require('express');
 const utils = require('../helpers/index.js');
 const bodyParser = require('body-parser');
@@ -64,11 +63,10 @@ app.post('/generate_schedule', (req, res) => {
 });
 
 app.post('/login', utils.authenticate, (req, res) => {
-  console.log('ABOUT TO REDIRECT TO welcome_back');
   res.redirect('/welcome_back');
 });
 
-app.post('/signup', utils.createUser, (req, res) => {
+app.post('/signup', /* utils.createBusiness, */ utils.createUser, (req, res) => {
   res.redirect('/welcome_back');
 });
 
@@ -86,8 +84,7 @@ app.get('/welcome_back',
   utils.sendEmployeeInfo,
   utils.getAllNeededEmployees,
   (req, res) => {
-    const obj = {};
-    obj.role = req.session.role;
+    let obj = {};
     obj.dayParts = req.dayParts;
     obj.view = 'employeeEditor';
     obj.scheduleActual = req.actual_schedules;

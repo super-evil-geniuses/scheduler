@@ -3,37 +3,35 @@ const db = require('../../database');
 const dummyData = require('./dummyData');
 
 // Saves the week start date and the corresponding schedule id
-console.log('DB.SCHEDULE: ', db.Schedule);
-console.log('DB.BUSINESS: ', db.Business);
 
-let saveSchedule = (weekStart) => {
+const saveSchedule = (weekStart) => {
   return db.Schedule.create({ monday_dates: weekStart.monday_dates });
 };
 
 // Saves one business
-let saveBusiness = (business) => {
+const saveBusiness = (business) => {
   return db.Business.create({ name: business.name });
 }
 
 // Saves one user
-let saveUser = (user) => {
+const saveUser = (user) => {
   return db.User.create({ name: user.name, role: user.role, password: user.password, business_id: user.business_id });
 };
 
 // Saves the schedule template
-let saveScheduleTemplate = (temp) => {
+const saveScheduleTemplate = (temp) => {
   return Promise.each(temp, (day) => {
     return db.Schedule.find({ where: { monday_dates: day.monday_date } })
       .then((result) => {
         // sets schedule_id to Schedule.id associated with the monday_date
-        let schedule_id = result.id;
+        const schedule_id = result.id;
         return db.Day_Part.find({ where: { name: day.day_part } })
           .then((result) => {
             // sets day_part_id to Day_Part.id associated with the shift
-            let day_part_id = result.id;
+            const day_part_id = result.id;
             return db.Business.find({ where: { id: day.business_id } })
               .then((result) => {
-                let business_id = result.id;
+                const business_id = result.id;
                 return db.Needed_Employee.create({ 
                   employees_needed: day.employees_needed,
                   schedule_id: schedule_id,
@@ -47,14 +45,14 @@ let saveScheduleTemplate = (temp) => {
 };
 
 // Saves availability for one employee
-let saveEmployeeAvailability = (avail) => {
+const saveEmployeeAvailability = (avail) => {
   return Promise.each(avail, (employeeAvail) => {
     return db.User.find({ where: { name: employeeAvail.name } })
       .then((result) => {
-        let user_id = result.id;
+        const user_id = result.id;
         return db.Day_Part.find({ where: { name: employeeAvail.day_part } })
           .then((result) => {
-            let day_part_id = result.id;
+            const day_part_id = result.id;
             return db.Employee_Availability.create({
               is_available: employeeAvail.is_available,
               user_id: user_id,
@@ -67,7 +65,7 @@ let saveEmployeeAvailability = (avail) => {
 
 // initializes the database with dummy data
 // ERROR IN TRYING TO GET THIS TO POPULATE WITH DUMMY DATA!
-let initialize = () => {
+const initialize = () => {
   return saveSchedule(dummyData.weekStart)
     .then(() => {
       return Promise.each(dummyData.business, (business) => {
@@ -76,7 +74,6 @@ let initialize = () => {
     })
     .then(() => {
       return Promise.each(dummyData.users, (user) => {
-        console.log('THIS IS USER: ', user);
         saveUser(user);
       });
     })

@@ -2,8 +2,8 @@ const db = require('../database/index.js');
 const Promise = require('bluebird');
 const Combinatorics = require('js-combinatorics');
 
-let findAllEmployeeAvailability = () => {
-  let availability = [];
+const findAllEmployeeAvailability = () => {
+  const availability = [];
   return db.Day_Part.findAll({ attributes: ['id'] })
     .then((day_parts) => {
       return Promise.each(day_parts, (day_part) => {
@@ -19,7 +19,7 @@ let findAllEmployeeAvailability = () => {
 };
 
 const availabilityParser = (availability) => {
-  let availObj = {};
+  const availObj = {};
   availability.forEach(availPerDayPart => {
     availPerDayPart.forEach(availByEmp => {
       if (!availObj[availByEmp.dataValues.day_part_id]) {
@@ -33,10 +33,10 @@ const availabilityParser = (availability) => {
 }
 
 const templateParser = (weekStart) => {
-  let tempObj = {};
+  const tempObj = {};
   return db.Schedule.find({ where: {monday_dates: weekStart} })
     .then((schedule) => {
-      let schedule_id = schedule.dataValues.id;
+      const schedule_id = schedule.dataValues.id;
       return db.Needed_Employee.findAll({ where: {schedule_id: schedule_id, }})
         .then((template) => {
           template.forEach(dayPart => {
@@ -48,7 +48,7 @@ const templateParser = (weekStart) => {
 }
 
 const scheduleGenerator = (allEmployeeAvail, temp) => {
-  let allCombinations = {};
+  const allCombinations = {};
   //fill allCombinations with all the possible combinations of employees for each day
   for (let dayPart in temp) {
     // if no one is needed for the shift
@@ -79,7 +79,7 @@ const scheduleGenerator = (allEmployeeAvail, temp) => {
       schedule[dayPart] = rocker ? possibilities[dayPart][0] : possibilities[dayPart][possibilities[dayPart].length - 1];
       rocker = !rocker;
     }
-    let completed = Object.assign({}, schedule);
+    const completed = Object.assign({}, schedule);
     cheapSolution.push(completed);
   };
   const findSolution = (possibilities, empShifts, dayPart) => {

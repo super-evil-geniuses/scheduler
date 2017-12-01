@@ -281,7 +281,7 @@ module.exports.temp1 = [
   { employees_needed: 2, monday_date: new Date('11/13/17'), day_part: 'tuesA', business_id: 2 },
 ];
 
-let bob_avail = [
+const bob_avail = [
   { name: 'Bob', day_part: 'monA', is_available: true },
   { name: 'Bob', day_part: 'monP', is_available: true },
   { name: 'Bob', day_part: 'tuesA', is_available: true },
@@ -298,7 +298,7 @@ let bob_avail = [
   { name: 'Bob', day_part: 'sunP', is_available: false },
 ]
 
-let lucas_avail = [
+const lucas_avail = [
   { name: 'Lucas', day_part: 'monA', is_available: true },
   { name: 'Lucas', day_part: 'monP', is_available: true },
   { name: 'Lucas', day_part: 'tuesA', is_available: true },
@@ -315,7 +315,7 @@ let lucas_avail = [
   { name: 'Lucas', day_part: 'sunP', is_available: false },
 ]
 
-let michael_avail = [
+const michael_avail = [
   { name: 'Michael', day_part: 'monA', is_available: true },
   { name: 'Michael', day_part: 'monP', is_available: true },
   { name: 'Michael', day_part: 'tuesA', is_available: true },
@@ -332,7 +332,7 @@ let michael_avail = [
   { name: 'Michael', day_part: 'sunP', is_available: true },
 ]
 
-let sophia_avail = [
+const sophia_avail = [
   { name: 'Sophia', day_part: 'monA', is_available: false },
   { name: 'Sophia', day_part: 'monP', is_available: false },
   { name: 'Sophia', day_part: 'tuesA', is_available: false },
@@ -349,7 +349,7 @@ let sophia_avail = [
   { name: 'Sophia', day_part: 'sunP', is_available: false },
 ]
 
-let tevene_avail = [
+const tevene_avail = [
   { name: 'Tevene', day_part: 'monA', is_available: false },
   { name: 'Tevene', day_part: 'monP', is_available: false },
   { name: 'Tevene', day_part: 'tuesA', is_available: false },
@@ -366,7 +366,7 @@ let tevene_avail = [
   { name: 'Tevene', day_part: 'sunP', is_available: true },
 ]
 
-let will_avail = [
+const will_avail = [
   { name: 'Will', day_part: 'monA', is_available: true },
   { name: 'Will', day_part: 'monP', is_available: true },
   { name: 'Will', day_part: 'tuesA', is_available: true },
@@ -383,7 +383,7 @@ let will_avail = [
   { name: 'Will', day_part: 'sunP', is_available: true },
 ]
 
-let christina_avail = [
+const christina_avail = [
   { name: 'Christina', day_part: 'monA', is_available: true },
   { name: 'Christina', day_part: 'monP', is_available: true },
   { name: 'Christina', day_part: 'tuesA', is_available: true },
@@ -400,7 +400,7 @@ let christina_avail = [
   { name: 'Christina', day_part: 'sunP', is_available: true },
 ]
 
-let nia_avail = [
+const nia_avail = [
   { name: 'Nia', day_part: 'monA', is_available: true },
   { name: 'Nia', day_part: 'monP', is_available: true },
   { name: 'Nia', day_part: 'tuesA', is_available: true },
@@ -417,7 +417,7 @@ let nia_avail = [
   { name: 'Nia', day_part: 'sunP', is_available: true },
 ]
 
-let kastania_avail = [
+const kastania_avail = [
   { name: 'Kastania', day_part: 'monA', is_available: true },
   { name: 'Kastania', day_part: 'monP', is_available: true },
   { name: 'Kastania', day_part: 'tuesA', is_available: true },
@@ -434,7 +434,7 @@ let kastania_avail = [
   { name: 'Kastania', day_part: 'sunP', is_available: false },
 ]
 
-let chris_avail = [
+const chris_avail = [
   { name: 'Chris', day_part: 'monA', is_available: true },
   { name: 'Chris', day_part: 'monP', is_available: false },
   { name: 'Chris', day_part: 'tuesA', is_available: true },
@@ -451,7 +451,7 @@ let chris_avail = [
   { name: 'Chris', day_part: 'sunP', is_available: false },
 ]
 
-let wren_avail = [
+const wren_avail = [
   { name: 'Wren', day_part: 'monA', is_available: true },
   { name: 'Wren', day_part: 'monP', is_available: true },
   { name: 'Wren', day_part: 'tuesA', is_available: true },

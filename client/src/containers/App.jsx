@@ -14,12 +14,10 @@ import SignUp from './SignUp.jsx';
 class App extends Component {
 
   componentWillMount() {
-    console.log('ComponentWillMountProps: ', this.props);
     this.props.checkedIfLoggedIn();
   }
 
   renderFlashMessage() {
-    console.log('props in renderFlashMesage:', this.props);
     if (this.props.flashMessage) {
       return <FlashMessage message={this.props.flashMessage.message} type={this.props.flashMessage.type} />
     } else {
