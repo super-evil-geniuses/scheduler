@@ -68,7 +68,7 @@ const addUser = (req, res, next) => {
     name: req.body.username,
     role: 'employee',
     password: passHash(req.body.password),
-    business_id: 1,
+    business_id: req.businessId,
   })
     .then((user) => {
       req.user = user;

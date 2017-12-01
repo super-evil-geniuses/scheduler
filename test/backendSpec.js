@@ -91,6 +91,7 @@ describe('Shiftly Backend Test Spec', () => {
         .send({
           username: 'Bob',
           password: 'Bob',
+          business: 'Hack Reactor'
         })
         .expect(200, done);
     });
@@ -102,6 +103,7 @@ describe('Shiftly Backend Test Spec', () => {
         .send({
           username: 'Alice',
           password: 'Alice',
+          business: 'Hack Reactor',
         })
         .end((err, res) => {
           if (err) { throw err; }
