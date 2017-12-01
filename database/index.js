@@ -3,7 +3,6 @@ const config = require('./config.js');
 const Promise = require('bluebird');
 require('dotenv').config();
 
-
 const sequelize = process.env.DATABASE_URL ? 
 new Sequelize(process.env.DATABASE_URL) : 
 new Sequelize(process.env.DB_NAME || 'shiftly', process.env.DB_USER || 'postgres', process.env.DB_PASS || null, { host: process.env.DB_HOST || 'localhost', dialect: 'postgres' });
@@ -62,7 +61,7 @@ let saveDayParts = (dayParts) => {
 	return Promise.each(dayParts, (dayPart) => {
 		db.Day_Part.create({ name: dayPart })
 			.catch((err) => {
-				console.log('day parts saved');
+				console.log('day parts already in database');
 			});
 	})
 };
