@@ -11,7 +11,7 @@ import Dashboard from '../components/Dashboard.jsx';
 import FlashMessage from '../components/FlashMessage.jsx';
 import Login from './Login.jsx';
 import SignUp from './SignUp.jsx';
-import Home from '../components/Home.jsx';
+import Main from '../components/Main.jsx';
 
 class App extends Component {
 
@@ -33,7 +33,7 @@ class App extends Component {
     } else if (this.props.view === 'signup') {
       return <SignUp />;
     } else if (this.props.view === 'employeeEditor' || this.props.view === 'scheduleEditor') {
-      return <Home />;
+      return <Main />;
       // return <Dashboard />;
     }
     return <div />;

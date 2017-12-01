@@ -1,15 +1,19 @@
 import React from 'react';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
-import Header from './Header.jsx';
-import Main from './Main.jsx';
+import { Link } from 'react-router-dom';
+
 
 const Home = () => (
-  <BrowserRouter>
-    <div>
-      <Header />
-      <Main />
-    </div>
-  </BrowserRouter>
+  <div>
+    <button>
+      <Link to="/">Home</Link>
+    </button>
+    <button>
+      <Link to="/schedule">Schedule</Link>
+    </button>
+    <button>
+      <Link to="/personal/information">Personal Information</Link>
+    </button>
+  </div>
 );
 
 export default Home;

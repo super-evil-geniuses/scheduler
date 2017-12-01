@@ -1,7 +1,8 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Dashboard from './Dashboard.jsx';
 import PersonalInformation from './PersonalInformation.jsx';
+import Home from './Home.jsx';
 
 // The Main component renders one of the two provided
 // Routes (provided that one matches). The /schedule
@@ -10,10 +11,13 @@ import PersonalInformation from './PersonalInformation.jsx';
 // when the pathname is exactly the string "/"
 const Main = () => (
   <div>
-    <Switch>
-      <Route exact path="/schedule" component={Dashboard} />
-      <Route exact path="/personal/information" component={PersonalInformation} />
-    </Switch>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/schedule" component={Dashboard} />
+        <Route exact path="/personal/information" component={PersonalInformation} />
+      </Switch>
+    </BrowserRouter>
   </div>
 );
 
