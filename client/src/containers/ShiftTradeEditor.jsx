@@ -5,50 +5,37 @@ import PropTypes from 'prop-types';
 import ShiftTradeItem from '../components/ShiftTradeItem.jsx';
 
 class ShiftTradeEditor extends Component {
-  constructor(props) {
-    super(props);
-  }
+  renderItems() {
+    const user = this.props.users[0];
 
-  renderShift(trade) {
-    return (
-      <div className="list-item clear-fix clickable" onClick={() => console.log('click!')}>
-        <div className="ratio-col-4-3" >
-          <div>
-            <span>{trade.scheduleInfo.weekOf}: {trade.scheduleInfo.shift}</span>
-          </div>
-        </div>
-        <div className="ratio-col-4" >
-          <div className="employee-edit">
-            <i className="material-icons employee-edit-button">date_range</i>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  renderHeader() {
-    return (
-      <div className="list-item clear-fix">
-        <div className="ratio-col-4-3" >
-          <div className="employee-edit">
-            <h4>Requested Shift Trades:</h4>
-          </div>
-        </div>
-      </div>
-    );
+    if (this.props.trades.length > 0) {
+      return (
+        this.props.trades.map((trade) => {
+          return (
+            <ShiftTradeItem key={trade.id} trade={trade} user={user} />
+          );
+        })
+      );
+    }
   }
 
   render() {
     return (
       <div className="ratio-col-1">
         <div className="container schedule-row clear-fix">
-          {this.renderHeader()}
-          <ShiftTradeItem trade={this.props.trades[0]} />
+          <div className="list-item clear-fix">
+            <div className="ratio-col-4-3" >
+              <div className="employee-edit">
+                <h4>Requested Shift Trades:</h4>
+              </div>
+            </div>
+          </div>
+          {this.renderItems()}
         </div>
       </div>
     );
   }
-};
+}
 
 const mapStateToProps = (state) => {
   const { userRole, trades, allSchedules, scheduleDates, dayParts, users } = state;
@@ -107,6 +94,7 @@ const mapStateToProps = (state) => {
 ShiftTradeEditor.propTypes = {
   userRole: PropTypes.string.isRequired,
   trades: PropTypes.arrayOf(PropTypes.object),
+  users: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default connect(mapStateToProps)(ShiftTradeEditor);
