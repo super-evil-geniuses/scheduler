@@ -37,9 +37,19 @@ const savePreferences = (scheduleActual) => {
   };
 };
 
+const acceptTrade = (shiftId, userId) => {
+  const options = { shiftId, userId };
+  console.log(options);
+  // const response = axios.patch('/trade_shift', options);
+
+  return {
+    type: 'ACCEPT_TRADE',
+    payload: options,
+  };
+};
+
 const acceptTrade = (shiftId, userId, tradeId) => {
   const options = { shiftId, userId, tradeId };
-  console.log(options);
   const response = axios.patch('/trade_shift', options);
 
   return {
@@ -228,6 +238,7 @@ module.exports = {
   deleteShift,
   addShift,
   acceptTrade,
+  offerShift,
   logout,
   checkedIfLoggedIn,
   generateSchedule,
