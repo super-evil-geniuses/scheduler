@@ -138,6 +138,7 @@ const login = (creds) => {
 
 const signUp = (creds) => {
   const response = axios.post('/signup', { creds });
+
   return {
     type: 'GET_ALL',
     payload: response,
@@ -155,7 +156,6 @@ const response = axios.post('/logout');
 
 const checkedIfLoggedIn = () => {
   const response = axios.get('/welcome_back');
-
   return {
     type: 'GET_ALL',
     payload: response,

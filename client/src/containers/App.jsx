@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { 
   changeView,
@@ -10,6 +11,7 @@ import Dashboard from '../components/Dashboard.jsx';
 import FlashMessage from '../components/FlashMessage.jsx';
 import Login from './Login.jsx';
 import SignUp from './SignUp.jsx';
+import Main from '../components/Main.jsx';
 
 class App extends Component {
 
@@ -29,9 +31,10 @@ class App extends Component {
     if (this.props.view === 'login') {
       return <Login />;
     } else if (this.props.view === 'signup') {
-      return <SignUp />
+      return <SignUp />;
     } else if (this.props.view === 'employeeEditor' || this.props.view === 'scheduleEditor') {
-      return <Dashboard />;
+      return <Main />;
+      // return <Dashboard />;
     }
     return <div />;
   }
@@ -50,8 +53,13 @@ class App extends Component {
       );
     }
     return (
-      <div className="nav-item nav-logout" onClick={() => { this.props.logout()}}>
-        Log out
+      <div>
+        <div className="nav-item nav-Dashboard" onClick={() => {this.props.changeView('employeeEditor'); this.renderView()}}>
+          Dashboard
+        </div>
+        <div className="nav-item nav-logout" onClick={() => { this.props.logout() }}>
+          Log out
+        </div>
       </div>
     );
   }

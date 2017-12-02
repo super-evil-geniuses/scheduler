@@ -178,7 +178,7 @@ const newSession = (req, res) => {
 const checkSession = (req, res, next) => {
   return new Promise((resolve, reject) => {
     if (req.cookies['shiftly']) {
-      resolve(db.Sessions.findAll( {where: { session: req.cookies['shiftly'] } }));
+      resolve(db.Session.findAll( {where: { session: req.cookies['shiftly'] } }));
     } else {
       resolve([]);
     }
@@ -225,7 +225,7 @@ const authenticate = (req, res, next) => {
       req.session = newSession(req, res);
       req.session.user = user.name;
       req.session.role = user.role;
-      db.Sessions.create({session: req.session.session, user_id: user.id})
+      db.Session.create({session: req.session.session, user_id: user.id})
       .then(() => {
         next();
       })
@@ -236,20 +236,19 @@ const authenticate = (req, res, next) => {
 };
 
 const createUser = (req, res, next) => {
-  db.User.create({
-    name: req.body.creds.username,
-    role: 'manager',
-    password: passHash(req.body.creds.password)
-  }).then((data) => {
+  const user = req.body.creds;
+  user.name = user.username;
+  user.password = passHash(user.password);
+  db.User.create(user).then((data) => {
     req.session = newSession(req, res);
-    req.session.user = req.body.creds.username;
-    req.session.role =data.dataValues.role;
-    db.Sessions.create({session: req.session.session, user_id: data.dataValues.id})
+    req.session.user = user.username;
+    req.session.role = data.dataValues.role;
+    db.Session.create({session: req.session.session, user_id: data.dataValues.id})
     .then(() => {
       next();
     })
   }).catch((err) => {
-    res.status(201).send({ flashMessage: {message: `username "${req.body.creds.username}" already exists`, type: 'red'}})
+    res.status(201).send({ flashMessage: {message: `username "${user.username}" already exists`, type: 'red'}})
   })
 };
 
@@ -288,7 +287,7 @@ const sendEmployeeInfo = (req, res, next) => {
 
 const destroySession = (req, res, next) => {
   console.log('destroying session');
-  db.Sessions.destroy({ where:{session: req.session.session} })
+  db.Session.destroy({ where:{session: req.session.session} })
   .then(() => {
     console.log('creating new session');
     req.session = newSession(req, res);
@@ -298,6 +297,7 @@ const destroySession = (req, res, next) => {
 
 
 module.exports = {
+  passHash,
   destroySession: destroySession,
   sendEmployeeInfo: sendEmployeeInfo,
   getAllActualSchedules: getAllActualSchedules,

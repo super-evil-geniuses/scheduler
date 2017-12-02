@@ -36,30 +36,6 @@ describe('Shiftly Backend Test Spec', () => {
     db.Day_Part.hasMany(db.Actual_Schedule, { as: 'actual_schedule' });
     db.Day_Part.hasMany(db.Needed_Employee, { as: 'needed_employee' });
 
-
-    const dayParts = [
-      'monA', 'monP', 
-      'tuesA', 'tuesP', 
-      'wedsA', 'wedsP', 
-      'thursA', 'thursP', 
-      'friA', 'friP', 
-      'satA', 'satP', 
-      'sunA', 'sunP'
-    ];
-
-    let saveDayParts = (dayParts) => {
-      return Promise.each(dayParts, (dayPart) => {
-        db.Day_Part.create({ name: dayPart })
-          .catch((err) => {
-            console.log('day parts saved');
-          });
-      });
-    };
-
-    setTimeout(() => {
-      saveDayParts(dayParts);
-    }, 500);
-
     setTimeout(done, 1000);
   });
 
@@ -67,7 +43,7 @@ describe('Shiftly Backend Test Spec', () => {
 
     /* Empty the db table before each test so that multiple tests
      * (or repeated runs of the tests) won't screw each other up: */
-   
+
     const tables = ['User', 'Schedule', 'Needed_Employee', 'Employee_Availability', 'Actual_Schedule'];
     Promise.each(tables, (table) => {
       return db[table].destroy({ where: {} });

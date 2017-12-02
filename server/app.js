@@ -76,7 +76,7 @@ app.post('/logout', utils.destroySession, (req, res) => {
 
 app.get('/welcome_back',
   utils.redirectIfLoggedIn,
-  utils.getAllDayParts, 
+  utils.getAllDayParts,
   utils.getAllUsers,
   utils.getAllActualSchedules,
   utils.getAllEmployeeAvailabilities,
