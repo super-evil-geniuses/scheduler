@@ -40,11 +40,11 @@ const savePreferences = (scheduleActual) => {
 const offerShift = (shiftId, userId) => {
   const options = { shiftId, userId };
   console.log(options);
-  // const response = axios.patch('/trade_shift', options);
+  const response = axios.post('/trade_shift', options);
 
   return {
     type: 'OFFER_TRADE',
-    payload: options,
+    payload: response,
   };
 };
 

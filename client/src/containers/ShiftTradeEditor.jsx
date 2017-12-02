@@ -76,6 +76,7 @@ const mapStateToProps = (state) => {
     friA: 'Friday AM',
     friP: 'Friday PM',
     satA: 'Saturday AM',
+    satP: 'Saturday PM',
     sunA: 'Sunday AM',
     sunP: 'Sunday PM',
   };
