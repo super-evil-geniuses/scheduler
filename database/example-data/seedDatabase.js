@@ -78,7 +78,10 @@ const saveShiftTradeRequests = (request) => {
 // initializes the database with dummy data
 // ERROR IN TRYING TO GET THIS TO POPULATE WITH DUMMY DATA!
 const initialize = () => {
-  return saveSchedule(dummyData.weekStart)
+  return saveSchedule(dummyData.weekStart1)
+    .then(() => {
+      return saveSchedule(dummyData.weekStart2);
+    })
     .then(() => {
       return Promise.each(dummyData.business, (business) => {
         saveBusiness(business);
@@ -91,6 +94,9 @@ const initialize = () => {
     })
     .then(() => {
       return saveScheduleTemplate(dummyData.temp1);
+    })
+    .then(() => {
+      return saveScheduleTemplate(dummyData.temp2);
     })
     .then(() => {
       return Promise.each(dummyData.avails, (avail) => {
