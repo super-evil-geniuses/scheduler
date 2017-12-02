@@ -3,6 +3,9 @@ const allSchedules = (state = [], action) => {
     case 'GET_ALL':
       return action.payload.data.allActualSchedules || state;
 
+    case 'ACCEPT_TRADE':
+      return action.payload.data.allActualSchedules || state;
+
     case 'REMOVE_LOGGED_IN_DETAILS':
       return [];
       

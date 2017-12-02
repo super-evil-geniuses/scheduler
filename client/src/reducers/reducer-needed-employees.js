@@ -10,6 +10,8 @@ const neededEmployees = (state = null, action) => {
       return state.concat(action.payload.data.template);
     case 'GET_ALL':
       return action.payload.data.neededEmployees || state;
+    case 'ACCEPT_TRADE':
+      return action.payload.data.neededEmployees || state;
     case 'REMOVE_LOGGED_IN_DETAILS':
       return null;
     default:
