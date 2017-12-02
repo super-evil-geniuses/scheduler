@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import ShiftTradeItem from '../components/ShiftTradeItem.jsx';
+
 class ShiftTradeEditor extends Component {
   constructor(props) {
     super(props);
@@ -41,7 +43,7 @@ class ShiftTradeEditor extends Component {
       <div className="ratio-col-1">
         <div className="container schedule-row clear-fix">
           {this.renderHeader()}
-          {this.renderShift(this.props.trades[0])}
+          <ShiftTradeItem trade={this.props.trades[0]} />
         </div>
       </div>
     );
