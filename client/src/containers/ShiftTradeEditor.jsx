@@ -25,6 +25,22 @@ class ShiftTradeEditor extends Component {
         })
       );
     }
+  return (
+      <div className="list-item clear-fix clickable">
+        <div className="ratio-col-4-3" >
+          <div>
+            <span>No Shifts Currently Offered</span>
+          </div>
+        </div>
+        <div className="ratio-col-4" >
+          <div className="employee-edit">
+            <i className="material-icons employee-no-edit-button" >
+              date_range
+            </i>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   render() {
