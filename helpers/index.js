@@ -2,6 +2,7 @@ const moment = require('moment');
 const db = require('../database');
 const Promise = require('bluebird');
 const crypto = require('crypto');
+const Sequelize = require('sequelize');
 
 const getAllUsers = (req, res, next) => {
   db.User.findAll({})
@@ -303,16 +304,35 @@ const findOrCreateBusiness = (req, res, next) => {
   const { business } = req.body;
   db.Business.findOrCreate({ where: { name: business } })
     .then((array) => {
-      console.log('This is the result array from findOrCreate: ', array);
       req.businessId = array[0].dataValues.id;
-      console.log('this is req.businessId-------------', req.businessId);
       next();
     })
     .catch((err) => {
-      console.log('There was an error in trying to findOrCreate with Travis');
       console.log('Travis is being difficult: ', err);
     });
 };
+
+const getAllOpenTrades = (req, res, next) => {
+  const { user } = req.session;
+
+  db.Shift_Trade_Request.findAll({ 
+    where: { status: null },
+  }).then((trades) => {
+      db.User.findAll()
+        .then((users) => {
+          const tradesInfo = trades.map((trade) => {
+            const user = users.filter((user) => {
+              return user.dataValues.id === trade.dataValues.user_id;
+            });
+            const tradeInfo = trade.dataValues;
+            tradeInfo.user = user;
+            return tradeInfo;
+          });
+          req.trades = tradesInfo;
+          next();
+        });
+    });
+}
 
 module.exports = {
   destroySession,
@@ -334,4 +354,5 @@ module.exports = {
   createScheduleDate,
   createScheduleTemplate,
   findOrCreateBusiness,
+  getAllOpenTrades,
 };

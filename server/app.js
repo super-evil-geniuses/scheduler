@@ -101,6 +101,7 @@ app.get('/welcome_back',
   utils.getAllActualSchedules,
   utils.getAllEmployeeAvailabilities,
   utils.getAllScheduleDates,
+  utils.getAllOpenTrades,
   utils.sendEmployeeInfo,
   utils.getAllNeededEmployees,
   (req, res) => {

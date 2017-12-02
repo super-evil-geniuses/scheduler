@@ -64,14 +64,12 @@ const saveEmployeeAvailability = (avail) => {
   });
 };
 
-// db.Shift_Trade_Request
-
 const saveShiftTradeRequests = (request) => {
   return db.User.find({where: { name: request.user }})
     .then((response) => {
       const user_id = response.id;
       return db.Shift_Trade_Request.create({
-        requesting_user_id: user_id,
+        user_id,
         actual_schedule_id: request.scheduleId,
       });
     });
