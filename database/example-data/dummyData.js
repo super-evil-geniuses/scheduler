@@ -240,7 +240,7 @@ module.exports.dayParts = [
   'sunA', 'sunP',
 ];
 
-module.exports.weekStart = { monday_dates: new Date('11/13/17') };
+module.exports.weekStart = { monday_dates: new Date('12/04/17') };
 
 module.exports.business = [
   { name: 'Hack Reactor' }, // business_id 1
@@ -262,23 +262,23 @@ module.exports.users = [
 ];
 
 module.exports.temp1 = [
-  { employees_needed: 1, monday_date: new Date('11/13/17'), day_part: 'monA', business_id: 1 },
-  { employees_needed: 2, monday_date: new Date('11/13/17'), day_part: 'monP', business_id: 1 },
-  { employees_needed: 2, monday_date: new Date('11/13/17'), day_part: 'tuesA', business_id: 1 },
-  { employees_needed: 2, monday_date: new Date('11/13/17'), day_part: 'tuesP', business_id: 1 },
-  { employees_needed: 2, monday_date: new Date('11/13/17'), day_part: 'wedsA', business_id: 1 },
-  { employees_needed: 3, monday_date: new Date('11/13/17'), day_part: 'wedsP', business_id: 1 },
-  { employees_needed: 2, monday_date: new Date('11/13/17'), day_part: 'thursA', business_id: 1 },
-  { employees_needed: 4, monday_date: new Date('11/13/17'), day_part: 'thursP', business_id: 1 },
-  { employees_needed: 3, monday_date: new Date('11/13/17'), day_part: 'friA', business_id: 1 },
-  { employees_needed: 5, monday_date: new Date('11/13/17'), day_part: 'friP', business_id: 1 },
-  { employees_needed: 4, monday_date: new Date('11/13/17'), day_part: 'satA', business_id: 1 },
-  { employees_needed: 5, monday_date: new Date('11/13/17'), day_part: 'satP', business_id: 1 },
-  { employees_needed: 3, monday_date: new Date('11/13/17'), day_part: 'sunA', business_id: 1 },
-  { employees_needed: 2, monday_date: new Date('11/13/17'), day_part: 'sunP', business_id: 1 },
-  { employees_needed: 1, monday_date: new Date('11/13/17'), day_part: 'monA', business_id: 2 },
-  { employees_needed: 2, monday_date: new Date('11/13/17'), day_part: 'monP', business_id: 2 },
-  { employees_needed: 2, monday_date: new Date('11/13/17'), day_part: 'tuesA', business_id: 2 },
+  { employees_needed: 1, monday_date: new Date('12/04/17'), day_part: 'monA', business_id: 1 },
+  { employees_needed: 2, monday_date: new Date('12/04/17'), day_part: 'monP', business_id: 1 },
+  { employees_needed: 2, monday_date: new Date('12/04/17'), day_part: 'tuesA', business_id: 1 },
+  { employees_needed: 2, monday_date: new Date('12/04/17'), day_part: 'tuesP', business_id: 1 },
+  { employees_needed: 2, monday_date: new Date('12/04/17'), day_part: 'wedsA', business_id: 1 },
+  { employees_needed: 3, monday_date: new Date('12/04/17'), day_part: 'wedsP', business_id: 1 },
+  { employees_needed: 2, monday_date: new Date('12/04/17'), day_part: 'thursA', business_id: 1 },
+  { employees_needed: 4, monday_date: new Date('12/04/17'), day_part: 'thursP', business_id: 1 },
+  { employees_needed: 3, monday_date: new Date('12/04/17'), day_part: 'friA', business_id: 1 },
+  { employees_needed: 5, monday_date: new Date('12/04/17'), day_part: 'friP', business_id: 1 },
+  { employees_needed: 4, monday_date: new Date('12/04/17'), day_part: 'satA', business_id: 1 },
+  { employees_needed: 5, monday_date: new Date('12/04/17'), day_part: 'satP', business_id: 1 },
+  { employees_needed: 3, monday_date: new Date('12/04/17'), day_part: 'sunA', business_id: 1 },
+  { employees_needed: 2, monday_date: new Date('12/04/17'), day_part: 'sunP', business_id: 1 },
+  { employees_needed: 1, monday_date: new Date('12/04/17'), day_part: 'monA', business_id: 2 },
+  { employees_needed: 2, monday_date: new Date('12/04/17'), day_part: 'monP', business_id: 2 },
+  { employees_needed: 2, monday_date: new Date('12/04/17'), day_part: 'tuesA', business_id: 2 },
 ];
 
 const bob_avail = [
@@ -475,5 +475,12 @@ module.exports.avails = [
   nia_avail, kastania_avail, 
   chris_avail, wren_avail,
   bob_avail
+];
+
+module.exports.shift_trade_requests = [
+  { user: 'Lucas', scheduleId: 1 },
+  { user: 'Michael', scheduleId: 2 },
+  { user: 'Will', scheduleId: 3 },
+  { user: 'Wren', scheduleId: 17 },
 ];
 
