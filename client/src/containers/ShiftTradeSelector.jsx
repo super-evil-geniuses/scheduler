@@ -38,10 +38,43 @@ class ShiftTradeSelector extends Component {
 }
 
 const mapStateToProps = state => {
-  const { scheduleActual } = state;
+  const { scheduleActual, selectedWeek, scheduleDates } = state;
+
+  const shiftNames = {
+    1: 'Monday AM',
+    2: 'Monday PM',
+    3: 'Tuesday AM',
+    4: 'Tuesday PM',
+    5: 'Wednesday AM',
+    6: 'Wednesday PM',
+    7: 'Thursday AM',
+    8: 'Thursday PM',
+    9: 'Friday AM',
+    10: 'Friday PM',
+    11: 'Saturday AM',
+    12: 'Saturday PM',
+    13: 'Sunday AM',
+    14: 'Sunday PM',
+  };
+
+  const shifts = scheduleActual.map((shiftActual) => {
+    const { day_part_id, schedule_id } = shiftActual;
+    const shift = {};
+    shift.id = shiftActual.id;
+    shift.week = {
+      id: schedule_id,
+      name: scheduleDates[schedule_id],
+    };
+    shift.dayPartId = day_part_id;
+    shift.name = shiftNames[day_part_id];
+    return shift;
+  });
 
   return {
-    scheduleActual,
+    // scheduleActual,
+    shifts,
+    // selectedWeek,
+    // scheduleDates,
   };
 };
 
