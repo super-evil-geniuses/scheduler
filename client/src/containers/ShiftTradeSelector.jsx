@@ -38,6 +38,12 @@ class ShiftTradeSelector extends Component {
     );
   }
 
+  mapOptions(shifts) {
+    return shifts.map((shift) => {
+      return this.renderOption(shift);
+    });
+  }
+
   render() {
     console.log(this.props);
     return (
@@ -51,7 +57,7 @@ class ShiftTradeSelector extends Component {
             <option key="default" value="select-week">
               Select Shift to Offer
             </option>
-            {this.renderOption(this.props.shifts[0])}
+            {this.props.shifts && this.mapOptions(this.props.shifts)}
           </select>
           <div className="employee-availability clear-fix">
             <button 
