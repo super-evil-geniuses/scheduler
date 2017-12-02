@@ -8,6 +8,7 @@ class ShiftTradeEditor extends Component {
   }
 
   render() {
+    console.log(this.props.trades);
     return (
       <div className='ratio-col-1'>
         Shift Trade Component
@@ -17,9 +18,10 @@ class ShiftTradeEditor extends Component {
 };
 
 const mapStateToProps = (state) => {
-  const { userRole } = state;
+  const { userRole, trades } = state;
   return {
     userRole,
+    trades,
   };
 };
 
