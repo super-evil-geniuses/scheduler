@@ -315,9 +315,11 @@ const findOrCreateBusiness = (req, res, next) => {
 };
 
 const getAllOpenTrades = (req, res, next) => {
-  db.sequelize.query('SELECT shift_trade_requests.*, users.name, users.id FROM shift_trade_requests, users WHERE shift_trade_requests.user_id = users.id')
+  db.sequelize.query('SELECT shift_trade_requests.*, users.name FROM shift_trade_requests, users WHERE shift_trade_requests.user_id = users.id')
     .then((trades) => {
-      req.trades = trades[0];
+      req.trades = trades[0].filter((trade) => {
+        return trade.status !== 'accepted';
+      })
       next();
     });
 };
@@ -326,11 +328,9 @@ const acceptTrade = (req, res, next) => {
   const { userId, shiftId, tradeId } = req.body;
   db.Actual_Schedule.update({ user_id: userId }, { where: { id: shiftId } })
     .then((result) => {
-      console.log(result);
       return db.Shift_Trade_Request.update({ status: 'accepted' }, { where: { id: tradeId } });
     })
     .then((result) => {
-      console.log(result);
       next();
     })
     .catch((err) => {
