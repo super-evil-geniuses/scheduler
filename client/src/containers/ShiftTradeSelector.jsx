@@ -17,6 +17,14 @@ class ShiftTradeSelector extends Component {
     }
   }
 
+  renderOption(shift) {
+    return (
+      <option key={shift.id} value={shift.id}>
+        Week of {shift.week.name}: {shift.name}
+      </option>
+    );
+  }
+
   render() {
     console.log(this.props);
     return (
@@ -30,6 +38,7 @@ class ShiftTradeSelector extends Component {
             <option key="default" value="select-week">
               Select Shift to Offer
             </option>
+            {this.renderOption(this.props.shifts[0])}
           </select>
         </div>
       </div>
@@ -39,6 +48,13 @@ class ShiftTradeSelector extends Component {
 
 const mapStateToProps = state => {
   const { scheduleActual, selectedWeek, scheduleDates } = state;
+
+  const scheduleDateKey = {};
+
+  scheduleDates.forEach((schedule) => {
+    const { id, monday_dates } = schedule;
+    scheduleDateKey[id] = monday_dates;
+  });
 
   const shiftNames = {
     1: 'Monday AM',
@@ -63,7 +79,7 @@ const mapStateToProps = state => {
     shift.id = shiftActual.id;
     shift.week = {
       id: schedule_id,
-      name: scheduleDates[schedule_id],
+      name: scheduleDateKey[schedule_id],
     };
     shift.dayPartId = day_part_id;
     shift.name = shiftNames[day_part_id];
@@ -71,10 +87,7 @@ const mapStateToProps = state => {
   });
 
   return {
-    // scheduleActual,
     shifts,
-    // selectedWeek,
-    // scheduleDates,
   };
 };
 
