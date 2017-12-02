@@ -35,6 +35,11 @@ module.exports = (sequelize) => {
     name: { type: Sequelize.STRING, unique: true },
   }, { underscored: true, timestamps: false });
 
+  const Shift_Trade_Request = sequelize.define('shift_trade_request', 
+    {
+      status: { type: Sequelize.STRING, unique: false },
+    }, { underscored: true, timestamps: false });
+
   const db = {
     User,
     Schedule,
@@ -44,6 +49,7 @@ module.exports = (sequelize) => {
     Day_Part,
     Session,
     Business,
+    Shift_Trade_Request,
   };
 
   return db;

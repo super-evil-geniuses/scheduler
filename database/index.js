@@ -16,6 +16,15 @@ db.User.hasMany(db.Session, { as: 'session' });
 db.User.hasMany(db.Actual_Schedule, { as: 'actual_schedule' });
 db.User.hasMany(db.Employee_Availability, { as: 'employee_availability' });
 
+db.User.hasMany(db.Shift_Trade_Request, {
+  as: 'requesting_user',
+  foreignKey: 'requesting_user_id',
+});
+db.User.hasMany(db.Shift_Trade_Request, {
+  as: 'accepting_user',
+  foreignKey: 'accepting_user_id',
+});
+
 db.Schedule.hasMany(db.Actual_Schedule, { as: 'actual_schedule' });
 db.Schedule.hasMany(db.Needed_Employee, { as: 'needed_employee' });
 
@@ -26,6 +35,8 @@ db.Day_Part.hasMany(db.Needed_Employee, { as: 'needed_employee' });
 db.Business.hasMany(db.User, { as: 'user' });
 db.Business.hasMany(db.Needed_Employee, { as: 'needed_employee' });
 
+db.Actual_Schedule.hasOne(db.Shift_Trade_Request, {as: 'actual_schedule'});
+
 // drops all table, just put it in so that it doesn't give an error for creating the same table everytime during dev
 db.Business.sync()
   .then(() => db.User.sync())
@@ -35,6 +46,7 @@ db.Business.sync()
   .then(() => db.Actual_Schedule.sync())
   .then(() => db.Needed_Employee.sync())
   .then(() => db.Session.sync())
+  .then(() => db.Shift_Trade_Request.sync())
   .then(() => {
     return saveDayParts(dayParts);
   });
@@ -68,4 +80,5 @@ module.exports = {
   sequelize: sequelize,
   Sessions: db.Session,
   Business: db.Business,
+  Shift_Trade_Request: db.Shift_Trade_Request,
 };
