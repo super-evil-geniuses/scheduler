@@ -12,7 +12,9 @@ class WeekSelector extends Component {
 
   handleSelectWeek(event) {
     event.preventDefault();
-    this.props.selectWeek(event.target.value);
+    if (event.target.value !== 'select-week') {
+      this.props.selectWeek(event.target.value);
+    }
   }
 
   render() {
@@ -23,7 +25,10 @@ class WeekSelector extends Component {
           <select
             className="date-dropdown"
             onChange={event => this.handleSelectWeek(event)}
-          >
+          > 
+            <option key="default" value="select-week">
+              Select Week
+            </option>
             {this.props.scheduleNeeds && Object.keys(this.props.scheduleNeeds).map((id) => {
               const monDate = this.props.scheduleNeeds[id].monDate.substr(0, 10);
               const optionVal = monDate;
