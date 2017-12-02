@@ -284,6 +284,7 @@ const sendEmployeeInfo = (req, res, next) => {
     obj.scheduleDates = req.scheduleDates;
     obj.view = 'employeeEditor';
     obj.role = req.session.role;
+    obj.trades = req.trades;
     res.json(obj);
     return;
   }
@@ -320,8 +321,8 @@ const getAllOpenTrades = (req, res, next) => {
   }).then((trades) => {
       db.User.findAll()
         .then((users) => {
-          const tradesInfo = trades.map((trade) => {
-            const user = users.filter((user) => {
+          const tradesInfo = trades.map(trade => {
+            const user = users.filter(user => {
               return user.dataValues.id === trade.dataValues.user_id;
             });
             const tradeInfo = trade.dataValues;
