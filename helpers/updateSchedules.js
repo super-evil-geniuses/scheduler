@@ -21,9 +21,7 @@ const updateSchedules = (req, res, next) => {
   }
 
   Promise.all(promises)
-    .then(() => {
-      return db.Actual_Schedule.findAll();
-    })
+    .then(() => db.Actual_Schedule.findAll())
     .then((newSchedules) => {
       req.schedules = newSchedules;
       next();
