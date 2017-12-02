@@ -45,7 +45,6 @@ class ShiftTradeSelector extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <div className="ratio-col-1">
         <div className="employee-availability clear-fix">

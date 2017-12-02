@@ -39,7 +39,6 @@ const savePreferences = (scheduleActual) => {
 
 const offerShift = (shiftId, userId) => {
   const options = { shiftId, userId };
-  console.log(options);
   const response = axios.post('/trade_shift', options);
 
   return {

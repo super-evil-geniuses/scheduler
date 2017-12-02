@@ -317,11 +317,9 @@ const findOrCreateBusiness = (req, res, next) => {
 const getAllOpenTrades = (req, res, next) => {
   db.sequelize.query('SELECT shift_trade_requests.*, users.name FROM shift_trade_requests, users WHERE shift_trade_requests.user_id = users.id')
     .then((trades) => {
-      console.log('-----------------');
       req.trades = trades[0].filter((trade) => {
         return trade.status !== 'accepted';
       })
-      console.log(req.trades);
       next();
     });
 };
