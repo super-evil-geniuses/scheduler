@@ -7,19 +7,49 @@ class ShiftTradeEditor extends Component {
     super(props);
   }
 
-  render() {
-    console.log(this.props.trades);
-    console.log(this.props.allSchedules);
+  renderShift(trade) {
     return (
-      <div className='ratio-col-1'>
-        Shift Trade Component
+      <div className="list-item clear-fix clickable" onClick={() => console.log('click!')}>
+        <div className="ratio-col-4-3" >
+          <div>
+            <span>{trade.scheduleInfo.weekOf}: {trade.scheduleInfo.shift}</span>
+          </div>
+        </div>
+        <div className="ratio-col-4" >
+          <div className="employee-edit">
+            <i className="material-icons employee-edit-button">date_range</i>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderHeader() {
+    return (
+      <div className="list-item clear-fix">
+        <div className="ratio-col-4-3" >
+          <div className="employee-edit">
+            <h4>Requested Shift Trades:</h4>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  render() {
+    return (
+      <div className="ratio-col-1">
+        <div className="container schedule-row clear-fix">
+          {this.renderHeader()}
+          {this.renderShift(this.props.trades[0])}
+        </div>
       </div>
     );
   }
 };
 
 const mapStateToProps = (state) => {
-  const { userRole, trades, allSchedules, scheduleDates, dayParts } = state;
+  const { userRole, trades, allSchedules, scheduleDates, dayParts, users } = state;
 
   const shiftNames = {
     monA: 'Monday AM',
@@ -68,6 +98,7 @@ const mapStateToProps = (state) => {
     userRole,
     trades: formattedTrades,
     allSchedules,
+    users,
   };
 };
 
