@@ -7,13 +7,26 @@ import { offerShift } from '../actions/index';
 class ShiftTradeSelector extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      offer: null,
+    }
     this.handleOfferShift = this.handleOfferShift.bind(this);
+    this.handleSave = this.handleSave.bind(this);
   }
 
   handleOfferShift(event) {
+    const { value } = event.target;
     event.preventDefault();
     if (event.target.value !== 'select-week') {
-      this.props.OfferShift(event.target.value);
+      this.setState({ offer: value });
+    }
+  }
+
+  handleSave(event) {
+    event.preventDefault();
+    console.log(this.state.offer);
+    if (this.state.offer) {
+      this.props.offerShift(this.state.offer, this.props.user.id);
     }
   }
 
@@ -28,18 +41,26 @@ class ShiftTradeSelector extends Component {
   render() {
     console.log(this.props);
     return (
-      <div className='ratio-col-1'>
+      <div className="ratio-col-1">
         <div className="employee-availability clear-fix">
           <h4>Offer a Shift Trade:</h4>
           <select
             className="date-dropdown"
-            onChange={event => this.handleOfferShift(event)}
+            onChange={(event) => this.handleOfferShift(event)}
           > 
             <option key="default" value="select-week">
               Select Shift to Offer
             </option>
             {this.renderOption(this.props.shifts[0])}
           </select>
+          <div className="employee-availability clear-fix">
+            <button 
+              className="btn-main clickable"
+              onClick={(event) => this.handleSave(event)}
+            >
+              Save
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -47,7 +68,7 @@ class ShiftTradeSelector extends Component {
 }
 
 const mapStateToProps = state => {
-  const { scheduleActual, selectedWeek, scheduleDates } = state;
+  const { users, scheduleActual, selectedWeek, scheduleDates } = state;
 
   const scheduleDateKey = {};
 
@@ -88,6 +109,7 @@ const mapStateToProps = state => {
 
   return {
     shifts,
+    user: users[0],
   };
 };
 

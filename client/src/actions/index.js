@@ -43,7 +43,7 @@ const offerShift = (shiftId, userId) => {
   // const response = axios.patch('/trade_shift', options);
 
   return {
-    type: 'ACCEPT_TRADE',
+    type: 'OFFER_TRADE',
     payload: options,
   };
 };
