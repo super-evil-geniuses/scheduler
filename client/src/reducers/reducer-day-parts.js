@@ -6,6 +6,8 @@ const dayParts = (state = null, action) => {
       return action.payload.data.dayParts || state;
     case 'ACCEPT_TRADE':
       return action.payload.data.dayParts || state;
+    case 'OFFER_TRADE':
+      return action.payload.data.dayParts || state;
     default:
       return state;
   }

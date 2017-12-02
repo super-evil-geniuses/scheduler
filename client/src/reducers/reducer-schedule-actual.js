@@ -43,6 +43,9 @@ const scheduleActual = (state = null, action) => {
     case 'ACCEPT_TRADE':
       return action.payload.data.scheduleActual || state;
 
+    case 'OFFER_TRADE':
+      return action.payload.data.scheduleActual || state;
+
     case 'REMOVE_LOGGED_IN_DETAILS':
       return null;
       

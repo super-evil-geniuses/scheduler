@@ -4,6 +4,8 @@ const flashMessage = (state = null, action) => {
   	  return action.payload.data.flashMessage || null;
     case 'ACCEPT_TRADE':
       return action.payload.data.flashMessage || null;
+    case 'OFFER_TRADE':
+      return action.payload.data.flashMessage || null;
   	case 'REMOVE_LOGGED_IN_DETAILS':
   	  return { message: 'You have logged out', type: 'green' };
     case 'ADD_EMPLOYEE':

@@ -5,8 +5,7 @@ const trades = (state = [], action) => {
     case 'ACCEPT_TRADE':
       return action.payload.data.trades || state;
     case 'OFFER_TRADE':
-      console.log(action.payload)
-      return state;
+      return action.payload.data.trades || state;
   }
   return state;
 };

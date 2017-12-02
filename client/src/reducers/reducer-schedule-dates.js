@@ -6,6 +6,8 @@ const scheduleDates = (state = null, action) => {
       return action.payload.data.scheduleDates || state;
     case 'ACCEPT_TRADE':
       return action.payload.data.scheduleDates || state;
+    case 'OFFER_TRADE':
+      return action.payload.data.scheduleDates || state;
     case 'CREATE_SCHEDULE_TEMPLATE':
     	return state.concat(action.payload.data.monday_date);
     case 'REMOVE_LOGGED_IN_DETAILS':
