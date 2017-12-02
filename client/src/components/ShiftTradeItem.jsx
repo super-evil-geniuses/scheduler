@@ -21,6 +21,8 @@ class ShiftTradeItem extends React.Component{
   }
 
   render() {
+
+
     return (
       <div className="list-item clear-fix clickable" onClick={this.handleClick}>
         <div className="ratio-col-4-3" >
@@ -30,7 +32,11 @@ class ShiftTradeItem extends React.Component{
         </div>
         <div className="ratio-col-4" >
           <div className="employee-edit">
-            <i className="material-icons employee-edit-button">date_range</i>
+            <i
+              className={this.state.clickable ? 'material-icons employee-edit-button' : 'material-icons employee-no-edit-button'}
+            >
+              date_range
+            </i>
           </div>
         </div>
       </div>
