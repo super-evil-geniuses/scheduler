@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
+
+import { acceptTrade } from '../actions/index';
 
 import ShiftTradeItem from '../components/ShiftTradeItem.jsx';
 
 class ShiftTradeEditor extends Component {
+  constructor(props) {
+    super(props);
+    this.acceptTrade = this.props.acceptTrade.bind(this);
+  }
+
   renderItems() {
     const user = this.props.users[0];
 
@@ -12,7 +20,7 @@ class ShiftTradeEditor extends Component {
       return (
         this.props.trades.map((trade) => {
           return (
-            <ShiftTradeItem key={trade.id} trade={trade} user={user} />
+            <ShiftTradeItem key={trade.id} trade={trade} user={user} acceptTrade={this.acceptTrade} />
           );
         })
       );
@@ -71,7 +79,7 @@ const mapStateToProps = (state) => {
     formattedTrade.id = trade.id;
     formattedTrade.status = trade.status;
     formattedTrade.requester = {
-      userId: trade.id,
+      userId: trade.user_id,
       name: trade.name,
     };
     formattedTrade.scheduleInfo = {
@@ -97,4 +105,8 @@ ShiftTradeEditor.propTypes = {
   users: PropTypes.arrayOf(PropTypes.object),
 };
 
-export default connect(mapStateToProps)(ShiftTradeEditor);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ acceptTrade }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShiftTradeEditor);
