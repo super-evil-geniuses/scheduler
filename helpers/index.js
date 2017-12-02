@@ -277,7 +277,7 @@ const sendEmployeeInfo = (req, res, next) => {
       return sched.user_id === obj.users[0].id;
     })
       .map(e => e.dataValues);
-    obj.all_actual_schedules = req.actual_schedules;
+    obj.allActualSchedules = req.actual_schedules;
     obj.employeeAvailabilities = req.employeeAvailabilities.filter((avail) => {
       return avail.dataValues.user_id === obj.users[0].id;
     })

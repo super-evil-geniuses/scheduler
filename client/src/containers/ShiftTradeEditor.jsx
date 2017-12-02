@@ -9,6 +9,7 @@ class ShiftTradeEditor extends Component {
 
   render() {
     console.log(this.props.trades);
+    console.log(this.props.allSchedules);
     return (
       <div className='ratio-col-1'>
         Shift Trade Component
@@ -18,7 +19,7 @@ class ShiftTradeEditor extends Component {
 };
 
 const mapStateToProps = (state) => {
-  const { userRole, trades, scheduleActual, scheduleDates, dayParts } = state;
+  const { userRole, trades, allSchedules, scheduleDates, dayParts } = state;
 
   const shiftNames = {
     monA: 'Monday AM',
@@ -34,18 +35,18 @@ const mapStateToProps = (state) => {
     satA: 'Saturday AM',
     sunA: 'Sunday AM',
     sunP: 'Sunday PM',
-  }
+  };
 
   const formattedTrades = trades.map((trade) => {
-    const actualSchedule = scheduleActual.filter((schedule) => {
+    const actualSchedule = allSchedules.filter((schedule) => {
       return schedule.id === trade.actual_schedule_id;
-    });
+    })[0];
     const scheduleDate = scheduleDates.filter((scheduleDate) => {
       return scheduleDate.id === actualSchedule.schedule_id;
-    });
+    })[0];
     const dayPart = dayParts.filter((dayPart) => {
       return dayPart.id === actualSchedule.day_part_id;
-    })
+    })[0];
 
     const formattedTrade = {};
     formattedTrade.id = trade.id;
@@ -66,6 +67,7 @@ const mapStateToProps = (state) => {
   return {
     userRole,
     trades: formattedTrades,
+    allSchedules,
   };
 };
 

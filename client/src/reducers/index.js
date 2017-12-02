@@ -10,6 +10,7 @@ import UserRoleReducer from './reducer-user-role';
 import View from './reducer-view';
 import FlashMessage from './reducer-flash-message';
 import Trades from './reducer-trades';
+import AllSchedules from './reducer-all-schedules';
 
 const rootReducer = combineReducers({
   flashMessage: FlashMessage,
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   selectedWeek: SelectedWeekReducer,
   view: View,
   trades: Trades,
+  allSchedules: AllSchedules,
 });
 
 export default rootReducer;
