@@ -25,7 +25,7 @@ class ShiftTradeEditor extends Component {
         })
       );
     }
-  return (
+    return (
       <div className="list-item clear-fix clickable">
         <div className="ratio-col-4-3" >
           <div>
