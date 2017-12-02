@@ -37,15 +37,13 @@ const savePreferences = (scheduleActual) => {
   };
 };
 
-const acceptTrade = (shift, userId, scheduleId) => {
-  const payload = {
-    userId,
-    shift,
-    scheduleId,
-  };
+const acceptTrade = (shiftId, userId, tradeId) => {
+  const options = { shiftId, userId, tradeId };
+  const response = axios.patch('/trade_shift', options);
+
   return {
-    type: 'ACCEPT_Trade',
-    payload,
+    type: 'ACCEPT_TRADE',
+    payload: response,
   };
 };
 
