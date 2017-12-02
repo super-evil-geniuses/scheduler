@@ -37,6 +37,18 @@ const savePreferences = (scheduleActual) => {
   };
 };
 
+const acceptTrade = (shift, userId, scheduleId) => {
+  const payload = {
+    userId,
+    shift,
+    scheduleId,
+  };
+  return {
+    type: 'ACCEPT_Trade',
+    payload,
+  };
+};
+
 /**
 |--------------------------------------------------
 | END OF NEW ACTION CREATORS
@@ -216,6 +228,7 @@ module.exports = {
   savePreferences,
   deleteShift,
   addShift,
+  acceptTrade,
   logout,
   checkedIfLoggedIn,
   generateSchedule,
