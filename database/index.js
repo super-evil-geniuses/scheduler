@@ -28,7 +28,7 @@ db.Day_Part.hasMany(db.Needed_Employee, { as: 'needed_employee' });
 db.Business.hasMany(db.User, { as: 'user' });
 db.Business.hasMany(db.Needed_Employee, { as: 'needed_employee' });
 
-db.Actual_Schedule.hasOne(db.Shift_Trade_Request, { as: 'actual_schedule_id' });
+db.Actual_Schedule.hasOne(db.Shift_Trade_Request, { as: 'actual_schedule' });
 
 // drops all table, just put it in so that it doesn't give an error for creating the same table everytime during dev
 db.Business.sync()

@@ -315,25 +315,12 @@ const findOrCreateBusiness = (req, res, next) => {
 
 const getAllOpenTrades = (req, res, next) => {
   const { user } = req.session;
-
-  db.Shift_Trade_Request.findAll({ 
-    where: { status: null },
-  }).then((trades) => {
-      db.User.findAll()
-        .then((users) => {
-          const tradesInfo = trades.map(trade => {
-            const user = users.filter(user => {
-              return user.dataValues.id === trade.dataValues.user_id;
-            });
-            const tradeInfo = trade.dataValues;
-            tradeInfo.user = user;
-            return tradeInfo;
-          });
-          req.trades = tradesInfo;
-          next();
-        });
+  db.sequelize.query('SELECT shift_trade_requests.*, users.name, users.id FROM shift_trade_requests, users WHERE shift_trade_requests.user_id = users.id')
+    .then((trades) => {
+      req.trades = trades[0];
+      next();
     });
-}
+};
 
 module.exports = {
   destroySession,
