@@ -15,10 +15,16 @@ const scheduleActual = (state = null, action) => {
     case 'ADD_SHIFT':
       if (state) {
         return state.concat([{
-          user_id: action.payload.userId.toString(),
+          user_id: action.payload.userId ? action.payload.userId.toString() : null,
           schedule_id: action.payload.scheduleId,
           day_part_id: action.payload.shift,
         }]);
+      }
+      return state;
+
+    case 'SAVE_PREFERENCES':
+      if (state) {
+        return action.payload.data;
       }
       return state;
 

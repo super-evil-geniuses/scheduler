@@ -208,8 +208,22 @@ h4 {
   padding: 0 20px;
   font-size: 12px;
   font-weight: 100;
-  text-transform: uppercase;
-  
+  text-transform: uppercase; 
+}
+
+.btn-save {
+  line-height: 40px;
+  height: 40px;
+  background-color: rgb(0, 149, 135);
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  border-radius: 2px;
+  padding: 0 20px;
+  font-size: 12px;
+  font-weight: 100;
+  text-transform: uppercase; 
+  margin: 25px 50px auto auto;
+  float: right;
 }
 
 .schedule-date-header {

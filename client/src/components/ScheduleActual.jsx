@@ -1,6 +1,9 @@
 import React from 'react';
 import _ from 'underscore';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { savePreferences } from '../actions/index';
 import EmployeeScheduleManager from './EmployeeScheduleManager.jsx';
 import EmployeeSchedule from './EmployeeSchedule.jsx';
 
@@ -26,7 +29,6 @@ const ScheduleActual = (props) => {
   } else {
     calendarBody = <div className='schedule-prompt'>You have not saved any shifts for this week.</div>;
   }
-
   return (
     <div className="container clear-fix schedule-actual">
       <div className="schedule-date-header">
@@ -41,6 +43,7 @@ const ScheduleActual = (props) => {
         {morningEvenings}
       </div>
       {calendarBody}
+      {props.userRole === 'manager' ? <button className="btn-save clickable" onClick={() => props.savePreferences(props.scheduleActual)} >Save Schedule</button> : null }
     </div>
   );
 }
@@ -49,5 +52,17 @@ ScheduleActual.propTypes = {
   weekHasAtLeastOneNeededEmployee: PropTypes.bool,
   selectedWeekActualSchedule: PropTypes.arrayOf(PropTypes.object).isRequired,
   userRole: PropTypes.string.isRequired,
+  savePreferences: PropTypes.func.isRequired,
 };
-export default ScheduleActual;
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    savePreferences,
+  }, dispatch);
+}
+
+const mapStateToProps = ({ scheduleActual }) => {
+  return { scheduleActual };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ScheduleActual);

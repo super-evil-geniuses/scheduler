@@ -2,7 +2,10 @@ const express = require('express');
 const utils = require('../helpers/index.js');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+
 const { generateSchedule } = require('../helpers/algo.js');
+const updateSchedules = require('../helpers/updateSchedules.js');
+
 
 const app = express();
 
@@ -12,6 +15,23 @@ app.use(cookieParser());
 app.use(utils.checkSession);
 
 app.use(express.static(`${__dirname}/../client/dist/compiled`));
+
+/**
+|--------------------------------------------------
+| NEW ROUTES
+|--------------------------------------------------
+*/
+
+app.post('/savePreferences', updateSchedules, (req, res) => {
+  // update db table scheduleActual
+  res.json(req.schedules);
+});
+
+/**
+|--------------------------------------------------
+| END OF NEW ROUTES
+|--------------------------------------------------
+*/
 
 app.get('/users', utils.getAllUsers, (req, res) => {
   res.json(req.users);

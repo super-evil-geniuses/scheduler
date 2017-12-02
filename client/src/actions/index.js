@@ -29,6 +29,14 @@ const addShift = (shift, userId, scheduleId) => {
   };
 };
 
+const savePreferences = (scheduleActual) => {
+  const response = axios.post('/savePreferences', scheduleActual);
+  return {
+    type: 'SAVE_PREFERENCES',
+    payload: response,
+  };
+};
+
 /**
 |--------------------------------------------------
 | END OF NEW ACTION CREATORS
@@ -205,6 +213,7 @@ const selectWeek = (monDate) => {
 };
 
 module.exports = {
+  savePreferences,
   deleteShift,
   addShift,
   logout,
