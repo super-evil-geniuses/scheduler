@@ -107,6 +107,9 @@ const initialize = () => {
       return generateSchedule('2017-12-04');
     })
     .then(() => {
+      return generateSchedule('2017-12-11');
+    })
+    .then(() => {
       return Promise.each(dummyData.shift_trade_requests, (request) => {
         return saveShiftTradeRequests(request);
       });
