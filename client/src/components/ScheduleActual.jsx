@@ -27,7 +27,13 @@ const ScheduleActual = (props) => {
   } else if (props.weekHasAtLeastOneNeededEmployee) {
     calendarBody = <div className='schedule-prompt'>Generate a schedule for this week when you have finalized your shifts.</div>;
   } else {
-    calendarBody = <div className='schedule-prompt'>You have not saved any shifts for this week.</div>;
+    const managerMessage = 'You have not saved any shifts for this week.';
+    const employeeMessage = 'Please select a shift in the dropdown to view your schedule for that week.';
+    calendarBody = (
+      <div className="schedule-prompt">
+        {props.userRole === 'manager' ? managerMessage : employeeMessage}
+      </div>
+    );
   }
   return (
     <div className="container clear-fix schedule-actual">
