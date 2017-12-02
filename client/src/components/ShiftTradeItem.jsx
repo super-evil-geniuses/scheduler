@@ -12,7 +12,7 @@ class ShiftTradeItem extends React.Component{
 
   handleClick() {
     const { scheduleId } = this.props.trade.scheduleInfo;
-    const { userId } = this.props.user.id;
+    const userId = this.props.user.id;
     const { id } = this.props.trade;
 
     if (this.state.clickable) {
@@ -21,8 +21,6 @@ class ShiftTradeItem extends React.Component{
   }
 
   render() {
-
-
     return (
       <div className="list-item clear-fix clickable" onClick={this.handleClick}>
         <div className="ratio-col-4-3" >
