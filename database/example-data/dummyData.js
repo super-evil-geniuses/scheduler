@@ -248,17 +248,72 @@ module.exports.business = [
 ];
 
 module.exports.users = [
-  { name: 'Lucas', role: 'employee', password: null, business_id: 1}, // id 1
-  { name: 'Michael', role: 'employee', password: null, business_id: 1}, // id 2
-  { name: 'Sophia', role: 'employee', password: null, business_id: 1},  // id 3
-  { name: 'Tevene', role: 'employee', password: null, business_id: 1},  // id 4
-  { name: 'Will', role: 'employee', password: null, business_id: 1},  // id 5
-  { name: 'Christina', role: 'employee', password: null, business_id: 1}, // id 6
-  { name: 'Nia', role: 'employee', password: null, business_id: 1}, // id 7
-  { name: 'Kastania', role: 'employee', password: null, business_id: 1},  // id 8
-  { name: 'Chris', role: 'employee', password: null, business_id: 1}, // id 9
-  { name: 'Wren', role: 'employee', password: null, business_id: 1},  // id 10
-  { name: 'Bob', role: 'employee', password: null, business_id: 2}, // id 11
+  {
+    name: 'Lucas',
+    role: 'employee',
+    password: '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+    business_id: 1,
+  }, // id 1
+  {
+    name: 'Michael',
+    role: 'employee',
+    password: '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+    business_id: 1,
+  }, // id 2
+  {
+    name: 'Sophia',
+    role: 'employee',
+    password: '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+    business_id: 1,
+  }, // id 3
+  {
+    name: 'Tevene',
+    role: 'employee',
+    password: '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+    business_id: 1,
+  }, // id 4
+  {
+    name: 'Will',
+    role: 'employee',
+    password: '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+    business_id: 1,
+  }, // id 5
+  {
+    name: 'Christina',
+    role: 'employee',
+    password: '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+    business_id: 1,
+  }, // id 6
+  {
+    name: 'Nia',
+    role: 'employee',
+    password: '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+    business_id: 1,
+  }, // id 7
+  {
+    name: 'Kastania',
+    role: 'employee',
+    password: '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+    business_id: 1,
+  }, // id 8
+  {
+    name: 'Chris',
+    role: 'employee',
+    password: '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+    business_id: 1,
+  }, // id 9
+  {
+    name: 'Wren',
+    role: 'employee',
+    password: '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+    business_id: 1,
+  }, // id 10
+  {
+    name: 'Bob',
+    role: 'employee',
+    password: '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+    business_id: 2,
+  }, // id 11
 ];
 
 module.exports.temp1 = [
