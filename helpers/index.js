@@ -317,9 +317,11 @@ const findOrCreateBusiness = (req, res, next) => {
 const getAllOpenTrades = (req, res, next) => {
   db.sequelize.query('SELECT shift_trade_requests.*, users.name FROM shift_trade_requests, users WHERE shift_trade_requests.user_id = users.id')
     .then((trades) => {
+      console.log('-----------------');
       req.trades = trades[0].filter((trade) => {
         return trade.status !== 'accepted';
       })
+      console.log(req.trades);
       next();
     });
 };
@@ -335,7 +337,27 @@ const acceptTrade = (req, res, next) => {
     })
     .catch((err) => {
       console.log('error updating a trade in the database ', err);
+    });
+};
+
+const saveTrade = (req, res, next) => {
+  const { userId, shiftId } = req.body;
+  db.Shift_Trade_Request.findOrCreate({
+    where: {
+      actual_schedule_id: shiftId,
+    },
+    defaults: {
+      user_id: userId,
+      actual_schedule_id: shiftId,
+    },
+  })
+    .then((response) => {
+      console.log(response);
+      next();
     })
+    .catch((err) => {
+      console.log('error accessing the database: ', err);
+    });
 };
 
 module.exports = {
@@ -360,4 +382,5 @@ module.exports = {
   findOrCreateBusiness,
   getAllOpenTrades,
   acceptTrade,
+  saveTrade,
 };
