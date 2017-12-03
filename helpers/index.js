@@ -2,6 +2,7 @@ const moment = require('moment');
 const db = require('../database');
 const Promise = require('bluebird');
 const crypto = require('crypto');
+const Sequelize = require('sequelize');
 
 const getAllUsers = (req, res, next) => {
   db.User.findAll({})
@@ -276,6 +277,7 @@ const sendEmployeeInfo = (req, res, next) => {
       return sched.user_id === obj.users[0].id;
     })
       .map(e => e.dataValues);
+    obj.allActualSchedules = req.actual_schedules;
     obj.employeeAvailabilities = req.employeeAvailabilities.filter((avail) => {
       return avail.dataValues.user_id === obj.users[0].id;
     })
@@ -283,6 +285,7 @@ const sendEmployeeInfo = (req, res, next) => {
     obj.scheduleDates = req.scheduleDates;
     obj.view = 'employeeEditor';
     obj.role = req.session.role;
+    obj.trades = req.trades;
     res.json(obj);
     return;
   }
@@ -303,14 +306,55 @@ const findOrCreateBusiness = (req, res, next) => {
   const { business } = req.body;
   db.Business.findOrCreate({ where: { name: business } })
     .then((array) => {
-      console.log('This is the result array from findOrCreate: ', array);
       req.businessId = array[0].dataValues.id;
-      console.log('this is req.businessId-------------', req.businessId);
       next();
     })
     .catch((err) => {
-      console.log('There was an error in trying to findOrCreate with Travis');
       console.log('Travis is being difficult: ', err);
+    });
+};
+
+const getAllOpenTrades = (req, res, next) => {
+  db.sequelize.query('SELECT shift_trade_requests.*, users.name FROM shift_trade_requests, users WHERE shift_trade_requests.user_id = users.id')
+    .then((trades) => {
+      req.trades = trades[0].filter((trade) => {
+        return trade.status !== 'accepted';
+      })
+      next();
+    });
+};
+
+const acceptTrade = (req, res, next) => {
+  const { userId, shiftId, tradeId } = req.body;
+  db.Actual_Schedule.update({ user_id: userId }, { where: { id: shiftId } })
+    .then((result) => {
+      return db.Shift_Trade_Request.update({ status: 'accepted' }, { where: { id: tradeId } });
+    })
+    .then((result) => {
+      next();
+    })
+    .catch((err) => {
+      console.log('error updating a trade in the database ', err);
+    });
+};
+
+const saveTrade = (req, res, next) => {
+  const { userId, shiftId } = req.body;
+  db.Shift_Trade_Request.findOrCreate({
+    where: {
+      actual_schedule_id: shiftId,
+    },
+    defaults: {
+      user_id: userId,
+      actual_schedule_id: shiftId,
+    },
+  })
+    .then((response) => {
+      console.log(response);
+      next();
+    })
+    .catch((err) => {
+      console.log('error accessing the database: ', err);
     });
 };
 
@@ -334,4 +378,7 @@ module.exports = {
   createScheduleDate,
   createScheduleTemplate,
   findOrCreateBusiness,
+  getAllOpenTrades,
+  acceptTrade,
+  saveTrade,
 };

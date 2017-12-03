@@ -37,6 +37,26 @@ const savePreferences = (scheduleActual) => {
   };
 };
 
+const offerShift = (shiftId, userId) => {
+  const options = { shiftId, userId };
+  const response = axios.post('/trade_shift', options);
+
+  return {
+    type: 'OFFER_TRADE',
+    payload: response,
+  };
+};
+
+const acceptTrade = (shiftId, userId, tradeId) => {
+  const options = { shiftId, userId, tradeId };
+  const response = axios.patch('/trade_shift', options);
+
+  return {
+    type: 'ACCEPT_TRADE',
+    payload: response,
+  };
+};
+
 /**
 |--------------------------------------------------
 | END OF NEW ACTION CREATORS
@@ -216,6 +236,8 @@ module.exports = {
   savePreferences,
   deleteShift,
   addShift,
+  acceptTrade,
+  offerShift,
   logout,
   checkedIfLoggedIn,
   generateSchedule,

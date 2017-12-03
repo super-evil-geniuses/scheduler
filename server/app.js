@@ -94,6 +94,31 @@ app.post('/logout', utils.destroySession, (req, res) => {
   res.status(200).end();
 });
 
+app.patch('/trade_shift', 
+  utils.acceptTrade,
+  utils.getAllDayParts,
+  utils.getAllUsers,
+  utils.getAllActualSchedules,
+  utils.getAllEmployeeAvailabilities,
+  utils.getAllScheduleDates,
+  utils.getAllOpenTrades,
+  utils.sendEmployeeInfo, (req, res) => {
+  res.status(200).end();
+});
+
+app.post('/trade_shift', 
+  utils.saveTrade,
+  utils.getAllDayParts,
+  utils.getAllUsers,
+  utils.getAllActualSchedules,
+  utils.getAllEmployeeAvailabilities,
+  utils.getAllScheduleDates,
+  utils.getAllOpenTrades,
+  utils.sendEmployeeInfo, (req, res) => {
+  console.log(req.body);
+  res.status(200).end();
+});
+
 app.get('/welcome_back',
   utils.redirectIfLoggedIn,
   utils.getAllDayParts,
@@ -101,6 +126,7 @@ app.get('/welcome_back',
   utils.getAllActualSchedules,
   utils.getAllEmployeeAvailabilities,
   utils.getAllScheduleDates,
+  utils.getAllOpenTrades,
   utils.sendEmployeeInfo,
   utils.getAllNeededEmployees,
   (req, res) => {

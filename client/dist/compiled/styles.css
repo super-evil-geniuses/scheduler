@@ -114,6 +114,11 @@ h4 {
   color: rgb(234, 183, 105);
 }
 
+.employee-no-edit-button {
+  vertical-align: middle;
+  color: #757575;
+}
+
 .employee-edit-profile {
   vertical-align: middle; 
   padding-right: 15px;

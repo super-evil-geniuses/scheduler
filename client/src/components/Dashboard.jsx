@@ -8,6 +8,8 @@ import ScheduleEditor from '../containers/ScheduleEditor.jsx';
 import ScheduleGenerator from '../containers/ScheduleGenerator.jsx';
 import WeekSelector from '../containers/WeekSelector.jsx';
 import ScheduleActual from './ScheduleActual.jsx';
+import ShiftTradeEditor from '../containers/ShiftTradeEditor.jsx';
+import ShiftTradeSelector from '../containers/ShiftTradeSelector.jsx';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -46,7 +48,8 @@ class Dashboard extends Component {
   renderEmployeeHeader() {
     return (
       <div className="container clear-fix">
-        {this.renderTab('Employees', 'employeeEditor')}
+        {this.renderTab('Employee', 'employeeEditor')}
+        {this.renderTab('Trades', 'scheduleEditor')}
       </div>
     );
   }
@@ -91,12 +94,23 @@ class Dashboard extends Component {
   }
 
   renderEmployeeEditor() {
-    return (
+    let editorView = (
       <div>
         <WeekSelector />
         <EmployeeEditor />
       </div>
     );
+
+    if (this.state.currentView === 'scheduleEditor') {
+      editorView = (
+        <div>
+          <ShiftTradeSelector />
+          <ShiftTradeEditor />
+        </div>
+      );
+    } 
+
+    return editorView;
   }
 
   renderManagerEditor() {

@@ -14,6 +14,10 @@ const employeeAvailabilities = (state = null, action) => {
       }
     case 'GET_ALL':
       return action.payload.data.employeeAvailabilities || state;
+    case 'OFFER_TRADE':
+    return action.payload.data.employeeAvailabilities || state;
+    case 'ACCEPT_TRADE':
+      return action.payload.data.employeeAvailabilities || state;
     case 'REMOVE_LOGGED_IN_DETAILS':
       return null;
     default:

@@ -1,6 +1,7 @@
 const Promise = require('bluebird');
 const db = require('../../database');
 const dummyData = require('./dummyData');
+const { generateSchedule } = require('../../helpers/algo.js');
 
 // Saves the week start date and the corresponding schedule id
 
@@ -63,10 +64,24 @@ const saveEmployeeAvailability = (avail) => {
   });
 };
 
+const saveShiftTradeRequests = (request) => {
+  return db.User.find({where: { name: request.user }})
+    .then((response) => {
+      const user_id = response.id;
+      return db.Shift_Trade_Request.create({
+        user_id,
+        actual_schedule_id: request.scheduleId,
+      });
+    });
+};
+
 // initializes the database with dummy data
 // ERROR IN TRYING TO GET THIS TO POPULATE WITH DUMMY DATA!
 const initialize = () => {
-  return saveSchedule(dummyData.weekStart)
+  return saveSchedule(dummyData.weekStart1)
+    .then(() => {
+      return saveSchedule(dummyData.weekStart2);
+    })
     .then(() => {
       return Promise.each(dummyData.business, (business) => {
         saveBusiness(business);
@@ -81,8 +96,22 @@ const initialize = () => {
       return saveScheduleTemplate(dummyData.temp1);
     })
     .then(() => {
+      return saveScheduleTemplate(dummyData.temp2);
+    })
+    .then(() => {
       return Promise.each(dummyData.avails, (avail) => {
         return saveEmployeeAvailability(avail);
+      });
+    })
+    .then(() => {
+      return generateSchedule('2017-12-04');
+    })
+    .then(() => {
+      return generateSchedule('2017-12-11');
+    })
+    .then(() => {
+      return Promise.each(dummyData.shift_trade_requests, (request) => {
+        return saveShiftTradeRequests(request);
       });
     })
     .then(() => {
