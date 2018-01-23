@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const expect = require('chai').expect;
 const pg = require('pg');
 const Sequelize = require('sequelize');
@@ -27,6 +29,8 @@ describe('Shiftly Backend Test Spec', () => {
     sequelize = new Sequelize(process.env.DB_NAME || 'shiftly', process.env.DB_USER || 'postgres', process.env.DB_PASS || null, { host: process.env.DB_HOST || 'localhost', dialect: 'postgres' });
     // debugger
     db = schema(sequelize);
+    db.Business.hasMany(db.User, { as: 'user' });
+    db.Business.hasMany(db.Needed_Employee, { as: 'needed_employee' });
     db.User.hasMany(db.Actual_Schedule, { as: 'actual_schedule' });
     db.User.hasMany(db.Employee_Availability, { as: 'employee_availability' });
     db.Employee_Availability.belongsTo(db.User);
@@ -68,7 +72,7 @@ describe('Shiftly Backend Test Spec', () => {
     /* Empty the db table before each test so that multiple tests
      * (or repeated runs of the tests) won't screw each other up: */
    
-    const tables = ['User', 'Schedule', 'Needed_Employee', 'Employee_Availability', 'Actual_Schedule'];
+    const tables = ['Business', 'User', 'Schedule', 'Needed_Employee', 'Employee_Availability', 'Actual_Schedule'];
     Promise.each(tables, (table) => {
       return db[table].destroy({ where: {} });
     })
@@ -89,6 +93,7 @@ describe('Shiftly Backend Test Spec', () => {
         .send({
           username: 'Bob',
           password: 'Bob',
+          business: 'Hack Reactor'
         })
         .expect(200, done);
     });
@@ -100,6 +105,7 @@ describe('Shiftly Backend Test Spec', () => {
         .send({
           username: 'Alice',
           password: 'Alice',
+          business: 'Hack Reactor',
         })
         .end((err, res) => {
           if (err) { throw err; }
@@ -171,6 +177,7 @@ describe('Shiftly Backend Test Spec', () => {
         .send({
           username: 'Alice',
           password: 'alice',
+          business: 'Hack Reactor',
         })
         .end((err) => {
           if (err) { done(err); }
@@ -359,3 +366,5 @@ describe('Shiftly Backend Test Spec', () => {
     });
   });
 });
+
+/* eslint-enable */

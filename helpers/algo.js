@@ -2,53 +2,53 @@ const db = require('../database/index.js');
 const Promise = require('bluebird');
 const Combinatorics = require('js-combinatorics');
 
-let findAllEmployeeAvailability = () => {
-	let availability = [];
-	return db.Day_Part.findAll({ attributes: ['id'] })
-		.then((day_parts) => {
-			return Promise.each(day_parts, (day_part) => {
-				return db.Employee_Availability.findAll({ where: { day_part_id: day_part.dataValues.id, is_available: true }})
-					.then((avail) => {
-						availability.push(avail);
-					});
-			});
-		})
-		.then(() => {
-			return availabilityParser(availability);
-		});
+const findAllEmployeeAvailability = () => {
+  const availability = [];
+  return db.Day_Part.findAll({ attributes: ['id'] })
+    .then((day_parts) => {
+      return Promise.each(day_parts, (day_part) => {
+        return db.Employee_Availability.findAll({ where: { day_part_id: day_part.dataValues.id, is_available: true } })
+          .then((avail) => {
+            availability.push(avail);
+          });
+      });
+    })
+    .then(() => {
+      return availabilityParser(availability);
+    });
 };
 
 const availabilityParser = (availability) => {
-	let availObj = {};
-	availability.forEach(availPerDayPart => {
-		availPerDayPart.forEach(availByEmp => {
-			if (!availObj[availByEmp.dataValues.day_part_id]) {
-				availObj[availByEmp.dataValues.day_part_id] = [availByEmp.dataValues.user_id];
-			} else {
-				availObj[availByEmp.dataValues.day_part_id].push(availByEmp.dataValues.user_id);
-			}
-		});
-	});
-	return availObj;
+  const availObj = {};
+  availability.forEach(availPerDayPart => {
+    availPerDayPart.forEach(availByEmp => {
+      if (!availObj[availByEmp.dataValues.day_part_id]) {
+        availObj[availByEmp.dataValues.day_part_id] = [availByEmp.dataValues.user_id];
+      } else {
+        availObj[availByEmp.dataValues.day_part_id].push(availByEmp.dataValues.user_id);
+      }
+    });
+  });
+  return availObj;
 }
 
 const templateParser = (weekStart) => {
-	let tempObj = {};
-	return db.Schedule.find({ where: {monday_dates: weekStart} })
-		.then((schedule) => {
-      let schedule_id = schedule.dataValues.id;
-			return db.Needed_Employee.findAll({ where: {schedule_id: schedule_id, }})
-    		.then((template) => {
-    			template.forEach(dayPart => {
-    				tempObj[dayPart.dataValues.day_part_id] = dayPart.dataValues.employees_needed;
-    			});
-    			return [tempObj, schedule_id];
-    		});
+  const tempObj = {};
+  return db.Schedule.find({ where: {monday_dates: weekStart} })
+    .then((schedule) => {
+      const schedule_id = schedule.dataValues.id;
+      return db.Needed_Employee.findAll({ where: {schedule_id: schedule_id, }})
+        .then((template) => {
+          template.forEach(dayPart => {
+            tempObj[dayPart.dataValues.day_part_id] = dayPart.dataValues.employees_needed;
+          });
+          return [tempObj, schedule_id];
+        });
     });
 }
 
 const scheduleGenerator = (allEmployeeAvail, temp) => {
-  let allCombinations = {};
+  const allCombinations = {};
   //fill allCombinations with all the possible combinations of employees for each day
   for (let dayPart in temp) {
     // if no one is needed for the shift
@@ -68,7 +68,7 @@ const scheduleGenerator = (allEmployeeAvail, temp) => {
       allCombinations[dayPart] = Combinatorics.combination(allEmployeeAvail[dayPart], temp[dayPart]).toArray();
     }
   }
-  
+
   let schedule = {};
   let cheapSolution = [];
   let completedSchedules = [];
@@ -79,7 +79,7 @@ const scheduleGenerator = (allEmployeeAvail, temp) => {
       schedule[dayPart] = rocker ? possibilities[dayPart][0] : possibilities[dayPart][possibilities[dayPart].length - 1];
       rocker = !rocker;
     }
-    let completed = Object.assign({}, schedule);
+    const completed = Object.assign({}, schedule);
     cheapSolution.push(completed);
   };
   const findSolution = (possibilities, empShifts, dayPart) => {
@@ -97,7 +97,7 @@ const scheduleGenerator = (allEmployeeAvail, temp) => {
         })
         schedule[dayPart] = thisTry;
         if (dayPart < 14) {
-         findSolution(possibilities, empShifts, dayPart+1);
+          findSolution(possibilities, empShifts, dayPart+1);
         } else {
           let completed = Object.assign({}, schedule);
           completedSchedules.push(completed);
@@ -106,24 +106,25 @@ const scheduleGenerator = (allEmployeeAvail, temp) => {
         thisTry.forEach((e) => {
           empShifts[e]--;
         });
-      }  
+      }
     }
   };
+
   findCheapSolution(allCombinations);
   schedule = {};
   findSolution(allCombinations, {}, 1);
-  return completedSchedules.length ? completedSchedules[Math.floor(Math.random()*completedSchedules.length)] : cheapSolution[0];
-}
+  return completedSchedules.length ? completedSchedules[Math.floor(Math.random() * completedSchedules.length)] : cheapSolution[0];
+};
 
 const willAnyEmployeeBeInOvertime = (shiftCounts, proposedShift) => {
   let overtime = false;
   proposedShift.forEach((e) => {
-    if(shiftCounts[e] >= 6) {
+    if (shiftCounts[e] >= 6) {
       overtime = true;
     }
-  })
+  });
   return overtime;
-}
+};
 
 const willHaveDouble = (amShift = [], pmShift) => {
   for (let i = 0; i < amShift.length; i++) {
@@ -132,7 +133,7 @@ const willHaveDouble = (amShift = [], pmShift) => {
     }
   }
   return false;
-}
+};
 
 const reformatScheduleObj = (actual_schedule, schedule_id) => {
   let reformat = [];
@@ -145,7 +146,7 @@ const reformatScheduleObj = (actual_schedule, schedule_id) => {
     });
   }
   return reformat;
-}
+};
 
 const generateSchedule = (weekStart) => {
   return findAllEmployeeAvailability()
@@ -158,18 +159,19 @@ const generateSchedule = (weekStart) => {
 
           let actual_schedule = scheduleGenerator(avail, template);
           let reformattedSchedule = reformatScheduleObj(actual_schedule, schedule_id);
-          return db.Actual_Schedule.destroy({ where: {schedule_id: schedule_id} })
+          return db.Actual_Schedule.destroy({ where: { schedule_id } })
             .then(() => {
               return Promise.each(reformattedSchedule, (scheduleObj) => {
                 return db.Actual_Schedule.create(scheduleObj);
               })
-              .then(() => {
-                return reformattedSchedule;
-              });
-            })
+                .then(() => {
+                  return reformattedSchedule;
+                });
+            });
         });
-      });
-}
+    });
+};
+
 module.exports.generateSchedule = generateSchedule;
 //scheduleGenerator is exported for testing puroposes only
 module.exports.scheduleGenerator = scheduleGenerator;

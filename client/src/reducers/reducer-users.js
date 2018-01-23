@@ -5,9 +5,8 @@ const users = (state = null, action) => {
     case 'ADD_EMPLOYEE':
       if (!action.payload.data.flashMessage) {
         return state ? state.concat(action.payload.data.user) : action.payload.data.user;
-      } else {
-        return state;
       }
+      return state;
     case 'GET_ALL':
       return action.payload.data.users || state;
     case 'REMOVE_LOGGED_IN_DETAILS':

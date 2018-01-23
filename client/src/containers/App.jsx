@@ -29,7 +29,7 @@ class App extends Component {
     if (this.props.view === 'login') {
       return <Login />;
     } else if (this.props.view === 'signup') {
-      return <SignUp />
+      return <SignUp />;
     } else if (this.props.view === 'employeeEditor' || this.props.view === 'scheduleEditor') {
       return <Dashboard />;
     }

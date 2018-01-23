@@ -7,7 +7,7 @@ const EmployeeSchedule = (props) => {
       <br />
       <span className="schedule-hours">{props.schedule.schedule.length * 6} hrs</span>
     </div>];
-  for (let i = 1; i < 15; i++) {
+  for (let i = 1; i < 15; i += 1) {
     if (props.schedule.schedule.indexOf(i) !== -1) {
       shifts.push(<div
         key={`shift${props.schedule.name}${i}`}

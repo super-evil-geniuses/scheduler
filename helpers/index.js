@@ -2,6 +2,7 @@ const moment = require('moment');
 const db = require('../database');
 const Promise = require('bluebird');
 const crypto = require('crypto');
+const Sequelize = require('sequelize');
 
 const getAllUsers = (req, res, next) => {
   db.User.findAll({})
@@ -55,12 +56,12 @@ const getAllDayParts = (req, res, next) => {
 
 const getAllActualSchedules = (req, res, next) => {
   db.Actual_Schedule.findAll({})
-  .then((schedules) => {
-    req.actual_schedules = schedules;
-    next();
-  }).catch((err) => {
-    res.status(500).send('Error getting schedules');
-  })
+    .then((schedules) => {
+      req.actual_schedules = schedules;
+      next();
+    }).catch((err) => {
+      res.status(500).send('Error getting schedules');
+    });
 };
 
 const addUser = (req, res, next) => {
@@ -68,6 +69,7 @@ const addUser = (req, res, next) => {
     name: req.body.username,
     role: 'employee',
     password: passHash(req.body.password),
+    business_id: req.businessId,
   })
     .then((user) => {
       req.user = user;
@@ -178,35 +180,35 @@ const newSession = (req, res) => {
 const checkSession = (req, res, next) => {
   return new Promise((resolve, reject) => {
     if (req.cookies['shiftly']) {
-      resolve(db.Sessions.findAll( {where: { session: req.cookies['shiftly'] } }));
+      resolve(db.Sessions.findAll({ where: { session: req.cookies['shiftly'] } }));
     } else {
       resolve([]);
     }
   })
-  .then((session) => {
-    if (session.length > 0) {
-      db.User.findAll({ where: { id: session[0].dataValues.user_id}})
-      .then((user) => {
-        let obj =  { session: session[0].dataValues.session }; 
-        if (user.length) {
-          obj.user = user[0].dataValues.name;
-          obj.role = user[0].dataValues.role;
-        }
-        req.session = obj;
+    .then((session) => {
+      if (session.length > 0) {
+        db.User.findAll({ where: { id: session[0].dataValues.user_id } })
+          .then((user) => {
+            let obj = { session: session[0].dataValues.session };
+            if (user.length) {
+              obj.user = user[0].dataValues.name;
+              obj.role = user[0].dataValues.role;
+            }
+            req.session = obj;
+            next();
+          })
+      } else {
+        req.session = newSession(req, res);
         next();
-      })
-    } else {
-      req.session = newSession(req, res);
-      next();
-    }
-  })
+      }
+    });
 };
 
 const passHash = (password) => {
   let shasum = crypto.createHash('sha256');
   shasum.update(password);
   return shasum.digest('hex');
-}
+};
 
 const authenticate = (req, res, next) => {
   //get user info from user db;
@@ -214,51 +216,52 @@ const authenticate = (req, res, next) => {
     next();
     return;
   }
-  db.User.findAll({ where: {name: req.body.creds.username} })
-  .then((user) => {
-    if (user.length === 0) {
-      res.status(201).send({ flashMessage: { message: 'incorrect username or password', type: 'red'}});
-      return;
-    }
-    user = user[0].dataValues;
-    if (passHash(req.body.creds.password) === user.password) {
-      req.session = newSession(req, res);
-      req.session.user = user.name;
-      req.session.role = user.role;
-      db.Sessions.create({session: req.session.session, user_id: user.id})
-      .then(() => {
-        next();
-      })
-    } else {
-      res.status(201).send({ flashMessage: { message: 'incorrect username or password', type: 'red'}});
-    }
-  })
+  db.User.findAll({ where: { name: req.body.creds.username } })
+    .then((user) => {
+      if (user.length === 0) {
+        res.status(201).send({ flashMessage: { message: 'incorrect username or password', type: 'red' } });
+        return;
+      }
+      user = user[0].dataValues;
+      if (passHash(req.body.creds.password) === user.password) {
+        req.session = newSession(req, res);
+        req.session.user = user.name;
+        req.session.role = user.role;
+        db.Sessions.create({ session: req.session.session, user_id: user.id })
+          .then(() => {
+            next();
+          });
+      } else {
+        res.status(201).send({ flashMessage: { message: 'incorrect username or password', type: 'red' } });
+      }
+    });
 };
 
 const createUser = (req, res, next) => {
   db.User.create({
     name: req.body.creds.username,
     role: 'manager',
-    password: passHash(req.body.creds.password)
+    password: passHash(req.body.creds.password),
+    // add business ID (will later need to change for req.body.creds.business)
+    business_id: 1,
   }).then((data) => {
     req.session = newSession(req, res);
     req.session.user = req.body.creds.username;
     req.session.role =data.dataValues.role;
-    db.Sessions.create({session: req.session.session, user_id: data.dataValues.id})
-    .then(() => {
-      next();
-    })
+    db.Sessions.create({ session: req.session.session, user_id: data.dataValues.id })
+      .then(() => {
+        next();
+      });
   }).catch((err) => {
-    res.status(201).send({ flashMessage: {message: `username "${req.body.creds.username}" already exists`, type: 'red'}})
-  })
+    res.status(201).send({ flashMessage: { message: `username "${req.body.creds.username}" already exists`, type: 'red' } });
+  });
 };
 
 const redirectIfLoggedIn = (req, res, next) => {
   if (!req.session.user) {
     res.send();
     return;
-  } 
-  console.log('redirecting');
+  }
   next();
 };
 
@@ -269,17 +272,20 @@ const sendEmployeeInfo = (req, res, next) => {
     obj.users = req.users.filter((user) => {
       return user.dataValues.name === req.session.user;
     })
-    .map((e) => e.dataValues);
+      .map(e => e.dataValues);
     obj.scheduleActual = req.actual_schedules.filter((sched) => {
       return sched.user_id === obj.users[0].id;
     })
-    .map((e) => e.dataValues);
+      .map(e => e.dataValues);
+    obj.allActualSchedules = req.actual_schedules;
     obj.employeeAvailabilities = req.employeeAvailabilities.filter((avail) => {
       return avail.dataValues.user_id === obj.users[0].id;
     })
-    .map((e) => e.dataValues);
+      .map(e => e.dataValues);
     obj.scheduleDates = req.scheduleDates;
     obj.view = 'employeeEditor';
+    obj.role = req.session.role;
+    obj.trades = req.trades;
     res.json(obj);
     return;
   }
@@ -288,32 +294,91 @@ const sendEmployeeInfo = (req, res, next) => {
 
 const destroySession = (req, res, next) => {
   console.log('destroying session');
-  db.Sessions.destroy({ where:{session: req.session.session} })
-  .then(() => {
-    console.log('creating new session');
-    req.session = newSession(req, res);
-    next();
-  })
+  db.Sessions.destroy({ where: { session: req.session.session } })
+    .then(() => {
+      console.log('creating new session');
+      req.session = newSession(req, res);
+      next();
+    });
 };
 
+const findOrCreateBusiness = (req, res, next) => {
+  const { business } = req.body;
+  db.Business.findOrCreate({ where: { name: business } })
+    .then((array) => {
+      req.businessId = array[0].dataValues.id;
+      next();
+    })
+    .catch((err) => {
+      console.log('Travis is being difficult: ', err);
+    });
+};
+
+const getAllOpenTrades = (req, res, next) => {
+  db.sequelize.query('SELECT shift_trade_requests.*, users.name FROM shift_trade_requests, users WHERE shift_trade_requests.user_id = users.id')
+    .then((trades) => {
+      req.trades = trades[0].filter((trade) => {
+        return trade.status !== 'accepted';
+      })
+      next();
+    });
+};
+
+const acceptTrade = (req, res, next) => {
+  const { userId, shiftId, tradeId } = req.body;
+  db.Actual_Schedule.update({ user_id: userId }, { where: { id: shiftId } })
+    .then((result) => {
+      return db.Shift_Trade_Request.update({ status: 'accepted' }, { where: { id: tradeId } });
+    })
+    .then((result) => {
+      next();
+    })
+    .catch((err) => {
+      console.log('error updating a trade in the database ', err);
+    });
+};
+
+const saveTrade = (req, res, next) => {
+  const { userId, shiftId } = req.body;
+  db.Shift_Trade_Request.findOrCreate({
+    where: {
+      actual_schedule_id: shiftId,
+    },
+    defaults: {
+      user_id: userId,
+      actual_schedule_id: shiftId,
+    },
+  })
+    .then((response) => {
+      console.log(response);
+      next();
+    })
+    .catch((err) => {
+      console.log('error accessing the database: ', err);
+    });
+};
 
 module.exports = {
-  destroySession: destroySession,
-  sendEmployeeInfo: sendEmployeeInfo,
-  getAllActualSchedules: getAllActualSchedules,
-  redirectIfLoggedIn: redirectIfLoggedIn,
-  createUser: createUser,
-  authenticate: authenticate,
-  getAllUsers: getAllUsers,
-  updateEmployeeAvailability: updateEmployeeAvailability,
-  getAllEmployeeAvailabilities: getAllEmployeeAvailabilities,
-  getAllDayParts: getAllDayParts,
-  getAllNeededEmployees: getAllNeededEmployees,
-  getAllScheduleDates: getAllScheduleDates,
-  addUser: addUser,
-  addEmployeeAvailability: addEmployeeAvailability,
-  checkSession: checkSession,
-  updateNeededEmployees: updateNeededEmployees,
-  createScheduleDate:createScheduleDate,
-  createScheduleTemplate: createScheduleTemplate,
+  destroySession,
+  sendEmployeeInfo,
+  getAllActualSchedules,
+  redirectIfLoggedIn,
+  createUser,
+  authenticate,
+  getAllUsers,
+  updateEmployeeAvailability,
+  getAllEmployeeAvailabilities,
+  getAllDayParts,
+  getAllNeededEmployees,
+  getAllScheduleDates,
+  addUser,
+  addEmployeeAvailability,
+  checkSession,
+  updateNeededEmployees,
+  createScheduleDate,
+  createScheduleTemplate,
+  findOrCreateBusiness,
+  getAllOpenTrades,
+  acceptTrade,
+  saveTrade,
 };

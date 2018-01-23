@@ -1,5 +1,68 @@
 import axios from 'axios';
 
+/**
+|--------------------------------------------------
+|  START OF NEW ACTION CREATORS
+|--------------------------------------------------
+*/
+const deleteShift = (shift, userId, scheduleId) => {
+  const payload = {
+    userId,
+    shift,
+    scheduleId,
+  };
+  return {
+    type: 'DELETE_SHIFT',
+    payload,
+  };
+};
+
+const addShift = (shift, userId, scheduleId) => {
+  const payload = {
+    userId,
+    shift,
+    scheduleId,
+  };
+  return {
+    type: 'ADD_SHIFT',
+    payload,
+  };
+};
+
+const savePreferences = (scheduleActual) => {
+  const response = axios.post('/savePreferences', scheduleActual);
+  return {
+    type: 'SAVE_PREFERENCES',
+    payload: response,
+  };
+};
+
+const offerShift = (shiftId, userId) => {
+  const options = { shiftId, userId };
+  const response = axios.post('/trade_shift', options);
+
+  return {
+    type: 'OFFER_TRADE',
+    payload: response,
+  };
+};
+
+const acceptTrade = (shiftId, userId, tradeId) => {
+  const options = { shiftId, userId, tradeId };
+  const response = axios.patch('/trade_shift', options);
+
+  return {
+    type: 'ACCEPT_TRADE',
+    payload: response,
+  };
+};
+
+/**
+|--------------------------------------------------
+| END OF NEW ACTION CREATORS
+|--------------------------------------------------
+*/
+
 const getAllUsers = () => {
   const response = axios.get('/users');
 
@@ -56,8 +119,8 @@ const generateSchedule = (mondayDate) => {
   }
 };
 
-const addEmployee = (username, password) => {
-  const response = axios.post('/add_employee', { username, password });
+const addEmployee = (username, password, business) => {
+  const response = axios.post('/add_employee', { username, password, business });
   return {
     type: 'ADD_EMPLOYEE',
     payload: response,
@@ -166,10 +229,15 @@ const selectWeek = (monDate) => {
   return {
     type: 'SELECT_WEEK',
     payload: monDate,
-  }
+  };
 };
 
 module.exports = {
+  savePreferences,
+  deleteShift,
+  addShift,
+  acceptTrade,
+  offerShift,
   logout,
   checkedIfLoggedIn,
   generateSchedule,

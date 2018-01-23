@@ -1,6 +1,10 @@
 import React from 'react';
 import _ from 'underscore';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { savePreferences } from '../actions/index';
+import EmployeeScheduleManager from './EmployeeScheduleManager.jsx';
 import EmployeeSchedule from './EmployeeSchedule.jsx';
 
 const ScheduleActual = (props) => {
@@ -12,16 +16,25 @@ const ScheduleActual = (props) => {
     morningEvenings.push(<div key={`${i}shift`} className="ratio-col-16 schedule-block  schedule-hours">{i % 2 === 0 ? 'AM' : 'PM'}</div>);
   }
 
+  // check to see if anyone is assigned a shift
   if (props.selectedWeekActualSchedule.length > 0) {
+    // map over each employees schedule and return their row of shifts
     calendarBody = props.selectedWeekActualSchedule.map((sched, idx) => {
-      return <EmployeeSchedule key={`${sched.name}${idx}`} schedule={sched} />;
+      return props.userRole === 'manager' ?
+        <EmployeeScheduleManager key={`${sched.name}${idx}`} schedule={sched} scheduleId={props.selectedWeekScheduleId} /> :
+        <EmployeeSchedule key={`${sched.name}${idx}`} schedule={sched} />;
     });
   } else if (props.weekHasAtLeastOneNeededEmployee) {
     calendarBody = <div className='schedule-prompt'>Generate a schedule for this week when you have finalized your shifts.</div>;
   } else {
-    calendarBody = <div className='schedule-prompt'>You have not saved any shifts for this week.</div>;
+    const managerMessage = 'You have not saved any shifts for this week.';
+    const employeeMessage = 'Please select a shift in the dropdown to view your schedule for that week.';
+    calendarBody = (
+      <div className="schedule-prompt">
+        {props.userRole === 'manager' ? managerMessage : employeeMessage}
+      </div>
+    );
   }
-
   return (
     <div className="container clear-fix schedule-actual">
       <div className="schedule-date-header">
@@ -35,7 +48,8 @@ const ScheduleActual = (props) => {
         <div className="ratio-col-8 schedule-block ">Sun</div>
         {morningEvenings}
       </div>
-        {calendarBody}
+      {calendarBody}
+      {props.userRole === 'manager' ? <button className="btn-save clickable" onClick={() => props.savePreferences(props.scheduleActual)} >Save Schedule</button> : null }
     </div>
   );
 }
@@ -43,5 +57,18 @@ const ScheduleActual = (props) => {
 ScheduleActual.propTypes = {
   weekHasAtLeastOneNeededEmployee: PropTypes.bool,
   selectedWeekActualSchedule: PropTypes.arrayOf(PropTypes.object).isRequired,
+  userRole: PropTypes.string.isRequired,
+  savePreferences: PropTypes.func.isRequired,
 };
-export default ScheduleActual;
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    savePreferences,
+  }, dispatch);
+}
+
+const mapStateToProps = ({ scheduleActual }) => {
+  return { scheduleActual };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ScheduleActual);

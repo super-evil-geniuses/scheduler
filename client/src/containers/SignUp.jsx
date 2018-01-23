@@ -19,9 +19,10 @@ const SignUp = props => (
         <div className="btn-credentials">
           <input className="btn-main clickable" type="button" value="Sign Up" onClick={
             () => {
-              let username = document.getElementById('username').value;
-              let password = document.getElementById('password').value;
-              props.signUp({ username, password });
+              const username = document.getElementById('username').value;
+              const password = document.getElementById('password').value;
+              const business = /*document.getElementById('business').value || */ 'Hack Reactor';
+              props.signUp({ username, password, business });
               document.getElementById('username').value = '';
               document.getElementById('password').value = '';
             }
